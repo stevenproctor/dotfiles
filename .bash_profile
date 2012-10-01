@@ -5,6 +5,7 @@ set -o vi
 
 export CLICOLOR=1
 
+# came from Aaron Lasseigne (AaronLasseigne on GitHub)
 battery_status()
 {
   HEART='♥ '
