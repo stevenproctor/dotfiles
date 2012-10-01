@@ -1,10 +1,3 @@
-"$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-PATH=/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
-PATH=$PATH:$HOME
-set -o vi
-
-export CLICOLOR=1
-
 # came from Aaron Lasseigne (AaronLasseigne on GitHub)
 battery_status()
 {
@@ -31,5 +24,5 @@ battery_status()
   fi
 }
 
-export PROMPT_COMMAND='PS1="$(battery_status) \h:\W \u\$ "'
+PS1="$(battery_status) \h:\W \u\$ "
 
