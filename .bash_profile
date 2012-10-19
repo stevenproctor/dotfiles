@@ -5,6 +5,10 @@ set -o vi
 
 export CLICOLOR=1
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
 # came from Aaron Lasseigne (AaronLasseigne on GitHub)
 battery_status()
 {
