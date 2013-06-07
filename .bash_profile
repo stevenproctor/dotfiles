@@ -9,6 +9,10 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
+if [ -f ~/.bash_local ]; then
+  . ~/.bash_local
+fi
+
 # came from Aaron Lasseigne (AaronLasseigne on GitHub)
 battery_status()
 {
@@ -35,5 +39,5 @@ battery_status()
   fi
 }
 
-export PROMPT_COMMAND='PS1="$(battery_status) \h:\W \u\$ "'
+export PROMPT_COMMAND='PS1="$(battery_status) [\d \t] \h:\W \u\$ "'
 
