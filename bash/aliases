@@ -1,0 +1,17 @@
+
+#standard shell aliases
+alias ll='ls -l'
+alias la='ls -a'
+alias lhal='ls -hal'
+
+#git aliases
+alias ?='git status'
+alias ga='git add'
+alias gaa='git add .'
+alias gco='git checkout'
+alias gc='git commit'
+alias gpush='git push'
+alias gpull='git pull'
+alias gdiff='git diff'
+alias merged?='git branch --merged'
+alias gbd='git branch -d'

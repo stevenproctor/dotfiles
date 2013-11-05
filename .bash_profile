@@ -1,4 +1,5 @@
-"$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 PATH=/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
 PATH=$PATH:$HOME
 set -o vi
@@ -7,10 +8,6 @@ export CLICOLOR=1
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
-fi
-
-if [ -f ~/.bash_local ]; then
-  . ~/.bash_local
 fi
 
 # came from Aaron Lasseigne (AaronLasseigne on GitHub)
@@ -39,5 +36,10 @@ battery_status()
   fi
 }
 
-export PROMPT_COMMAND='PS1="$(battery_status) [\d \t] \h:\W \u\$ "'
+export PROMPT_COMMAND='PS1="[\d \t] \h:\W \u\$ "'
 
+source ~/.bash/aliases
+
+if [ -f ~/.bash_local ]; then
+  . ~/.bash_local
+fi
