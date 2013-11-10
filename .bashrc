@@ -24,5 +24,5 @@ battery_status()
   fi
 }
 
-PS1="$(battery_status) \h:\W \u\$ "
+PS1="\h:\W \u\$ "
 
