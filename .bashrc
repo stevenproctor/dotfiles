@@ -35,3 +35,4 @@ battery_status()
 
 PS1="\h:\W \u\$ "
 
+export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
