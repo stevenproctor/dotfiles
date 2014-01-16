@@ -8,7 +8,7 @@ set -o vi
 
 export CLICOLOR=1
 
-if [[ -f brew && -f $(brew --prefix)/etc/bash_completion ]]; then
+if which brew 2>/dev/null && [-f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
