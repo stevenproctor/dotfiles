@@ -1,5 +1,7 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+
 PATH=/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
 PATH=$PATH:$HOME
 set -o vi
