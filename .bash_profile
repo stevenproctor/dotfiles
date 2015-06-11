@@ -5,10 +5,11 @@
 PATH=/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
 PATH=$PATH:$HOME
 set -o vi
+export EDITOR='vim'
 
 export CLICOLOR=1
 
-if which brew 2>/dev/null && [-f $(brew --prefix)/etc/bash_completion ]; then
+if which brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
@@ -45,3 +46,9 @@ source ~/.bash/aliases
 if [ -f ~/.bash_local ]; then
   . ~/.bash_local
 fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+export NVM_DIR="/Users/sg0221754/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
