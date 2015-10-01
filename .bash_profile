@@ -2,14 +2,16 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-PATH=/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
+PATH=/usr/local/sbin:/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
 PATH=$PATH:$HOME
+MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
+
 set -o vi
 export EDITOR='vim'
 
 export CLICOLOR=1
 
-if which brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+if which brew 2>/dev/null && [[ -f $(brew --prefix)/etc/bash_completion ]]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
