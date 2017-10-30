@@ -54,3 +54,29 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 export NVM_DIR="/Users/sg0221754/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+### What did I do in git this past year?
+
+function this_year() {
+  date +'%Y'
+}
+
+function last_year() {
+  echo "$(this_year)-1" | bc
+}
+
+function end_of_last_year() {
+  echo "$(last_year)-12-31"
+}
+
+function my_git_user_name() {
+  git config --get user.name
+}
+
+function my_commits_for_this_past_year()
+{
+  git log --author="$(my_git_user_name)" --after="$(end_of_last_year)" origin/master
+}
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+#if [ -e /Users/sg0221754/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/sg0221754/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
