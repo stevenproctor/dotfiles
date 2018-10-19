@@ -78,5 +78,11 @@ function my_commits_for_this_past_year()
   git log --author="$(my_git_user_name)" --after="$(end_of_last_year)" origin/master
 }
 
+function truncate_logs()
+{
+  find log -type f -name "*.log" | xargs -I {} bash -c 'echo "" > {}'
+}
+
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 #if [ -e /Users/sg0221754/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/sg0221754/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
