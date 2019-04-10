@@ -1,4 +1,3 @@
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
@@ -52,6 +51,18 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+function repeat() {
+  local count=$1;
+  shift;
+
+  echo "running '$@' for $count times"
+
+  for i in  $(eval echo "{1..$count}")
+  do
+    $@ || break
+  done
+}
+
 export NVM_DIR="/Users/sg0221754/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
@@ -84,5 +95,15 @@ function truncate_logs()
 }
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-#if [ -e /Users/sg0221754/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/sg0221754/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+export LESS_TERMCAP_mb=$'\e'"[1;31m"
+export LESS_TERMCAP_md=$'\e'"[1;31m"
+export LESS_TERMCAP_me=$'\e'"[0m"
+export LESS_TERMCAP_se=$'\e'"[0m"
+export LESS_TERMCAP_so=$'\e'"[1;44;33m"
+export LESS_TERMCAP_ue=$'\e'"[0m"
+export LESS_TERMCAP_us=$'\e'"[1;32m"
+#if [ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]; then . "${HOME}/.nix-profile/etc/profile.d/nix.sh"; fi # added by Nix installer
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
