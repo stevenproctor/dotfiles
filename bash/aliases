@@ -19,4 +19,4 @@ alias merged?='git branch --merged'
 alias gbd='git branch -d'
 alias gpush!='git push -u origin `git rev-parse --abbrev-ref HEAD`'
 alias master!='git checkout master'
-alias gbc="git branch -vv | grep -e '[origin/[^:]*: gone]' | awk '{print \$1}' | xargs git branch -d"
+alias gbc="git branch -vv | grep -e '[origin/[^:]*: gone]' | awk '{print \$1}' | xargs git branch -D"
