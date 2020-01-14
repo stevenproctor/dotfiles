@@ -42,11 +42,13 @@ battery_status()
 
 export PROMPT_COMMAND='PS1="[\d \t] \h:\W \u\$ "'
 
-source ~/.bash/aliases
+safesource() {
+  test -f $1 && . $1
+}
 
-if [ -f ~/.bash_local ]; then
-  . ~/.bash_local
-fi
+safesource ~/.bash/git-completion.bash
+safesource ~/.bash/aliases
+safesource ~/.bash_local
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
