@@ -109,3 +109,5 @@ export LESS_TERMCAP_us=$'\e'"[1;32m"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -s ".config/broot/launcher/bash/br" ] && source /Users/sproctor/.config/broot/launcher/bash/br
