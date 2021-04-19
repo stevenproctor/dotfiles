@@ -19,6 +19,7 @@ alias gpull='git pull --ff-only'
 alias gpush='git push'
 alias gpush!='git push -u origin `git rev-parse --abbrev-ref HEAD`'
 alias master!='git checkout master'
+alias main!='git checkout main'
 alias merged?='git branch --merged'
 
 __git_complete ga _git_add
