@@ -11,6 +11,7 @@ alias gaa='git add .'
 alias gbc="git branch -vv | grep -e '[origin/[^:]*: gone]' | awk '{print \$1}' | xargs git branch -D"
 alias gbd='git branch -d'
 alias gc='git commit'
+alias gcb='git branch --show-current'
 alias gco='git checkout'
 alias gdiff='git diff'
 alias gfetch='git fetch -ap'
@@ -30,3 +31,6 @@ __git_complete gfetch _git_fetch
 __git_complete gmerge _git_merge
 __git_complete gpull _git_pull
 __git_complete gpush _git_push
+
+# github cli aliases
+alias pr-comment='gh pr comment `gcb`'
