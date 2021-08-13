@@ -1,4 +1,4 @@
-(module my_nvim.mapping
+(module dotfiles.mapping
   {autoload {nvim aniseed.nvim
              nu aniseed.nvim.util
              core aniseed.core}})
@@ -52,7 +52,7 @@
 (noremap :n :gph ":GitGutterPrevHunk<CR>")
 (noremap :n :gsh ":GitGutterStageHunk<CR>")
 
-(noremap :n :<leader>li "<Cmd>LspInfo<CR>")
+; (noremap :n :<leader>li "<Cmd>LspInfo<CR>")
 ;vim.api.nvim_set_keymap('n', '<leader>li', '<Cmd>LspInfo<CR>', { noremap=true, silent=true })
 
 ; Open file in Marked 2 (markdown viewer)

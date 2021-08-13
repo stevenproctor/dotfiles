@@ -1,4 +1,4 @@
-(module my_vim.core
+(module dotfiles.core
   {autoload
    {a aniseed.core}
    require
@@ -18,8 +18,8 @@
 (a.map safe-source ["~/.vimrc" "~/.vimrc.local"])
 
 
-(def- backup-dir "$HOME/.vim/backup")
-(def- undo-dir "$HOME.vim/undo")
+(def- backup-dir (.. (nvim.fn.glob "$HOME") "/.vim/backup"))
+(def- undo-dir (.. (nvim.fn.glob "$HOME") "/.vim/backup"))
 
 (def- on-opts [
            :autoindent
@@ -47,7 +47,7 @@
 
 (def- val-based-opts
   {
-    :t_Co 256
+    ; :t_Co 256
     :laststatus 2
     :encoding "utf-8"
     :history 500
@@ -67,15 +67,16 @@
     :undoreload 10000
     :foldmethod "expr"
     :foldexpr "nvim_treesitter#foldexpr()"
-    :foldlevelstart 99
+    :foldlevelstart 100
     :foldlevel 99
     :tabstop 2
     :shiftwidth 2
     :softtabstop 2
-    :list "listchars=tab:➥\\ ,trail:·"
+    :list true
+    :listchars "tab:➥\\ ,trail:·"
     :backspace "indent,eol,start"    ;allow backspacing over everything in insert mode
     :wildmode "list:longest,list:full"
-    :wrap "off"
+    :wrap false
    })
 
 (defn- set-opt
@@ -88,9 +89,13 @@
 
 (a.map set-opt-on on-opts)
 
-(a.map set-opt val-based-opts)
+(a.map-indexed set-opt val-based-opts)
 
 (nvim.ex.syntax "on")
-(nvim.ex.colorscheme "solarized8")
+(nvim.ex.colorscheme :solarized8)
 
-(nvim.fn.glob "~/.vimrc.local")
+
+
+; (nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "solarized8")
+; 
+; (nvim.fn.glob "~/.vimrc.local")
