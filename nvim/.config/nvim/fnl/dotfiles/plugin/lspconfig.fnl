@@ -43,7 +43,7 @@
   :gr "lua vim.lsp.buf.references()"
   :K "lua vim.lsp.buf.hover()"
   "[g" "lua vim.lsp.diagnostic.goto_prev()"
-  "g" "lua vim.lsp.diagnostic.goto_prev()"
+  "]g" "lua vim.lsp.diagnostic.goto_prev()"
   :<leader>ca "lua vim.lsp.buf.codeaction()"
   :<leader>sld "lua vim.lsp.diagnostic.show_line_diagnostics()"
   :<leader>rn "lua vim.lsp.buf.rename()"

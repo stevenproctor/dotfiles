@@ -40,7 +40,7 @@
    :kabouzeid/nvim-lspinstall {} ; NeoVim lsp server installs
    :airblade/vim-gitgutter {} ; Git
 :kovisoft/paredit {}
-:luochen1990/rainbow {}
+; :luochen1990/rainbow {}
 :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
 :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
 :hashivim/vim-terraform {} ; Terraform
@@ -55,7 +55,8 @@
 :tpope/vim-vinegar {}
 :radenling/vim-dispatch-neovim {} ; Clojure
   :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
-
+  :p00f/nvim-ts-rainbow {}
+  :norcalli/nvim-colorizer.lua {:mode :colorizer}
   }
 
 ; :tpope/vim-fireplace {} ; Clojure
