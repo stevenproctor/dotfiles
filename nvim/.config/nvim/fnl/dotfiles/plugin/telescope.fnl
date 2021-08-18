@@ -5,13 +5,13 @@
 
 (telescope.setup
   {:defaults
-   {:vimgrep_arguments ["ag" "--nocolor=never" "--noheading"
+   {:vimgrep_arguments ["ag" "--nocolor" "--noheading"
                         "--files-with-matches" "--number" "--column"
-                        "--smart-case" "--hidden" "--follow"
+                        "--smart-case" "--hidden" "--follow" "--skip-vcs-ignores"
                         "-g" "!.git/"]}})
 
 
-(util.lnnoremap :ff "Telescope find_files hidden=true")
+(util.lnnoremap :ff "Telescope git_files hidden=true")
 (util.lnnoremap :f- "Telescope file_browser")
 (util.lnnoremap :fg "Telescope live_grep")
 (util.lnnoremap :* "Telescope grep_string")

@@ -28,35 +28,37 @@
 
 (def- packages
   {
-   :wbthomason/packer.nvim {:mod :packer}
+   :Olical/aniseed {}
+   :Olical/conjure {} ; Clojure
+   :Olical/fennel.vim {} ; Fennel
+   :airblade/vim-gitgutter {} ; Git
    :airblade/vim-gitgutter {} ; Git
    :clojure-vim/vim-jack-in {} ; Conjure support - jack-in with nrepl dependencies
-   :thecontinium/asyncomplete-conjure.vim {}
-   :tpope/vim-dispatch {} ; Conjure support - jack-in with nrepl dependencies
-   :Olical/conjure {} ; Clojure
-   :Olical/aniseed {}
-   :Olical/fennel.vim {} ; Fennel
-   :neovim/nvim-lspconfig {:mod :lspconfig} ; NeoVim  lsp config
+   :hashivim/vim-terraform {} ; Terraform
+   :hrsh7th/nvim-compe {:mod :compe} ; autocomplete
+   :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
    :kabouzeid/nvim-lspinstall {} ; NeoVim lsp server installs
-   :airblade/vim-gitgutter {} ; Git
-:kovisoft/paredit {}
-; :luochen1990/rainbow {}
-:jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
-:nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
-:hashivim/vim-terraform {} ; Terraform
-:skywind3000/asyncrun.vim {} ; :AsyncRun
-:tpope/vim-classpath {}
-:tpope/vim-fugitive {} ; Git
-:tpope/vim-git {} ; Git Commit Message
-:tpope/vim-pathogen {}
-:tpope/vim-surround {}
-:tpope/vim-repeat {}
-:tpope/vim-unimpaired {}
-:tpope/vim-vinegar {}
-:radenling/vim-dispatch-neovim {} ; Clojure
-  :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
-  :p00f/nvim-ts-rainbow {}
-  :norcalli/nvim-colorizer.lua {:mode :colorizer}
+   :kovisoft/paredit {}
+   :neovim/nvim-lspconfig {:mod :lspconfig} ; NeoVim  lsp config
+   :norcalli/nvim-colorizer.lua {:mode :colorizer}
+   :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
+   :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
+   :p00f/nvim-ts-rainbow {}
+   :radenling/vim-dispatch-neovim {} ; Clojure
+   :skywind3000/asyncrun.vim {} ; :AsyncRun
+   :tami5/compe-conjure {} ; autocomplete using conjure as a source
+   :tpope/vim-classpath {}
+   :tpope/vim-dispatch {} ; Conjure support - jack-in with nrepl dependencies
+   :tpope/vim-fugitive {} ; Git
+   :tpope/vim-git {} ; Git Commit Message
+   :tpope/vim-pathogen {}
+   :tpope/vim-repeat {}
+   :tpope/vim-surround {}
+   :tpope/vim-unimpaired {}
+   :tpope/vim-vinegar {}
+   :wbthomason/packer.nvim {:mod :packer}
+   ; :luochen1990/rainbow {}
+   ; :thecontinium/asyncomplete-conjure.vim {}
   }
 
 ; :tpope/vim-fireplace {} ; Clojure

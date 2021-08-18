@@ -3,6 +3,7 @@
    {a aniseed.core
     u dotfiles.util
     nvim aniseed.nvim
+    nu aniseed.nvim.util
     }
    })
 
@@ -34,6 +35,23 @@
 ; --   vim.lsp.buf.execute_command({command = cmd, arguments = arguments})
 ; -- end
 
+(defn lsp-execute-command [cmd ...]
+  (let [buf-uri (vim.uri_from_bufnr 0)
+        cursor (vim.api.nvim_win_get_cursor 0)
+        r (- (a.first cursor) 1)
+        c (a.second cursor)
+        args [buf-uri r c]
+        ]
+    (vim.lsp.buf.execute_command {:command cmd
+                                  :arguments (merge args {...})})
+    ))
+
+
+(nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig :lsp-execute-command {:return false})
+
+; (nu.fn-bridge
+;   :DeleteHiddenBuffers
+;   :dotfiles.mapping :delete-hidden-buffers)
 
 (def core-nmappings
   {
@@ -53,6 +71,7 @@
 (def client-nmappings
   {:clojure
    {
+; --   buf_set_keymap('n', '<leader>cn', "<cmd>lua LspExecuteCommand('clean-ns')<CR>", opts)
 ; --   buf_set_keymap('n', '<leader>cn', "<cmd>lua LspExecuteCommand('clean-ns')<CR>", opts)
 ; --   buf_set_keymap('n', '<leader>ref', "<cmd>lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\"))<CR>", opts)
 ; --   buf_set_keymap('x', '<leader>ref', "<cmd>lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\"))<CR>", opts)
@@ -91,6 +110,7 @@
 
 
   (bind-client-mappings client)
+  (nvim.ex.autocmd :BufWritePre :<buffer> :lua "vim.lsp.buf.formatting_sync()")
 ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]] 
 ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
 
