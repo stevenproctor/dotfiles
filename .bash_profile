@@ -6,7 +6,7 @@ PATH=$PATH:$HOME
 MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
 
 set -o vi
-export EDITOR='vim'
+export EDITOR='nvim'
 
 export CLICOLOR=1
 
