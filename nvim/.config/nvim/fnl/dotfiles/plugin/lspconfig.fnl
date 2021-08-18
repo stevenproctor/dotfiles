@@ -43,7 +43,7 @@
         args [buf-uri r c]
         ]
     (vim.lsp.buf.execute_command {:command cmd
-                                  :arguments (merge args {...})})
+                                  :arguments (a.merge args ...)})
     ))
 
 
@@ -111,7 +111,7 @@
 
   (bind-client-mappings client)
   (nvim.ex.autocmd :BufWritePre :<buffer> :lua "vim.lsp.buf.formatting_sync()")
-;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]] 
+;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()]]
 ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
 
   (print "LSP Client Attached.");
@@ -137,38 +137,38 @@
 ; -- end
 
 ; -- local nvim_lsp = require('lspconfig')
-; -- 
+; --
 ; -- function LspExecuteCommand(cmd, ...)
 ; --   arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[2] -1}
 ; --   for _,a in pairs({...}) do table.insert(arguments, a) end
 ; --   vim.lsp.buf.execute_command({command = cmd, arguments = arguments})
 ; -- end
-; -- 
+; --
 ; -- -- Use an on_attach function to only map the following keys
 ; -- -- after the language server attaches to the current buffer
 ; -- local on_attach = function(client, bufnr)
 ; --   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 ; --   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-; -- 
+; --
 ; --   --Enable completion triggered by <c-x><c-o>
 ; --   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-; -- 
+; --
 ; --   -- Mappings.
 ; --   local opts = { noremap=true, silent=true }
-; -- 
+; --
 ; --   -- See `:help vim.lsp.*` for documentation on any of the below functions
 
-; -- 
-; --   
+; --
+; --
 ; --   -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
-; -- 
+; --
 ; --   vim.api.nvim_command[[lua print("Lsp Client Attached.")]]
 ; -- end
-; -- 
-; -- 
+; --
+; --
 ; -- -- vim.api.nvim_set_keymap('n', '<leader>li', '<Cmd>LspInfo<CR>', { noremap=true, silent=true })
-; -- 
-; -- 
+; --
+; --
 ; -- local function setup_servers()
 ; --   require'lspinstall'.setup()
 ; --   local servers = require'lspinstall'.installed_servers()
@@ -181,9 +181,9 @@
 ; --     }
 ; --   end
 ; -- end
-; -- 
+; --
 ; -- setup_servers()
-; -- 
+; --
 ; -- -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 ; -- require'lspinstall'.post_install_hook = function ()
 ; --   setup_servers() -- reload installed servers
