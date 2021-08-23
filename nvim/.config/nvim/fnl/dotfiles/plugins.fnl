@@ -57,6 +57,7 @@
    :tpope/vim-unimpaired {}
    :tpope/vim-vinegar {}
    :wbthomason/packer.nvim {:mod :packer}
+   :junegunn/vim-easy-align {:mod :easyalign}
    ; :luochen1990/rainbow {}
    ; :thecontinium/asyncomplete-conjure.vim {}
   }
