@@ -43,8 +43,7 @@
         args [buf-uri r c]
         ]
     (vim.lsp.buf.execute_command {:command cmd
-                                  :arguments (a.merge args ...)})
-    ))
+                                  :arguments (a.merge args ...)})))
 
 
 (nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig :lsp-execute-command {:return false})
@@ -71,16 +70,11 @@
 (def client-nmappings
   {:clojure
    {
-; --   buf_set_keymap('n', '<leader>cn', "<cmd>lua LspExecuteCommand('clean-ns')<CR>", opts)
-; --   buf_set_keymap('n', '<leader>cn', "<cmd>lua LspExecuteCommand('clean-ns')<CR>", opts)
-; --   buf_set_keymap('n', '<leader>ref', "<cmd>lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\"))<CR>", opts)
-; --   buf_set_keymap('x', '<leader>ref', "<cmd>lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\"))<CR>", opts)
-; --   buf_set_keymap('n', '<leader>id', "<cmd>lua LspExecuteCommand('inline-symbol')<CR>", opts)
-; --   buf_set_keymap('x', '<leader>id', "<cmd>lua LspExecuteCommand('inline-symbol')<CR>", opts)
-; --   buf_set_keymap('n', '<leader>il', "<cmd>lua LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\"))<CR>", opts)
-; --   buf_set_keymap('x', '<leader>il', "<cmd>lua LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\"))<CR>", opts)
-; --   buf_set_keymap('n', '<leader>m2l', "<cmd>lua LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\"))<CR>", opts)
-; --   buf_set_keymap('x', '<leader>m2l', "<cmd>lua LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\"))<CR>", opts)
+    :<leader>cn "lua LspExecuteCommand('clean-ns)'"
+    :<leader>ref "lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\"))'"
+    :<leader>id "lua LspExecuteCommand('clean-ns)'"
+    :<leader>il "lua LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\"))'"
+    :<leader>m2l "lua LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\"))'"
    }
   })
 
