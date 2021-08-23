@@ -29,12 +29,6 @@
 (define-sign :Hint   "🔎")
 (define-sign :Information  "ℹ️")
 
-; -- function LspExecuteCommand(cmd, ...)
-; --   arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[2] -1}
-; --   for _,a in pairs({...}) do table.insert(arguments, a) end
-; --   vim.lsp.buf.execute_command({command = cmd, arguments = arguments})
-; -- end
-
 (defn lsp-execute-command [cmd ...]
   (let [buf-uri (vim.uri_from_bufnr 0)
         cursor (vim.api.nvim_win_get_cursor 0)
@@ -70,11 +64,11 @@
 (def client-nmappings
   {:clojure
    {
-    :<leader>cn "lua LspExecuteCommand('clean-ns)'"
-    :<leader>ref "lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\"))'"
-    :<leader>id "lua LspExecuteCommand('clean-ns)'"
-    :<leader>il "lua LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\"))'"
-    :<leader>m2l "lua LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\"))'"
+    :<leader>cn "lua LspExecuteCommand('clean-ns')"
+    :<leader>ref "lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\")')"
+    :<leader>id "lua LspExecuteCommand('inline-symbol')"
+    :<leader>il "lua LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
+    :<leader>m2l "lua LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
    }
   })
 
@@ -131,12 +125,6 @@
 ; -- end
 
 ; -- local nvim_lsp = require('lspconfig')
-; --
-; -- function LspExecuteCommand(cmd, ...)
-; --   arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1] - 1, vim.api.nvim_win_get_cursor(0)[2] -1}
-; --   for _,a in pairs({...}) do table.insert(arguments, a) end
-; --   vim.lsp.buf.execute_command({command = cmd, arguments = arguments})
-; -- end
 ; --
 ; -- -- Use an on_attach function to only map the following keys
 ; -- -- after the language server attaches to the current buffer
