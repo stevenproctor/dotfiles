@@ -47,11 +47,11 @@
 (def client-nmappings
   {:clojure
    {
-    :<leader>cn "lua LspExecuteCommand('clean-ns')"
-    :<leader>ref "lua LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\")')"
-    :<leader>id "lua LspExecuteCommand('inline-symbol')"
-    :<leader>il "lua LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
-    :<leader>m2l "lua LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
+    :<leader>cn "call LspExecuteCommand('clean-ns')"
+    :<leader>ref "call LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\")')"
+    :<leader>id "call LspExecuteCommand('inline-symbol')"
+    :<leader>il "call LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
+    :<leader>m2l "call LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
    }
   })
 

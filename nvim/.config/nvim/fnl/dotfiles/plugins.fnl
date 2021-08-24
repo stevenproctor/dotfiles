@@ -68,17 +68,6 @@
 
 (use packages)
 
-;;(nu.fn-bridge
-;;  :DeleteHiddenBuffers
-;;  :dotfiles.mapping :delete-hidden-buffers)
-
-; " Define user commands for updating/cleaning the plugins.
-; " Each of them loads minpac, reloads .vimrc to register the
-;   information of plugins, then performs the task.
-; command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac#status()'})
-; command! PackClean  call PackInit() | call minpac#clean()
-; command! PackStatus packadd minpac | call minpac#status()
-
 
 ;;   call minpac#add('dense-analysis/ale') " Linting
 ;;   call minpac#add('editorconfig/editorconfig-vim')

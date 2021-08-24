@@ -8,6 +8,7 @@
 (require :dotfiles.plugins)
 (require :dotfiles.core)
 (require :dotfiles.mapping)
+(require :dotfiles.conceal)
 
 ;(nvim.ex.source "~/.vimrc")
 
