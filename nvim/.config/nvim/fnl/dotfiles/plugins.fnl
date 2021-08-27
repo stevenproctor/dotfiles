@@ -29,7 +29,7 @@
 (def- packages
   {
    :Olical/aniseed {}
-   :Olical/conjure {} ; Clojure
+   :Olical/conjure { :mod :conjure } ; Clojure
    :Olical/fennel.vim {} ; Fennel
    :airblade/vim-gitgutter {} ; Git
    :airblade/vim-gitgutter {} ; Git
