@@ -58,6 +58,10 @@
    :tpope/vim-vinegar {}
    :wbthomason/packer.nvim {:mod :packer}
    :junegunn/vim-easy-align {:mod :easyalign}
+
+   :tpope/vim-dadbod {}
+   :kristijanhusak/vim-dadbod-ui {}
+   :kristijanhusak/vim-dadbod-completion {}
    ; :luochen1990/rainbow {}
    ; :thecontinium/asyncomplete-conjure.vim {}
   }

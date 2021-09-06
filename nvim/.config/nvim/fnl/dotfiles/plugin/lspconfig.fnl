@@ -38,10 +38,12 @@
   :K "lua vim.lsp.buf.hover()"
   "[g" "lua vim.lsp.diagnostic.goto_prev()"
   "]g" "lua vim.lsp.diagnostic.goto_prev()"
-  :<leader>ca "lua vim.lsp.buf.codeaction()"
+  :<c-k> "lua vim.lsp.buf.signature_help()"
+  :<leader>ca "lua vim.lsp.buf.code_action()"
+  :<leader>cl "lua vim.lsp.codelens.run()"
   :<leader>sld "lua vim.lsp.diagnostic.show_line_diagnostics()"
   :<leader>rn "lua vim.lsp.buf.rename()"
-  :<leader>fa "lua vim.lsp.buf.formattting_sync()"
+  :<leader>fa "lua vim.lsp.buf.formatting_sync()"
   })
 
 (def client-nmappings
@@ -67,7 +69,7 @@
     (nbufmap mapping cmd))
 
   ; x mode mappings
-  (xbufmap :<leader>fa "lua vim.lsp.buf.formattting_sync()")
+  (xbufmap :<leader>fa "lua vim.lsp.buf.formatting_sync()")
 
 ; --   buf_set_keymap('n', 'gs', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
 ; --   buf_set_keymap('n', 'gS', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
@@ -83,6 +85,7 @@
 
   (bind-client-mappings client)
   (nvim.ex.autocmd :BufWritePre :<buffer> :lua "vim.lsp.buf.formatting_sync()")
+  (nvim.ex.autocmd "BufEnter,CursorHold,InsertLeave" :<buffer> :lua "vim.lsp.codelens.refresh()")
 
   ; client autocmds
 ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]

@@ -6,9 +6,10 @@
 (telescope.setup
   {:defaults
    {:vimgrep_arguments ["ag" "--nocolor" "--noheading"
-                        "--files-with-matches" "--number" "--column"
+                        "--number" "--column"
                         "--smart-case" "--hidden" "--follow" "--skip-vcs-ignores"
-                        "-g" "!.git/"]}})
+                        ; "-g" "!.git/"
+                        ]}})
 
 
 (util.lnnoremap :ff "Telescope git_files hidden=true")

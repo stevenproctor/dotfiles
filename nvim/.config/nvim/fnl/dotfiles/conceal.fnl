@@ -5,6 +5,7 @@
 
 
 (def conceals {:defn :𝑓
+               ;; :defn- :
                :fn :λ
                :lambda :λ
                :and :∧
@@ -36,8 +37,8 @@
     (let [the-match (.. "\\<" the-match "\\>" )]
       (nvim.fn.matchadd :Conceal the-match 0 -1 {:conceal replacement})))
 
-  (set nvim.wo.concealcursor :nvc)
-  (set nvim.wo.conceallevel 2))
+  (set nvim.wo.conceallevel 2)
+  (set nvim.wo.concealcursor :nvc))
 
 
 (defn toggle-conceal []
@@ -55,6 +56,6 @@
 (def pretty-filetypes [:fennel
                        :clojure])
 
-(each [_ ftype (pairs pretty-filetypes)]
-  (nvim.ex.autocmd :FileType ftype :call "SetupConceals()"))
-
+; (each [_ ftype (pairs pretty-filetypes)]
+;   (nvim.ex.autocmd :FileType ftype :call "SetupConceals()"))
+; 
