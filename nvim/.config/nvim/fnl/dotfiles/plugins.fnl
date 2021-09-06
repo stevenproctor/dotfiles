@@ -37,8 +37,11 @@
    :hashivim/vim-terraform {} ; Terraform
    :hrsh7th/nvim-compe {:mod :compe} ; autocomplete
    :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
+   :junegunn/vim-easy-align {:mod :easyalign}
    :kabouzeid/nvim-lspinstall {} ; NeoVim lsp server installs
    :kovisoft/paredit {}
+   :kristijanhusak/vim-dadbod-completion {}
+   :kristijanhusak/vim-dadbod-ui {}
    :neovim/nvim-lspconfig {:mod :lspconfig} ; NeoVim  lsp config
    :norcalli/nvim-colorizer.lua {:mode :colorizer}
    :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
@@ -48,20 +51,18 @@
    :skywind3000/asyncrun.vim {} ; :AsyncRun
    :tami5/compe-conjure {} ; autocomplete using conjure as a source
    :tpope/vim-classpath {}
+   :tpope/vim-dadbod {}
    :tpope/vim-dispatch {} ; Conjure support - jack-in with nrepl dependencies
    :tpope/vim-fugitive {} ; Git
    :tpope/vim-git {} ; Git Commit Message
    :tpope/vim-pathogen {}
+   :tpope/vim-rails {}
    :tpope/vim-repeat {}
    :tpope/vim-surround {}
    :tpope/vim-unimpaired {}
    :tpope/vim-vinegar {}
    :wbthomason/packer.nvim {:mod :packer}
-   :junegunn/vim-easy-align {:mod :easyalign}
 
-   :tpope/vim-dadbod {}
-   :kristijanhusak/vim-dadbod-ui {}
-   :kristijanhusak/vim-dadbod-completion {}
    ; :luochen1990/rainbow {}
    ; :thecontinium/asyncomplete-conjure.vim {}
   }
