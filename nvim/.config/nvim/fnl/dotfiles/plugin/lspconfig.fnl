@@ -59,7 +59,8 @@
 
 
 (defn bind-client-mappings [client]
-  (let [mappings (a.get client-nmappings client)]
+  (let [client-name (a.get client :name)
+        mappings (a.get client-nmappings client-name)]
     (when mappings
       (each [mapping cmd (pairs mappings)]
         (nbufmap mapping cmd)))))
