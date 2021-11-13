@@ -34,6 +34,7 @@
    :airblade/vim-gitgutter {} ; Git
    :airblade/vim-gitgutter {} ; Git
    :clojure-vim/vim-jack-in {} ; Conjure support - jack-in with nrepl dependencies
+   :folke/lsp-colors.nvim {}
    :hashivim/vim-terraform {} ; Terraform
    :hrsh7th/nvim-compe {:mod :compe} ; autocomplete
    :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs

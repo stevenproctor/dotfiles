@@ -41,6 +41,8 @@
   :<c-k> "lua vim.lsp.buf.signature_help()"
   :<leader>ca "lua vim.lsp.buf.code_action()"
   :<leader>cl "lua vim.lsp.codelens.run()"
+  :<leader>ic "lua vim.lsp.buf.incoming_calls()"
+  :<leader>oc "lua vim.lsp.buf.outgoing_calls()"
   :<leader>sld "lua vim.lsp.diagnostic.show_line_diagnostics()"
   :<leader>rn "lua vim.lsp.buf.rename()"
   :<leader>fa "lua vim.lsp.buf.formatting_sync()"
@@ -50,10 +52,10 @@
   {:clojure
    {
     :<leader>cn "call LspExecuteCommand('clean-ns')"
-    :<leader>ref "call LspExecuteCommand('extract-function', vim.api.nvim_eval(\"input('Function name: ')\")')"
+    :<leader>ref "call LspExecuteCommand('extract-function', input('Function name: '))"
     :<leader>id "call LspExecuteCommand('inline-symbol')"
-    :<leader>il "call LspExecuteCommand('introduce-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
-    :<leader>m2l "call LspExecuteCommand('move-to-let', vim.api.nvim_eval(\"input('Binding name: ')\")')"
+    :<leader>il "call LspExecuteCommand('introduce-let', input('Binding name: '))"
+    :<leader>m2l "call LspExecuteCommand('move-to-let', input('Binding name: '))"
    }
   })
 
@@ -86,24 +88,25 @@
 
   (bind-client-mappings client)
   (nvim.ex.autocmd :BufWritePre :<buffer> :lua "vim.lsp.buf.formatting_sync()")
-  (nvim.ex.autocmd "BufEnter,CursorHold,InsertLeave" :<buffer> :lua "vim.lsp.codelens.refresh()")
+;  (nvim.ex.autocmd "BufEnter,CursorHold,InsertLeave" :<buffer> :lua "vim.lsp.codelens.refresh()")
 
   ; client autocmds
-;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(0), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
+;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(1), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
 
   (print "LSP Client Attached."))
 
 (let [lspi (require :lspinstall)]
   (when lspi
+
     (defn lsp-execute-command [cmd ...]
       (let [buf-uri (vim.uri_from_bufnr 0)
             cursor (vim.api.nvim_win_get_cursor 0)
             r (- (a.first cursor) 1)
             c (a.second cursor)
-            args [buf-uri r c]
-            ]
+            opts [buf-uri r c]
+            args (a.concat opts [...])]
         (vim.lsp.buf.execute_command {:command cmd
-                                      :arguments (a.merge args ...)})))
+                                      :arguments args})))
 
     (defn setup-servers []
       (lspi.setup)

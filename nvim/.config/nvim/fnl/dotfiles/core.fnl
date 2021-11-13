@@ -96,6 +96,7 @@
 
 
 
-; (nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "solarized8")
+(nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "solarized8")
+;(nvim.ex.autocmd "vimenter" "*"  "luafile" "treesitter.lua")
 ; 
 ; (nvim.fn.glob "~/.vimrc.local")
