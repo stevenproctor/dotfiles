@@ -95,7 +95,7 @@
 
   (print "LSP Client Attached."))
 
-(let [lspi (require :lspinstall)]
+(let [lspi (require :nvim-lsp-installer)]
   (when lspi
 
     (defn lsp-execute-command [cmd ...]
@@ -109,11 +109,14 @@
                                       :arguments args})))
 
     (defn setup-servers []
-      (lspi.setup)
-      (let [lspconfig (require :lspconfig)
-            servers (lspi.installed_servers)]
-        (each [_ server (pairs servers)]
-          ((. lspconfig server :setup) {:on_attach on_attach :flags {:debounce_text_changes 150} }))))
+      (lspi.on_server_ready (fn [server]
+                              (let [opts {:on_attach on_attach :flags {:debounce_text_changes 150} }]
+                                (server:setup opts))))
+      ;; (let [lspconfig (require :lspconfig)
+      ;;       servers (lspi.get_installed_servers)]
+      ;;   (each [_ server (pairs servers)]
+      ;;     (server.setup {:on_attach on_attach :flags {:debounce_text_changes 150} })))
+      )
 
     (defn on-post-install []
       (setup-servers)

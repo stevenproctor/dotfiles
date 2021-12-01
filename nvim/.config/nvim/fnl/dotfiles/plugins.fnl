@@ -39,7 +39,6 @@
    :hrsh7th/nvim-compe {:mod :compe} ; autocomplete
    :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
    :junegunn/vim-easy-align {:mod :easyalign}
-   :kabouzeid/nvim-lspinstall {} ; NeoVim lsp server installs
    :kovisoft/paredit {}
    :kristijanhusak/vim-dadbod-completion {}
    :kristijanhusak/vim-dadbod-ui {}
@@ -63,6 +62,7 @@
    :tpope/vim-unimpaired {}
    :tpope/vim-vinegar {}
    :wbthomason/packer.nvim {:mod :packer}
+   :williamboman/nvim-lsp-installer {} ; NeoVim lsp server installs
 
    ; :luochen1990/rainbow {}
    ; :thecontinium/asyncomplete-conjure.vim {}

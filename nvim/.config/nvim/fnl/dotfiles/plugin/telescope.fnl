@@ -7,7 +7,7 @@
   {:defaults
    {:vimgrep_arguments ["ag" "--nocolor" "--noheading"
                         "--number" "--column" "--nobreak"
-                        "--smart-case" "--hidden" "--follow" "--skip-vcs-ignores"
+                        "--smart-case" "--hidden" "--follow" ; "--skip-vcs-ignores"
                         ; "-g" "!.git/"
                         ]}})
 
