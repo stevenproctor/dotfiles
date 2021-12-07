@@ -18,16 +18,16 @@
 
 
 (defn define-sign [level sign]
-  (let [sign-level (.. "LspDiagnosticsSign" level)]
+  (let [sign-level (.. "DiagnosticSign" level)]
     (nvim.fn.sign_define sign-level
                      {:texthl sign-level
                       :text sign
                       :numhl sign-level})))
 
 (define-sign :Error "☢️")
-(define-sign :Warning  "⚠️")
-(define-sign :Hint   "🔎")
-(define-sign :Information  "ℹ️")
+(define-sign :Warn  "⚠️")
+(define-sign :SignHint "🔎")
+(define-sign :Info  "ℹ️")
 
 (def core-nmappings
   {
@@ -36,14 +36,14 @@
   :gi "lua vim.lsp.buf.implementation()"
   :gr "lua vim.lsp.buf.references()"
   :K "lua vim.lsp.buf.hover()"
-  "[g" "lua vim.lsp.diagnostic.goto_prev()"
-  "]g" "lua vim.lsp.diagnostic.goto_prev()"
+  "[g" "lua vim.diagnostic.goto_prev()"
+  "]g" "lua vim.diagnostic.goto_next()"
   :<c-k> "lua vim.lsp.buf.signature_help()"
   :<leader>ca "lua vim.lsp.buf.code_action()"
   :<leader>cl "lua vim.lsp.codelens.run()"
   :<leader>ic "lua vim.lsp.buf.incoming_calls()"
   :<leader>oc "lua vim.lsp.buf.outgoing_calls()"
-  :<leader>sld "lua vim.lsp.diagnostic.show_line_diagnostics()"
+  :<leader>sld "lua vim.diagnostic.open_float(nil, {source = 'always'})"
   :<leader>rn "lua vim.lsp.buf.rename()"
   :<leader>fa "lua vim.lsp.buf.formatting_sync()"
   })
