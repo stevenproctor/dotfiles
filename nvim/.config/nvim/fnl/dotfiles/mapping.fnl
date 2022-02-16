@@ -54,3 +54,7 @@
 
 ; Open file in Marked 2 (markdown viewer)
 (noremap :n :<leader>mv ":AsyncRun -mode=bang open -a Marked\\ 2.app \'%:p\'<cr>")
+
+; Run current statement in DadBod-UI
+(nvim.ex.autocmd :FileType :sql :nmap :<leader>s "vap<leader>S")
+

@@ -49,7 +49,7 @@
   })
 
 (def client-nmappings
-  {:clojure
+  {:clojure_lsp
    {
     :<leader>cn "call LspExecuteCommand('clean-ns')"
     :<leader>ref "call LspExecuteCommand('extract-function', input('Function name: '))"
