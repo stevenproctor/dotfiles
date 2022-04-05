@@ -92,7 +92,7 @@
 (a.map-indexed set-opt val-based-opts)
 
 (nvim.ex.syntax "on")
-(nvim.ex.colorscheme :solarized8)
+(nvim.ex.colorscheme :soluarized)
 
 
 

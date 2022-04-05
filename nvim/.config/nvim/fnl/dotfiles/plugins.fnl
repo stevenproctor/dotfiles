@@ -36,7 +36,15 @@
    :clojure-vim/vim-jack-in {} ; Conjure support - jack-in with nrepl dependencies
    :folke/lsp-colors.nvim {}
    :hashivim/vim-terraform {} ; Terraform
-   :hrsh7th/nvim-compe {:mod :compe} ; autocomplete
+   :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
+                                 :hrsh7th/cmp-nvim-lsp
+                                 :hrsh7th/cmp-vsnip
+                                 :hrsh7th/vim-vsnip-integ
+                                 :PaterJason/cmp-conjure]
+                      :mod :cmp} ; autocomplete
+   :hrsh7th/vim-vsnip {}
+   :hrsh7th/vim-vsnip-integ {}
+   :Iron-E/nvim-soluarized {}
    :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
    :junegunn/vim-easy-align {:mod :easyalign}
    :kovisoft/paredit {}
@@ -49,7 +57,6 @@
    :p00f/nvim-ts-rainbow {}
    :radenling/vim-dispatch-neovim {} ; Clojure
    :skywind3000/asyncrun.vim {} ; :AsyncRun
-   :tami5/compe-conjure {} ; autocomplete using conjure as a source
    :tpope/vim-classpath {}
    :tpope/vim-dadbod {}
    :tpope/vim-dispatch {} ; Conjure support - jack-in with nrepl dependencies
