@@ -9,7 +9,8 @@
 
 ; (set nvim.g.mapleader "\\")
 
-(noremap :n "<leader>`" ":source ~/.config/nvim/init.lua<CR>")
+; (noremap :n "<leader>`" ":source ~/.config/nvim/init.lua<CR>")
+(noremap :n "<leader>`" ":call AniseedCompile()<CR>")
 
 (noremap :n :<Enter> ":nohlsearch<Enter>/<BS>")
 

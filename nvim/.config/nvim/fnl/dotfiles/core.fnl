@@ -2,7 +2,11 @@
   {autoload
    {a aniseed.core}
    require
-   {nvim aniseed.nvim}})
+   {anenv aniseed.env
+    nvim aniseed.nvim
+    nu aniseed.nvim.util
+    u dotfiles.util
+    }})
 
 
 (nvim.ex.set "shortmess+=c") ; don't give |ins-completion-menu| messages.
@@ -100,3 +104,18 @@
 ;(nvim.ex.autocmd "vimenter" "*"  "luafile" "treesitter.lua")
 ; 
 ; (nvim.fn.glob "~/.vimrc.local")
+
+(defn make-fennel-scratch
+  []
+  (nvim.command "new | setlocal bt=nofile bh=wipe nobl noswapfile nu filetype=fennel"))
+
+(nu.fn-bridge :FennelScratchBuffer :dotfiles.core :make-fennel-scratch {:return false})
+(u.nnoremap :<leader>fsb ":call FennelScratchBuffer ()<CR>")
+
+(defn compile-fnl []
+  (print :recompiling)
+  (anenv.init
+    {:force true
+     :init :foo}))
+
+(nu.fn-bridge :AniseedCompile :dotfiles.core :compile-fnl {:return false})
