@@ -116,6 +116,6 @@
   (print :recompiling)
   (anenv.init
     {:force true
-     :init :foo}))
+     :init :dotfiles.init}))
 
 (nu.fn-bridge :AniseedCompile :dotfiles.core :compile-fnl {:return false})
