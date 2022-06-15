@@ -9,6 +9,7 @@
 (require :dotfiles.core)
 (require :dotfiles.mapping)
 (require :dotfiles.conceal)
+(require :dotfiles.zoom-toggle)
 
 ;(nvim.ex.source "~/.vimrc")
 
