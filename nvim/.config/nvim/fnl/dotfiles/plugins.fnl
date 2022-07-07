@@ -53,7 +53,8 @@
    :neovim/nvim-lspconfig {:mod :lspconfig} ; NeoVim  lsp config
    :norcalli/nvim-colorizer.lua {:mode :colorizer}
    :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
-   :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
+   :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter :requires [:nvim-treesitter/playground]}
+   :nvim-treesitter/playground {}
    :p00f/nvim-ts-rainbow {}
    :radenling/vim-dispatch-neovim {} ; Clojure
    :skywind3000/asyncrun.vim {} ; :AsyncRun

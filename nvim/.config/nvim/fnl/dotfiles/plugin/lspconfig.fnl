@@ -132,3 +132,64 @@
     (nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig :lsp-execute-command {:return false})
 
     (u.nnoremap :<leader>li "LspInfo")))
+
+
+;; (let [eval (require :conjure.eval)
+;;       client (require :conjure.client)
+;;       ts-utils (require :nvim-treesitter.ts_utils)
+;;       parsers (require :nvim-treesitter.parsers)
+;;       ]
+;; 
+;;     ; client["with-filetype"]("fennel", eval["eval-str"], {
+;;     ;   origin = "my-awesome-plugin",
+;;     ;   code = "(+ 10 20)",
+;;     ;   ["passive?"] = true,
+;;     ;   ["on-result"] = function (r)
+;;     ;     print("RESULT:", r)
+;;     ;   end
+;;     ; })
+;; 
+;;     (defn ts-node-descendent-of? [node ancestor-type]
+;;       (print node)
+;;       (if (= nil node)
+;;         false
+;;         (let [node-type (node:type)]
+;;           (print node-type)
+;;           (if (= ancestor-type node-type)
+;;             true
+;;             (ts-node-descendent-of? (node:parent) ancestor-type)))))
+;; 
+;;     (defn in-fenced-code-block? []
+;;       (let [cursor (vim.api.nvim_win_get_cursor 0)
+;;             lnum (a.first cursor)
+;;             col (a.second cursor)
+;;             root_lang_tree (parsers.get_parser)
+;;             range [ lnum - 1 col lnum - 1 col ]
+;;             (node root lang-tree) (ts-utils.get_root_for_position (- lnum 1) col root_lang_tree) ]
+;;         (a.pr "language" (a.get lang-tree :_lang :err))
+;;         )
+;;       (let [node-at-cursor (ts-utils.get_node_at_cursor)]
+;;         (print "node at cursor" node-at-cursor)
+;;         (a.pr "root for node at cursor " (ts-utils.get_root_for_node node-at-cursor))
+;;         (print (ts-node-descendent-of? node-at-cursor :fenced_code_block))))
+;; 
+;;     (defn markdown-code-to-repl []
+;;       ; (let [buf-uri (vim.uri_from_bufnr 0)
+;;       ;       cursor (vim.api.nvim_win_get_cursor 0)
+;;       ;       r (- (a.first cursor) 1)
+;;       ;       c (a.second cursor)
+;;       ;       opts [buf-uri r c]
+;;       ;       args (a.concat opts [...])]
+;;       ;   (vim.lsp.buf.execute_command {:command cmd
+;;       ;                                 :arguments args}))
+;;       )
+;; 
+;;     (nu.fn-bridge :MarkdownCodeToRepl :dotfiles.plugin.lspconfig :markdown-code-to-repl {:return false})
+;; 
+;;     (nu.fn-bridge :IsInFencedCodeBlock :dotfiles.plugin.lspconfig :in-fenced-code-block? {:return false})
+;; 
+;;     ;; If file type is Markdown
+;;     ;(u.nnoremap :<leader>ee "call MarkdownCodeToRepl")
+;;     
+;;   )
+;; 

@@ -18,4 +18,5 @@
                       :#6c71c4 ; violet / brmagenta
                       ] ; table of hex strings
              }
+   :playground {:enable true}
    })
