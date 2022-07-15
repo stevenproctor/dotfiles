@@ -21,6 +21,8 @@
                :false :⊥
 ;; and
 ;; or
+;; if-not
+;; when-not
 ;; (not
 ;; None        | ∅
 ;; true, false | ⊤, ⊥ (top and bottom from logic)
@@ -46,6 +48,8 @@
     (set nvim.wo.conceallevel 2)
     (set nvim.wo.conceallevel 0)))
 
+;(setup-conceals)
+;(toggle-conceal)
 ;(if true true false)
 
 
@@ -56,6 +60,6 @@
 (def pretty-filetypes [:fennel
                        :clojure])
 
-; (each [_ ftype (pairs pretty-filetypes)]
-;   (nvim.ex.autocmd :FileType ftype :call "SetupConceals()"))
-; 
+(each [_ ftype (pairs pretty-filetypes)]
+  (nvim.ex.autocmd :FileType ftype :call "SetupConceals()"))
+
