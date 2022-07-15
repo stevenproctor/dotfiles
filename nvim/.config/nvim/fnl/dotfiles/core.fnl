@@ -77,7 +77,7 @@
     :shiftwidth 2
     :softtabstop 2
     :list true
-    :listchars "tab:➥\\ ,trail:·"
+    :listchars "tab:➥\\ ,trail:·,"
     :backspace "indent,eol,start"    ;allow backspacing over everything in insert mode
     :wildmode "list:longest,list:full"
     :wrap false
@@ -102,7 +102,7 @@
 
 (nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "solarized8")
 ;(nvim.ex.autocmd "vimenter" "*"  "luafile" "treesitter.lua")
-; 
+;
 ; (nvim.fn.glob "~/.vimrc.local")
 
 (defn make-fennel-scratch
