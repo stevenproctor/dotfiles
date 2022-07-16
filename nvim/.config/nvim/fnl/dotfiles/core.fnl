@@ -61,7 +61,7 @@
     :background "dark"
     :backupdir backup-dir
     :directory backup-dir      ;Don't clutter my dirs up with swp and tmp files
-    :grepprg "ag" ; Use Silver Searcher instead of grep
+    :grepprg "ag --nocolor --nogroup --hidden --smart-case" ; Use Silver Searcher instead of grep
     :tags "tags"
     :updatetime 300 ; per coc.vim for diagnostic messages
     :signcolumn "auto:1-3"

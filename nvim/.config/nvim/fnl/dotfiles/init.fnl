@@ -13,3 +13,4 @@
 
 ;(nvim.ex.source "~/.vimrc")
 
+(a.println "(re)loaded")
