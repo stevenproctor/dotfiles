@@ -4,8 +4,7 @@
     u dotfiles.util
     nvim aniseed.nvim
     nu aniseed.nvim.util
-    }
-   })
+    }})
 
 (defn bufmap [mode from to]
   (u.noremap mode from to {:local? true}))

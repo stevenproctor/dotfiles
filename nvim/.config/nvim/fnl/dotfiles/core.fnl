@@ -51,37 +51,37 @@
 
 (def- val-based-opts
   {
-    ; :t_Co 256
-    :laststatus 2
-    :encoding "utf-8"
-    :history 500
-    :redrawtime 5000
-    :scrolloff 3
-    :guifont "Hasklig"
-    :background "dark"
-    :backupdir backup-dir
-    :directory backup-dir      ;Don't clutter my dirs up with swp and tmp files
-    :grepprg "ag --nocolor --nogroup --hidden --smart-case" ; Use Silver Searcher instead of grep
-    :tags "tags"
-    :updatetime 300 ; per coc.vim for diagnostic messages
-    :signcolumn "auto:1-3"
-    :colorcolumn 80
-    :cmdheight 2 ; Better display for messages
-    :undodir undo-dir
-    :undolevels 1000
-    :undoreload 10000
-    :foldmethod "expr"
-    :foldexpr "nvim_treesitter#foldexpr()"
-    :foldlevelstart 100
-    :foldlevel 99
-    :tabstop 2
-    :shiftwidth 2
-    :softtabstop 2
-    :list true
-    :listchars "tab:➥\\ ,trail:·,"
-    :backspace "indent,eol,start"    ;allow backspacing over everything in insert mode
-    :wildmode "list:longest,list:full"
-    :wrap false
+   ; :t_Co 256
+   :laststatus 2
+   :encoding "utf-8"
+   :history 500
+   :redrawtime 5000
+   :scrolloff 3
+   :guifont "Hasklig"
+   :background "dark"
+   :backupdir backup-dir
+   :directory backup-dir      ;Don't clutter my dirs up with swp and tmp files
+   :grepprg "ag --nocolor --nogroup --hidden --smart-case" ; Use Silver Searcher instead of grep
+   :tags "tags"
+   :updatetime 300 ; per coc.vim for diagnostic messages
+   :signcolumn "auto:1-3"
+   :colorcolumn [80 100]
+   :cmdheight 2 ; Better display for messages
+   :undodir undo-dir
+   :undolevels 1000
+   :undoreload 10000
+   :foldmethod "expr"
+   :foldexpr "nvim_treesitter#foldexpr()"
+   :foldlevelstart 100
+   :foldlevel 99
+   :tabstop 2
+   :shiftwidth 2
+   :softtabstop 2
+   :list true
+   :listchars "tab:➥\\ ,trail:·,"
+   :backspace "indent,eol,start"    ;allow backspacing over everything in insert mode
+   :wildmode "list:longest,list:full"
+   :wrap false
    })
 
 (defn- set-opt
