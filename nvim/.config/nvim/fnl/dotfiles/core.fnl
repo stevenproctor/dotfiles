@@ -19,8 +19,7 @@
     (if (not (a.empty? glob))
       (nvim.ex.source filename))))
 
-(a.map safe-source ["~/.vimrc" "~/.vimrc.local"])
-
+; (a.map safe-source ["~/.vimrc" "~/.vimrc.local"])
 
 (def- backup-dir (.. (nvim.fn.glob "$HOME") "/.vim/backup"))
 (def- undo-dir (.. (nvim.fn.glob "$HOME") "/.vim/backup"))
