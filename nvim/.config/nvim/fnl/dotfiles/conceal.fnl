@@ -55,7 +55,7 @@
 
 (nu.fn-bridge :ToggleConceal :dotfiles.conceal :toggle-conceal {:return false})
 (nu.fn-bridge :SetupConceals :dotfiles.conceal :setup-conceals {:return false})
-(u.nnoremap :<leader>ct "call ToggleConceal()")
+(u.nnoremap :<leader>tc "call ToggleConceal()")
 
 (def pretty-filetypes [:fennel
                        :clojure])
