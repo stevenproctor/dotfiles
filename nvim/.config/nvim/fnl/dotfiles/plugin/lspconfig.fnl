@@ -3,8 +3,7 @@
    {a aniseed.core
     u dotfiles.util
     nvim aniseed.nvim
-    nu aniseed.nvim.util
-    }})
+    nu aniseed.nvim.util}})
 
 (defn bufmap [mode from to]
   (u.noremap mode from to {:local? true}))
@@ -63,12 +62,57 @@
   })
 
 
+(def client-command-lnmappings
+  {:clojure_lsp
+   {:ai [:add-import-to-namespace ["input('Namespace name: ')"]]
+    :am [:add-missing-libspec []]
+    :as [:add-require-suggestion ["input('Namespace name: ')" "input('Namespace as: ')" "input('Namespace name: ')"]]
+    :cc [:cycle-coll []]
+    :cn [:clean-ns []]
+    :cp [:cycle-privacy []]
+    :ct [:create-test []]
+    :df [:demote-fn []]
+    :db [:drag-backward []]
+    :df [:drag-forward []]
+    :dk [:destructure-keys []]
+    :ed [:extract-to-def ["input('Definition name: ')"]]
+    :ed [:extract-function ["input('Function name: ')"]]
+    :el [:expand-let []]
+    :fe [:create-function []]
+    :il [:introduce-let ["input('Binding name: ')"]]
+    :is [:inline-symbol []]
+    :ma [:resolve-macro-as []]
+    :mf [:move-form ["input('File name: ')"]]
+    :ml [:move-to-let ["input('Binding name: ')"]]
+    :pf [:promote-fn ["input('Function name: ')"]]
+    :sc [:change-collection ["input('Collection type: ')"]]
+    :sm [:sort-map []]
+    :tf [:thread-first-all []]
+    :tF [:thread-first []]
+    :tl [:thread-last-all []]
+    :tL [:thread-last []]
+    :ua [:unwind-all []]
+    :uw [:unwind-thread []]
+    }
+    })
+
+
 (defn bind-client-mappings [client]
   (let [client-name (a.get client :name)
-        mappings (a.get client-nmappings client-name)]
+        mappings (a.get client-nmappings client-name)
+        command-lnmappings (a.get client-command-lnmappings client-name)]
     (when mappings
       (each [mapping cmd (pairs mappings)]
-        (nbufmap mapping cmd)))))
+        (nbufmap mapping cmd)))
+    (when command-lnmappings
+      (each [lnmapping command-mapping (pairs command-lnmappings)]
+        (let [lsp-cmd (a.first command-mapping)
+              opts-str (accumulate [s ""
+                                    i opt (ipairs (a.second command-mapping))]
+                         (.. s ", " opt))
+              mapping (.. :<leader> lnmapping)
+              cmd (.. "call LspExecuteCommand('" lsp-cmd "'" opts-str ")")]
+          (nbufmap mapping cmd))))))
 
 (defn on_attach [client bufnr]
   (each [mapping cmd (pairs core-nmappings)]
