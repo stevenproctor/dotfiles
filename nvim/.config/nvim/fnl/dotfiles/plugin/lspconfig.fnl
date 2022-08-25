@@ -76,7 +76,7 @@
     :df [:drag-forward []]
     :dk [:destructure-keys []]
     :ed [:extract-to-def ["input('Definition name: ')"]]
-    :ed [:extract-function ["input('Function name: ')"]]
+    :ef [:extract-function ["input('Function name: ')"]]
     :el [:expand-let []]
     :fe [:create-function []]
     :il [:introduce-let ["input('Binding name: ')"]]
