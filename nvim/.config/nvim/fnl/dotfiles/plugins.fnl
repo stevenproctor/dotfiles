@@ -2,9 +2,7 @@
   {autoload {nvim aniseed.nvim
              a aniseed.core
              ;; util dotfiles.util
-             packer packer
-
-             }
+             packer packer}
    ;; require {minpac minpac}
    })
 
