@@ -3,7 +3,11 @@
 
 (treesitter.setup
   {:highlight {:enable true
-               :additional_vim_regex_highlighting false}
+               ;; :additional_vim_regex_highlighting false
+               :additional_vim_regex_highlighting [:org]
+               }
+
+   :ensure_installed [:org]
 
    :rainbow {:enable true
              :extended_mode true ; Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean

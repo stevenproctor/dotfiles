@@ -25,6 +25,7 @@
                 :nvim_lsp true
                 :nvim_lua true
                 :conjure true
+                :orgmode true
                 :vsnip true
                 :vim_dadbod_completion true}})))
 

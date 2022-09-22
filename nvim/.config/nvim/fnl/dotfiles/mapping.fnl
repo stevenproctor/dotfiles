@@ -1,7 +1,9 @@
 (module dotfiles.mapping
   {autoload {nvim aniseed.nvim
              nu aniseed.nvim.util
-             core aniseed.core}})
+             core aniseed.core
+             util dotfiles.util
+             }})
 
 (defn- noremap [mode from to]
   "Sets a mapping with {:noremap true}."

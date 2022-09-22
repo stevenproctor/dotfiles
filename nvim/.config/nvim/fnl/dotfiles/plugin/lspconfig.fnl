@@ -44,7 +44,8 @@
   :<leader>ca "lua vim.lsp.buf.code_action()"
   :<leader>cl "lua vim.lsp.codelens.run()"
   :<leader>ic "lua vim.lsp.buf.incoming_calls()"
-  :<leader>oc "lua vim.lsp.buf.outgoing_calls()"
+  ;; TODO: think of new mapping; conficts with org mode
+  ;; :<leader>oc "lua vim.lsp.buf.outgoing_calls()"
   :<leader>sld "lua vim.diagnostic.open_float(nil, {source = 'always'})"
   :<leader>rn "lua vim.lsp.buf.rename()"
   :<leader>fa "lua vim.lsp.buf.formatting_sync()"
