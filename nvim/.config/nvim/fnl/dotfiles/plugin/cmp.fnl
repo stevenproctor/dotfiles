@@ -13,9 +13,12 @@
 
 (def- cmp-srcs
   [{:name :nvim_lsp}
+   {:name :nvim_lua}
    {:name :vsnip}
    {:name :conjure}
-   {:name :buffer}])
+   {:name :buffer}
+   {:name :orgmode}
+   {:name :emoji}])
 
 ;; Setup cmp with desired settings
 (let [cmp (require :cmp)]
