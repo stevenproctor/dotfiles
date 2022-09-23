@@ -32,6 +32,7 @@
    :airblade/vim-gitgutter {} ; Git
    :airblade/vim-gitgutter {} ; Git
    :clojure-vim/vim-jack-in {} ; Conjure support - jack-in with nrepl dependencies
+   :dhruvasagar/vim-table-mode {} ; table creation and formatting
    :folke/lsp-colors.nvim {}
    :hashivim/vim-terraform {} ; Terraform
    :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
