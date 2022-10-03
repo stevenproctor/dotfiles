@@ -1,0 +1,23 @@
+# This is Git's per-user configuration file.
+[user]
+	email = steven.proctor@gmail.com
+	name = Proctor
+
+[core]
+	editor = nvim
+	excludesFile = ~/.gitignore.global
+[init]
+	defaultBranch = main
+
+[alias] ; Command aliases for the git[1] command wrapper
+	last = cat-file commit HEAD
+[branch]
+  autoSetupRebase = always
+[rerere]
+	enabled = true
+[remote]
+	pushDefault = origin
+
+;; This is last, take in any other local file overrides
+[include]
+	path = ~/.gitconfig.local ; find ".gitconfig.local" in your `$HOME` directory
