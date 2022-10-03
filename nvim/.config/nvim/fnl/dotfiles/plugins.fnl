@@ -52,7 +52,7 @@
    :kristijanhusak/vim-dadbod-completion {}
    :kristijanhusak/vim-dadbod-ui {}
    :neovim/nvim-lspconfig {:mod :lspconfig} ; NeoVim  lsp config
-   :norcalli/nvim-colorizer.lua {:mode :colorizer}
+   :norcalli/nvim-colorizer.lua {:mod :colorizer}
    :nvim-orgmode/orgmode { :mod :orgmode }
    :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
    :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
