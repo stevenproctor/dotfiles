@@ -4,5 +4,5 @@
              core aniseed.core
              util dotfiles.util}})
 
-(nvim.ex.autocmd :FileType :fugitive :nmap :<leader>gp ":Git pull --rebase<CR>")
+(nvim.ex.autocmd :FileType :fugitive :nmap :<leader>gp ":Git pull<CR>")
 (nvim.ex.autocmd :FileType :fugitive :nmap :<leader>gP (.. ":Git push origin " (nvim.fn.FugitiveHead) "<CR>"))
