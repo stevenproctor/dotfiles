@@ -31,6 +31,7 @@
    :Olical/fennel.vim {} ; Fennel
    :airblade/vim-gitgutter {} ; Git
    :airblade/vim-gitgutter {} ; Git
+   :akinsho/org-bullets.nvim {:mod :orgbullets}
    :clojure-vim/vim-jack-in {} ; Conjure support - jack-in with nrepl dependencies
    :dhruvasagar/vim-table-mode {} ; table creation and formatting
    :folke/lsp-colors.nvim {}
@@ -51,11 +52,14 @@
    :kovisoft/paredit {}
    :kristijanhusak/vim-dadbod-completion {}
    :kristijanhusak/vim-dadbod-ui {}
+   :lukas-reineke/headlines.nvim {:mod :headlines}
+;   :michaelb/sniprun {:run "bash ./install.sh" :mod :sniprun}
    :neovim/nvim-lspconfig {:mod :lspconfig} ; NeoVim  lsp config
    :norcalli/nvim-colorizer.lua {:mod :colorizer}
    :nvim-orgmode/orgmode { :mod :orgmode }
    :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]] :mod :telescope}
    :nvim-treesitter/nvim-treesitter {:run ":TSUpdate" :mod :treesitter}
+   :nvim-treesitter/playground {}
    :p00f/nvim-ts-rainbow {}
    :radenling/vim-dispatch-neovim {} ; Clojure
    :skywind3000/asyncrun.vim {} ; :AsyncRun
