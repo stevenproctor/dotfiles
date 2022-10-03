@@ -62,7 +62,7 @@
    :tpope/vim-classpath {}
    :tpope/vim-dadbod {}
    :tpope/vim-dispatch {} ; Conjure support - jack-in with nrepl dependencies
-   :tpope/vim-fugitive {} ; Git
+   :tpope/vim-fugitive {:mod :fugitive} ; Git
    :tpope/vim-git {} ; Git Commit Message
    :tpope/vim-pathogen {}
    :tpope/vim-rails {}
