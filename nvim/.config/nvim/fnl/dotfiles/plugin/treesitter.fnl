@@ -1,7 +1,9 @@
 (module dotfiles.plugin.treesitter
-  {autoload {treesitter nvim-treesitter.configs}})
+  {autoload {treesitter nvim-treesitter
+             ts_utils nvim-treesitter.ts_utils
+             treesitter-configs nvim-treesitter.configs}})
 
-(treesitter.setup
+(treesitter-configs.setup
   {:highlight {:enable true
                ;; :additional_vim_regex_highlighting false
                :additional_vim_regex_highlighting [:org]
