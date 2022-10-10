@@ -25,3 +25,5 @@
 ;; This is last, take in any other local file overrides
 [include]
 	path = ~/.gitconfig.local ; find ".gitconfig.local" in your `$HOME` directory
+[pull]
+	ff = only
