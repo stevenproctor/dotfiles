@@ -18,7 +18,7 @@
    {:name :conjure}
    {:name :buffer}
    {:name :orgmode}
-   {:name :emoji}])
+   {:name :emoji :max_item_count 8}])
 
 ;; Setup cmp with desired settings
 (let [cmp (require :cmp)]
