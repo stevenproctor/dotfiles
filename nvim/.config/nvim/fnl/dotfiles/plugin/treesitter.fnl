@@ -25,3 +25,5 @@
                       ] ; table of hex strings
              }
    })
+
+; lua print(require('nvim-treesitter.parsers').get_parser():language_for_range({ require('nvim-treesitter.ts_utils').get_node_at_cursor():range() }):lang())
