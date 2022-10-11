@@ -50,6 +50,8 @@
    :hrsh7th/vim-vsnip-integ {}
    :Iron-E/nvim-soluarized {}
    :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
+   :jose-elias-alvarez/null-ls.nvim {:mod :null-ls
+                                     :requires [:nvim-lua/plenary.nvim]}
    :junegunn/vim-easy-align {:mod :easyalign}
    :kovisoft/paredit {:mod :paredit}
    :kristijanhusak/vim-dadbod-completion {}
