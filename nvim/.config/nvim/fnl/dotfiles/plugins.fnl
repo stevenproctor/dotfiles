@@ -51,7 +51,7 @@
    :Iron-E/nvim-soluarized {}
    :jiangmiao/auto-pairs {} ; backets, parens, and quotes in pairs
    :junegunn/vim-easy-align {:mod :easyalign}
-   :kovisoft/paredit {}
+   :kovisoft/paredit {:mod :paredit}
    :kristijanhusak/vim-dadbod-completion {}
    :kristijanhusak/vim-dadbod-ui {}
    :lukas-reineke/headlines.nvim {:mod :headlines}
