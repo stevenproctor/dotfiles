@@ -76,6 +76,7 @@
    :tabstop 2
    :shiftwidth 2
    :softtabstop 2
+   :mouse ""
    :list true
    :listchars "tab:➥\\ ,trail:·,"
    :backspace "indent,eol,start"    ;allow backspacing over everything in insert mode
