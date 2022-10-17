@@ -2,7 +2,9 @@
         {autoload {a aniseed.core
                    u dotfiles.util
                    nvim aniseed.nvim
-                   nu aniseed.nvim.util}})
+                   lsp vim.lsp
+                   nu aniseed.nvim.util
+                   cmp_nvim_lsp cmp_nvim_lsp}})
 
 (defn bufmap [mode from to] (u.noremap mode from to {:local? true}))
 
@@ -32,7 +34,7 @@
       :K "lua vim.lsp.buf.hover()"
       "[g" "lua vim.diagnostic.goto_prev()"
       "]g" "lua vim.diagnostic.goto_next()"
-      :<c-k> "lua vim.lsp.buf.signature_help()"
+      ;:<c-k> "lua vim.lsp.buf.signature_help()"
       :<leader>ca "lua vim.lsp.buf.code_action()"
       :<leader>cl "lua vim.lsp.codelens.run()"
       :<leader>ic "lua vim.lsp.buf.incoming_calls()"
@@ -115,39 +117,39 @@
       ; --   buf_set_keymap('x', '<leader>ic', "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
       (nvim.buf_set_option 0 :omnifunc "v:lua.vim.lsp.omnifunc")
       (bind-client-mappings client)
-      (nvim.ex.autocmd :BufWritePre :<buffer> :lua
-                       "vim.lsp.buf.formatting_sync()")
+      (nvim.ex.autocmd :BufWritePre :<buffer> :lua :vim.lsp.buf.format)
       ;  (nvim.ex.autocmd "BufEnter,CursorHold,InsertLeave" :<buffer> :lua "vim.lsp.codelens.refresh()")
       ; client autocmds
       ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(1), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
       (print "LSP Client Attached."))
 
-(let [lspi (require :nvim-lsp-installer)]
-  (when lspi
-    (defn lsp-execute-command [cmd ...]
-          (let [buf-uri (vim.uri_from_bufnr 0)
-                cursor (vim.api.nvim_win_get_cursor 0)
-                r (- (a.first cursor) 1)
-                c (a.second cursor)
-                opts [buf-uri r c]
-                args (a.concat opts [...])]
-            (vim.lsp.buf.execute_command {:command cmd :arguments args})))
-    (defn setup-servers []
-          (lspi.on_server_ready (fn [server]
-                                  (let [opts {: on_attach
-                                              :flags {:debounce_text_changes 150}}]
-                                    (server:setup opts))))
-          ;; (let [lspconfig (require :lspconfig)
-          ;;       servers (lspi.get_installed_servers)]
-          ;;   (each [_ server (pairs servers)]
-          ;;     (server.setup {:on_attach on_attach :flags {:debounce_text_changes 150} })))
-          )
-    (defn on-post-install [] (setup-servers) (nvim.ex.bufdo :e))
-    (setup-servers)
-    (set lspi.post_install_hook on-post-install)
-    (nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig
-                  :lsp-execute-command {:return false})
-    (u.nnoremap :<leader>li :LspInfo)))
+(when-let [lspi (require :nvim-lsp-installer)]
+          (let [capabilities (cmp_nvim_lsp.update_capabilities (lsp.protocol.make_client_capabilities))]
+            (defn lsp-execute-command [cmd ...]
+                  (let [buf-uri (vim.uri_from_bufnr 0)
+                        cursor (vim.api.nvim_win_get_cursor 0)
+                        r (- (a.first cursor) 1)
+                        c (a.second cursor)
+                        opts [buf-uri r c]
+                        args (a.concat opts [...])]
+                    (vim.lsp.buf.execute_command {:command cmd :arguments args})))
+            (defn setup-servers []
+                  (lspi.on_server_ready (fn [server]
+                                          (let [opts {: on_attach
+                                                      : capabilities
+                                                      :flags {:debounce_text_changes 150}}]
+                                            (server:setup opts))))
+                  ;; (let [lspconfig (require :lspconfig)
+                  ;;       servers (lspi.get_installed_servers)]
+                  ;;   (each [_ server (pairs servers)]
+                  ;;     (server.setup {:on_attach on_attach :flags {:debounce_text_changes 150} })))
+                  )
+            (defn on-post-install [] (setup-servers) (nvim.ex.bufdo :e))
+            (setup-servers)
+            (set lspi.post_install_hook on-post-install)
+            (nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig
+                          :lsp-execute-command {:return false})
+            (u.nnoremap :<leader>li :LspInfo)))
 
 (comment (let [lspi (require :nvim-lsp-installer)
                ;lspconfig (require :lspconfig)
