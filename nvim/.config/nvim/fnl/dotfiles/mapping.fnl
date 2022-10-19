@@ -9,7 +9,15 @@
 
 ; (set nvim.g.mapleader "\\")
 
-(noremap :n "<leader>`" ":source ~/.config/nvim/init.lua<CR>")
+(defn aniseed-reload []
+  (each [k _ (ipairs package.loaded)]
+    (when (string.match k "^dotfiles%..+")
+      (tset package.loaded k nil)))
+  ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true}))
+
+(vim.keymap.set :n "<leader>`" aniseed-reload)
+
+; (noremap :n "<leader>`" ":source ~/.config/nvim/init.lua<CR>")
 (noremap :n :<leader>! ":call AniseedCompile()<CR>")
 
 (noremap :n :<Enter> ":nohlsearch<Enter>/<BS>")
