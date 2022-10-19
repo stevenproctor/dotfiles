@@ -50,6 +50,7 @@
                 :kristijanhusak/vim-dadbod-completion {}
                 :kristijanhusak/vim-dadbod-ui {}
                 :L3MON4D3/LuaSnip {:mod :luasnip}
+                :lifepillar/vim-solarized8 {}
                 :lukas-reineke/headlines.nvim {:mod :headlines}
                 ;   :michaelb/sniprun {:run "bash ./install.sh" :mod :sniprun}
                 :neovim/nvim-lspconfig {:mod :lspconfig}

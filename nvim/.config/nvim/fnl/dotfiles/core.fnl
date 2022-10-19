@@ -97,11 +97,13 @@
 (a.map-indexed set-opt val-based-opts)
 
 (nvim.ex.syntax "on")
-(nvim.ex.colorscheme :soluarized)
+;; (nvim.ex.colorscheme :soluarized)
+ (nvim.ex.colorscheme :solarized8)
 
 
 
-;(nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "solarized8")
+;; (nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "soluarized")
+(nvim.ex.autocmd "vimenter" "*" "++nested" "colorscheme" "solarized8")
 ;(nvim.ex.autocmd "vimenter" "*"  "luafile" "treesitter.lua")
 ;
 ; (nvim.fn.glob "~/.vimrc.local")
