@@ -10,10 +10,11 @@
 ; (set nvim.g.mapleader "\\")
 
 (defn aniseed-reload []
-  (each [k _ (ipairs package.loaded)]
-    (when (string.match k "^dotfiles%..+")
-      (tset package.loaded k nil)))
-  ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true}))
+      (each [k _ (ipairs package.loaded)]
+        (when (string.match k "^dotfiles%..+")
+          (tset package.loaded k nil)))
+      ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true})
+      (a.println "aniseed reloaded!"))
 
 (vim.keymap.set :n "<leader>`" aniseed-reload)
 
