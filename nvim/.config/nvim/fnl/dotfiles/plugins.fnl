@@ -22,7 +22,6 @@
                 :Olical/conjure {:mod :conjure}
                 :Olical/fennel.vim {}
                 :airblade/vim-gitgutter {}
-                :akinsho/org-bullets.nvim {:mod :orgbullets}
                 :clojure-vim/vim-jack-in {}
                 :dhruvasagar/vim-table-mode {}
                 :folke/lsp-colors.nvim {}
