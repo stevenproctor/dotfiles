@@ -117,7 +117,7 @@
       ; --   buf_set_keymap('x', '<leader>ic', "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
       (nvim.buf_set_option 0 :omnifunc "v:lua.vim.lsp.omnifunc")
       (bind-client-mappings client)
-      (nvim.ex.autocmd :BufWritePre :<buffer> :lua :vim.lsp.buf.format)
+      (nvim.ex.autocmd :BufWritePre :<buffer> ":lua vim.lsp.buf.format()")
       ;  (nvim.ex.autocmd "BufEnter,CursorHold,InsertLeave" :<buffer> :lua "vim.lsp.codelens.refresh()")
       ; client autocmds
       ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(1), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
