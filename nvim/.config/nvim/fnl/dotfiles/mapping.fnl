@@ -14,7 +14,7 @@
         (when (string.match k "^dotfiles%..+")
           (tset package.loaded k nil)))
       ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true})
-      (a.println "aniseed reloaded!"))
+      (core.println "aniseed reloaded!"))
 
 (vim.keymap.set :n "<leader>`" aniseed-reload)
 
