@@ -13,10 +13,13 @@
 	last = cat-file commit HEAD
 [branch]
   autoSetupRebase = always
+[checkout]
+  defaultRemote = origin
 [merge]
   ff = only
 [push]
   autoSetupRemote = true
+  default = upstream
 [rerere]
 	enabled = true
 [remote]
