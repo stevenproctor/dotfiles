@@ -125,7 +125,7 @@
       (print "LSP Client Attached."))
 
 (when-let [lspi (require :nvim-lsp-installer)]
-          (let [capabilities (cmp_nvim_lsp.update_capabilities (lsp.protocol.make_client_capabilities))]
+          (let [capabilities (cmp_nvim_lsp.default_capabilities (lsp.protocol.make_client_capabilities))]
             (defn lsp-execute-command [cmd ...]
                   (let [buf-uri (vim.uri_from_bufnr 0)
                         cursor (vim.api.nvim_win_get_cursor 0)
