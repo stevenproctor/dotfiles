@@ -1,0 +1,50 @@
+* test
+** test level 2
+*** test level 3
+**** test level 4
+***** test level 5
+****** test level 6
+******* test level 7
+******** test level 8
+********* test level 9
+********** test level 10
+
+* test 3
+* test 4
+
+  #+NAME: x
+  3
+
+- [ ] something
+- [X] something else 
+- [-] half done  ∂
+
+Some fennel
+
+#+begin_example ex1
+dfs
+#+end_example
+
+#+name: random
+#+begin_src fennel
+(print )
+(+ 1 (* 3 7))
+#+end_src
+
+#+results:
+
+Some Clojure
+
+#+begin_src clojure
+(println (* 3 )(+ 1 2) )
+#+end_src
+
+#+begin_src python :results silent :exports code :var n=0
+print(1 + 3)
+#+end_src
+
+
+#+begin_src
+print(+ 1 3)
+#+end_src
+
