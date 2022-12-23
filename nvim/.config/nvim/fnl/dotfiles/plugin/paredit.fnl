@@ -11,6 +11,14 @@
 
 (defn bool->int [bool] (if bool 1 0))
 
+(defn int->bool [x] (if (= 0 x) false true))
+
+(defn toggle-global! [x] (->> (a.get nvim.g x)
+                              (int->bool)
+                              (not)
+                              (bool->int)
+                              (tset nvim.g x)))
+
 (defn language-at-cursor [] (let [parser (ts-parsers.get_parser)
                                   current-node (ts-utils.get_node_at_cursor)
                                   range (if current-node [(current-node:range)])
@@ -53,9 +61,27 @@
 ; (nvim.del_augroup_by_name "BabeliteParedit")
 ; (nvim.get_autocmds {:group "BabeliteParedit"})
 
-; (let [group (nvim.create_augroup "BabeliteParedit" {:clear true})]
-;   (nvim.create_autocmd ["CursorHold" "CursorMoved"]
-;                        {:group group
-;                         ;:pattern ["*.org" "*.md"]
-;                         :callback TreeSitterLangParedit}))
-; 
+;;(let [group (nvim.create_augroup :BabeliteParedit {:clear true})]
+;;  (nvim.create_autocmd [:CursorHold :CursorMoved]
+;;                       {: group
+;;                        ;:pattern ["*.org" "*.md"]
+;;                        :callback TreeSitterLangParedit}))
+;;
+
+;; (defn paredit-toggle! [] (toggle-global :paredit_mode)
+;;       (nvim.fn.PareditInitBuffer)
+;; nvim.g.paredit_mode
+;;       )
+;; 
+;; \
+;; (int->bool 0)
+;; (defn test [x] (a.get nvim.g x))
+;; 
+;; (test :pareditmode)
+;; (a.get nvim.g :paredit_mode)
+;; (comment ;
+;;   nvim.g.paredit_mode
+;;   ;
+;; 
+;;   (paredit-toggle!)
+;;   )
