@@ -9,7 +9,6 @@
   (let [map-opts {:noremap true :silent true}
         to (.. ":" to "<cr>")
         buff-num (a.get opts :buff-num)]
-
     (if (or (a.get opts :local?) buff-num )
       (nvim.buf_set_keymap (or buff-num 0) mode from to map-opts)
       (nvim.set_keymap mode from to map-opts))))
@@ -19,3 +18,6 @@
 
 (defn lnnoremap [from to]
   (nnoremap (.. "<leader>" from) to))
+
+(defn lvnoremap [from to opts]
+  (noremap :v (.. "<leader>" from) to opts))

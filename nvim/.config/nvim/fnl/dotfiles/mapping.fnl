@@ -68,3 +68,13 @@
 (nvim.ex.autocmd :FileType :sql :nmap :<leader>s :vap<leader>S)
 
 (noremap :n :Q ":.!bash <CR>")
+
+; Ruby old hash syntax to new hash syntax
+;(util/lvnoremap :uhs "<C-U>s/\\([a-z][^ \\t]*\\) =>/\\1:/ge" )
+;(util/lnnoremap :uhs "<C-U>s/\\([a-z][^ \\t]*\\) =>/\\1:/ge" )
+
+; Trim trailing Whitespace in visual selection
+(util.lvnoremap :tw "<C-U>s/\\s\\+$//ge<CR>:nohlsearch<Enter>/<BS>")
+
+; Trim trailing Whitespace in current line
+(util.lnnoremap :tw "<C-U>.s/\\s\\+$//ge<CR>:nohlsearch<Enter>/<BS>")
