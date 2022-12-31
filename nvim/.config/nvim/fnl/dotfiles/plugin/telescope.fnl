@@ -9,7 +9,9 @@
                         "--number" "--column" "--nobreak"
                         "--smart-case" "--hidden" "--follow" ; "--skip-vcs-ignores"
                         ; "-g" "!.git/"
-                        ]}})
+                        ]}
+   :pickers
+   {:buffers {:mappings {:n {:d :delete_buffer}}}}})
 
 
 (util.lnnoremap :ff "Telescope git_files hidden=true")
