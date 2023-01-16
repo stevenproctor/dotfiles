@@ -83,13 +83,21 @@
                       :wildmode "list:longest,list:full"
                       :wrap false})
 
+(def- append-val-opts {:diffopt "algorithm:patience"})
+
 (defn- set-opt [[opt val]] (tset vim.opt (a.str opt) val))
+
+(defn- set-opt+ [[opt val]]
+       (let [existing-opt-val (a.get nvim.o opt)]
+         (tset vim.opt (a.str opt) (a.str existing-opt-val "," val))))
 
 (defn- set-opt-on [opt] (set-opt [opt true]))
 
 (a.map set-opt-on on-opts)
 
 (a.map-indexed set-opt val-based-opts)
+
+(a.map-indexed set-opt+ append-val-opts)
 
 (nvim.ex.syntax :on)
 ;; (nvim.ex.colorscheme :soluarized)
