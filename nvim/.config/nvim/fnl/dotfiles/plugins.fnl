@@ -65,6 +65,8 @@
                 :radenling/vim-dispatch-neovim {}
                 :rafamadriz/friendly-snippets {}
                 :skywind3000/asyncrun.vim {}
+                :tjdevries/sg.nvim {:run "cargo build --workspace"
+                                    :dependencies [:nvim-lua/plenary.nvim]}
                 :tpope/vim-classpath {}
                 :tpope/vim-dadbod {}
                 :tpope/vim-dispatch {}
