@@ -3,6 +3,7 @@
                    u dotfiles.util
                    nvim aniseed.nvim
                    lsp vim.lsp
+                   lspconfig lspconfig
                    nu aniseed.nvim.util
                    cmp_nvim_lsp cmp_nvim_lsp}})
 
@@ -17,14 +18,14 @@
         (nvim.fn.sign_define sign-level
                              {:texthl sign-level :text sign :numhl sign-level})))
 
-; (define-sign :Error "☢️")
-; (define-sign :Warn  "⚠️")
-; (define-sign :SignHint "🔎")
-; (define-sign :Info  "ℹ️")
-(define-sign :Error :X)
-(define-sign :Warn "!")
-(define-sign :SignHint "?")
-(define-sign :Info :i)
+(define-sign :Error "☢️")
+(define-sign :Warn "⚠️")
+(define-sign :SignHint "🔎")
+(define-sign :Info "ℹ️")
+; (define-sign :Error :X)
+; (define-sign :Warn "!")
+; (define-sign :SignHint "?")
+; (define-sign :Info :i)
 
 (def core-nmappings
      {:gd "lua vim.lsp.buf.definition()"
@@ -86,6 +87,8 @@
                     :ua [:unwind-all []]
                     :uw [:unwind-thread []]}})
 
+(def server-specific-opts {})
+
 (defn bind-client-mappings [client]
       (let [client-name (a.get client :name)
             mappings (a.get client-nmappings client-name)
@@ -124,36 +127,28 @@
       ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(1), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
       (print "LSP Client Attached."))
 
-(when-let [lspi (require :nvim-lsp-installer)]
-          (let [capabilities (cmp_nvim_lsp.default_capabilities (lsp.protocol.make_client_capabilities))]
-            (defn lsp-execute-command [cmd ...]
-                  (let [buf-uri (vim.uri_from_bufnr 0)
-                        cursor (vim.api.nvim_win_get_cursor 0)
-                        r (- (a.first cursor) 1)
-                        c (a.second cursor)
-                        opts [buf-uri r c]
-                        args (a.concat opts [...])]
-                    (vim.lsp.buf.execute_command {:command cmd :arguments args})))
-            (defn setup-servers []
-                  (lspi.on_server_ready (fn [server]
-                                          (let [opts {: on_attach
-                                                      : capabilities
-                                                      :flags {:debounce_text_changes 150}}]
-                                            (server:setup opts))))
-                  ;; (let [lspconfig (require :lspconfig)
-                  ;;       servers (lspi.get_installed_servers)]
-                  ;;   (each [_ server (pairs servers)]
-                  ;;     (server.setup {:on_attach on_attach :flags {:debounce_text_changes 150} })))
-                  )
-            (defn on-post-install [] (setup-servers) (nvim.ex.bufdo :e))
-            (setup-servers)
-            (set lspi.post_install_hook on-post-install)
-            (nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig
-                          :lsp-execute-command {:return false})
-            (u.nnoremap :<leader>li :LspInfo)))
+(def base-server-opts
+     (let [capabilities (cmp_nvim_lsp.default_capabilities (lsp.protocol.make_client_capabilities))]
+       {: on_attach : capabilities :flags {:debounce_text_changes 150}}))
 
-(comment (let [lspi (require :nvim-lsp-installer)
-               ;lspconfig (require :lspconfig)
-               servers (lspi.get_installed_servers)]
-           (each [_ server (pairs servers)]
-             (a.pr server))))
+(defn default-server-handler [server-name]
+      (let [specific-opts (a.get server-specific-opts server-name {})
+            server (a.get lspconfig server-name)
+            server-opts (a.merge base-server-opts server-opts)]
+        (server.setup server-opts)))
+
+(defn lsp-execute-command [cmd ...]
+      (let [buf-uri (vim.uri_from_bufnr 0)
+            cursor (vim.api.nvim_win_get_cursor 0)
+            r (- (a.first cursor) 1)
+            c (a.second cursor)
+            opts [buf-uri r c]
+            args (a.concat opts [...])]
+        (vim.lsp.buf.execute_command {:command cmd :arguments args})))
+
+(when-let [mason-lspconfig (require :mason-lspconfig)] (mason-lspconfig.setup)
+          (mason-lspconfig.setup_handlers {1 default-server-handler}))
+
+(u.nnoremap :<leader>li :LspInfo)
+(nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig
+              :lsp-execute-command {:return false})

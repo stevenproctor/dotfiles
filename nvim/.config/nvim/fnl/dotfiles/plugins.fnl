@@ -77,7 +77,9 @@
                 :tpope/vim-unimpaired {}
                 :tpope/vim-vinegar {}
                 :wbthomason/packer.nvim {:mod :packer}
-                :williamboman/nvim-lsp-installer {}
+                ;; :williamboman/nvim-lsp-installbuilder {}
+                :williamboman/mason.nvim {:mod :mason
+                                          :requires [:williamboman/mason-lspconfig.nvim]}
                 ; NeoVim lsp server installs
                 ; :luochen1990/rainbow {}
                 ; :thecontinium/asyncomplete-conjure.vim {}
