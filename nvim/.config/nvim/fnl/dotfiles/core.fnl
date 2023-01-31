@@ -62,7 +62,7 @@
                       :updatetime 300
                       ; per coc.vim for diagnostic messages
                       :signcolumn "auto:1-3"
-                      :colorcolumn [80 100]
+                      :colorcolumn [81 100]
                       :cmdheight 2
                       ; Better display for messages
                       :undodir undo-dir
