@@ -78,3 +78,29 @@
 
 ; Trim trailing Whitespace in current line
 (util.lnnoremap :tw "<C-U>.s/\\s\\+$//ge<CR>:nohlsearch<Enter>/<BS>")
+
+; Window switching
+; ˙ -> alt-h
+; ∆ -> alt-j
+; ˚ -> alt-k
+; ¬ -> alt-l
+;; Terminal mode
+(noremap :t "˙" "<c-\\><c-n><c-w>h")
+(noremap :t "∆" "<c-\\><c-n><c-w>j")
+(noremap :t "˚" "<c-\\><c-n><c-w>k")
+(noremap :t "¬" "<c-\\><c-n><c-w>l")
+;; Insert mode:
+(noremap :i "˙" :<Esc><c-w>h)
+(noremap :i "∆" :<Esc><c-w>j)
+(noremap :i "˚" :<Esc><c-w>k)
+(noremap :i "¬" :<Esc><c-w>l)
+;; Visual mode:
+(noremap :v "˙" :<Esc><c-w>h)
+(noremap :v "∆" :<Esc><c-w>j)
+(noremap :v "˚" :<Esc><c-w>k)
+(noremap :v "¬" :<Esc><c-w>l)
+;; Normal mode:
+(noremap :n "˙" :<c-w>h)
+(noremap :n "∆" :<c-w>j)
+(noremap :n "˚" :<c-w>k)
+(noremap :n "¬" :<c-w>l)
