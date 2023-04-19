@@ -52,6 +52,7 @@
                 :lifepillar/vim-solarized8 {}
                 :lukas-reineke/headlines.nvim {:mod :headlines}
                 ;   :michaelb/sniprun {:run "bash ./install.sh" :mod :sniprun}
+                :mrjones2014/smart-splits.nvim {:mod :smartsplits}
                 :neovim/nvim-lspconfig {:mod :lspconfig}
                 :norcalli/nvim-colorizer.lua {:mod :colorizer}
                 :nvim-orgmode/orgmode {:mod :orgmode}
