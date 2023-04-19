@@ -24,6 +24,7 @@
                 :ahmedkhalf/project.nvim {}
                 :airblade/vim-gitgutter {}
                 :clojure-vim/vim-jack-in {}
+                :christianrondeau/vim-base64 {}
                 :dhruvasagar/vim-table-mode {}
                 :folke/lsp-colors.nvim {}
                 :folke/which-key.nvim {:mod :whichkey}
@@ -54,6 +55,7 @@
                 :lukas-reineke/headlines.nvim {:mod :headlines}
                 ;   :michaelb/sniprun {:run "bash ./install.sh" :mod :sniprun}
                 :mrjones2014/smart-splits.nvim {:mod :smartsplits}
+                :mechatroner/rainbow_csv {}
                 :neovim/nvim-lspconfig {:mod :lspconfig}
                 :norcalli/nvim-colorizer.lua {:mod :colorizer}
                 :nvim-orgmode/orgmode {:mod :orgmode}
