@@ -7,6 +7,8 @@
                    ts-utils nvim-treesitter.ts_utils
                    languagetree vim.treesitter.languagetree}})
 
+(set nvim.g.paredit_smartjump 1)
+
 (defn list-member? [xs x] (a.some #(= x $1) (a.vals xs)))
 
 (defn bool->int [bool] (if bool 1 0))
