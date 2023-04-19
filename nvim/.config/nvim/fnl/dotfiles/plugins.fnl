@@ -21,6 +21,7 @@
 (def- packages {:Olical/aniseed {}
                 :Olical/conjure {:mod :conjure}
                 :Olical/fennel.vim {}
+                :ahmedkhalf/project.nvim {}
                 :airblade/vim-gitgutter {}
                 :clojure-vim/vim-jack-in {}
                 :dhruvasagar/vim-table-mode {}
