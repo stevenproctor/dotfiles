@@ -5,7 +5,7 @@
                           (: tree :root)))
 
 (defn make-query [lang query-string]
-      (let [query (vim.treesitter.parse_query lang "(headline (stars) @stars)")]
+      (let [query (vim.treesitter.query.parse lang "(headline (stars) @stars)")]
         (fn [bufnr]
           (let [root-node (root bufnr lang)
                 iter-captures (query.iter_captures query root-node bufnr 0 -1)]
