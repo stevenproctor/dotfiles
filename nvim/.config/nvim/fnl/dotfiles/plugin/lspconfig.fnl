@@ -5,6 +5,7 @@
                    lsp vim.lsp
                    lspconfig lspconfig
                    nu aniseed.nvim.util
+                   mason dotfiles.plugin.mason
                    cmp_nvim_lsp cmp_nvim_lsp}})
 
 (defn bufmap [mode from to] (u.noremap mode from to {:local? true}))
@@ -146,8 +147,11 @@
             args (a.concat opts [...])]
         (vim.lsp.buf.execute_command {:command cmd :arguments args})))
 
-(when-let [mason-lspconfig (require :mason-lspconfig)] (mason-lspconfig.setup)
-          (mason-lspconfig.setup_handlers {1 default-server-handler}))
+(mason.setup)
+
+(when-let [mason-lspconfig (require :mason-lspconfig)]
+  (mason-lspconfig.setup)
+  (mason-lspconfig.setup_handlers {1 default-server-handler}))
 
 (u.nnoremap :<leader>li :LspInfo)
 (nu.fn-bridge :LspExecuteCommand :dotfiles.plugin.lspconfig
