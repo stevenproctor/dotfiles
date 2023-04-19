@@ -3,4 +3,4 @@
 
 (mason.setup {:ui {:icons {:package_installed "✓"}}})
 
-(mason-lspconf.setup {:ensure_installed [:sumneko_lua]})
+(mason-lspconf.setup {:ensure_installed [:lua_ls]})
