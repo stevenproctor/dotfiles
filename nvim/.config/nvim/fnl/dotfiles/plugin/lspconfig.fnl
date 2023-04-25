@@ -19,10 +19,10 @@
         (nvim.fn.sign_define sign-level
                              {:texthl sign-level :text sign :numhl sign-level})))
 
-; (define-sign :Error "☢️")
-; (define-sign :Warn "⚠️")
-; (define-sign :SignHint "🔎")
-; (define-sign :Info "ℹ️")
+;; (define-sign :Error "☢️")
+;; (define-sign :Warn "⚠️")
+;; (define-sign :SignHint "🔎")
+;; (define-sign :Info "ℹ️")
 (define-sign :Error :X)
 (define-sign :Warn "!")
 (define-sign :SignHint "?")
