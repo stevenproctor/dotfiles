@@ -19,6 +19,8 @@
                         :--follow])
 
 (telescope.load_extension :projects)
+(telescope.load_extension :yank_history)
+
 (telescope.setup {:defaults {: vimgrep_arguments}
                   :pickers {:buffers {:mappings {:n {:d :delete_buffer}}}}
                   :extensions {:projects {:projects {}}}})
@@ -43,3 +45,4 @@
 (util.lnnoremap :fsr "Telescope lsp_references")
 (util.lnnoremap :fsS "Telescope lsp_document_symbols")
 (util.lnnoremap :fss "Telescope lsp_workspace_symbols")
+(util.lnnoremap :fy "Telescope yank_history")

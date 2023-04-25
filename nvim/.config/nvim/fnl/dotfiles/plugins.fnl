@@ -28,6 +28,7 @@
                 :dhruvasagar/vim-table-mode {}
                 :folke/lsp-colors.nvim {}
                 :folke/which-key.nvim {:mod :whichkey}
+                :gbprod/yanky.nvim {:mod :yanky}
                 :hashivim/vim-terraform {}
                 :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
                                               :hrsh7th/cmp-emoji
