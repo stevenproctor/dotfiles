@@ -16,6 +16,7 @@ end
 -- Bootstrap essential plugins required for installing and loading the rest.
 ensure("wbthomason", "packer.nvim")
 ensure("Olical", "aniseed")
+ensure("lifepillar", "vim-solarized8")
 
 -- Enable Aniseed's automatic compilation and loading of Fennel source code.
 vim.g["aniseed#env"] = {
