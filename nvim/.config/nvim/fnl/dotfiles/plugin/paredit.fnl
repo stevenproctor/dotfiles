@@ -60,6 +60,11 @@
                        (set nvim.g.paredit_mode))
                   (nvim.fn.PareditInitBuffer))))
 
+
+(nvim.ex.autocmd :FileType :ruby :call "PareditInitBalancingAllBracketsBuffer()")
+(nvim.ex.autocmd :FileType :javascript :call "PareditInitBalancingAllBracketsBuffer()")
+(nvim.ex.autocmd :FileType :terraform :call "PareditInitBalancingAllBracketsBuffer()")
+
 ; (nvim.del_augroup_by_name "BabeliteParedit")
 ; (nvim.get_autocmds {:group "BabeliteParedit"})
 
