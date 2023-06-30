@@ -111,3 +111,5 @@ export LESS_TERMCAP_us=$'\e'"[1;32m"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -s ".config/broot/launcher/bash/br" ] && source /Users/sproctor/.config/broot/launcher/bash/br
+
+source /Users/proctor/.config/broot/launcher/bash/br
