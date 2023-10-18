@@ -32,6 +32,8 @@
 ; Insert Date
 (noremap :n :<F5> "\"=strftime(\"%F\")<CR>p")
 (noremap :i :<F5> "<C-R>=strftime(\"%F\")<CR>")
+(noremap :n :<M-5> "\"=trim(system('date -u'))<CR>p")
+(noremap :i :<M-5> "<C-R>=trim(system('date -u'))<CR>")
 
 ; Make markdown link with empty url
 ;map <Leader>ah S<a href="" target="_blank" rel="noopener noreferrer"><CR>
