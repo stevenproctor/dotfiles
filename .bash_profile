@@ -1,9 +1,12 @@
+shopt -s globstar
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 PATH=/usr/local/sbin:/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
 PATH=$PATH:$HOME
 MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
+
+export XDG_CONFIG_HOME=$HOME/.config
 
 set -o vi
 export EDITOR='nvim'
@@ -110,6 +113,6 @@ export LESS_TERMCAP_us=$'\e'"[1;32m"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-[ -s ".config/broot/launcher/bash/br" ] && source /Users/sproctor/.config/broot/launcher/bash/br
+[ -s "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
-source /Users/proctor/.config/broot/launcher/bash/br
+# source /Users/proctor/.config/broot/launcher/bash/br

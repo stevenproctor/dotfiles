@@ -40,4 +40,4 @@ export XML_CATALOG_FILES=/usr/local/etc/xml/catalog
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
-source /Users/proctor/.config/broot/launcher/bash/br
+# source ~/.config/broot/launcher/bash/br
