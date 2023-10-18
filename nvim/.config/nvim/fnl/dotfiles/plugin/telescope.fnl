@@ -21,7 +21,7 @@
 (telescope.load_extension :projects)
 (telescope.load_extension :yank_history)
 
-(telescope.setup {:defaults {: vimgrep_arguments}
+(telescope.setup {;; :defaults {: vimgrep_arguments}
                   :pickers {:buffers {:mappings {:n {:d :delete_buffer}}}}
                   :extensions {:projects {:projects {}}}})
 
