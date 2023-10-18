@@ -68,11 +68,12 @@
                 :nvim-treesitter/playground {}
                 :p00f/nvim-ts-rainbow {}
                 :radenling/vim-dispatch-neovim {}
+                :RaafatTurki/hex.nvim { :mod :hex }
                 :rafamadriz/friendly-snippets {}
                 :skywind3000/asyncrun.vim {}
-                :tjdevries/sg.nvim {:run "cargo build --workspace"
-                                    :dependencies [:nvim-lua/plenary.nvim]}
-                :tpope/vim-classpath {}
+                ;; :tjdevries/sg.nvim {:run "cargo build --workspace"
+                ;;                     :dependencies [:nvim-lua/plenary.nvim]}
+                ;; :tpope/vim-classpath {}
                 :tpope/vim-dadbod {}
                 :tpope/vim-dispatch {}
                 :tpope/vim-fugitive {:mod :fugitive}
@@ -80,6 +81,7 @@
                 :tpope/vim-pathogen {}
                 :tpope/vim-rails {}
                 :tpope/vim-repeat {}
+                :tpope/vim-rhubarb {}
                 :tpope/vim-surround {}
                 :tpope/vim-unimpaired {}
                 :tpope/vim-vinegar {}
