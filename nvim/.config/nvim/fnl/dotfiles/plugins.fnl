@@ -23,6 +23,7 @@
                 :Olical/fennel.vim {}
                 :ahmedkhalf/project.nvim {}
                 :airblade/vim-gitgutter {}
+                :akinsho/toggleterm.nvim {:mod :toggleterm}
                 :clojure-vim/vim-jack-in {}
                 :christianrondeau/vim-base64 {}
                 :dhruvasagar/vim-table-mode {}
