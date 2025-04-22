@@ -81,6 +81,13 @@
 ; Trim trailing Whitespace in current line
 (util.lnnoremap :tw "<C-U>.s/\\s\\+$//ge<CR>:nohlsearch<Enter>/<BS>")
 
+
+;; <Leader><C-l> in terminal to clear scrollback buffer
+;; nmap <silent> <leader><C-l> :set scrollback=1 \| set scrollback=100000<cr>
+(util.lnnoremap :<C-k> ":set scrollback=1 | :set scrollback 100000<cr>" {:silent true})
+;; tmap <silent> <leader><C-l> <C-\><C-n><leader><C-l>i
+(util.ltnoremap :<C-k> "<C-\\><C-n><leader><C-l>i" {:silent true})
+
 ;; (noremap :n :<C-A-l> ":echo \"test\"\n")
 ; Window switching
 ; ˙ -> alt-h

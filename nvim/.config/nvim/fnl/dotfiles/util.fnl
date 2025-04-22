@@ -18,4 +18,6 @@
 
 (defn lnnoremap [from to] (nnoremap (.. :<leader> from) to))
 
-(defn lvnoremap [from to opts] (noremap :v (.. :<leader> from) to opts))
+(defn ltnoremap [from to opts] (noremap :v (.. :<leader> from) to opts))
+
+(defn lvnoremap [from to opts] (noremap :t (.. :<leader> from) to opts))
