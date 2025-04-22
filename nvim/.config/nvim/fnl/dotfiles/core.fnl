@@ -77,7 +77,7 @@
                       :softtabstop 2
                       :mouse ""
                       :list true
-                      :listchars "tab:➥\\ ,trail:·,"
+                      :listchars "tab:➥\\ ,trail:·,nbsp:■"
                       :backspace "indent,eol,start"
                       ;allow backspacing over everything in insert mode
                       :wildmode "list:longest,list:full"
