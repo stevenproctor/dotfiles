@@ -31,6 +31,7 @@
                 :folke/which-key.nvim {:mod :whichkey}
                 :gbprod/yanky.nvim {:mod :yanky}
                 :hashivim/vim-terraform {}
+                :HiPhish/rainbow-delimiters.nvim {}
                 :hrsh7th/nvim-cmp {:requires [:hrsh7th/cmp-buffer
                                               :hrsh7th/cmp-emoji
                                               :hrsh7th/cmp-nvim-lsp
@@ -46,7 +47,7 @@
                 :hrsh7th/vim-vsnip-integ {}
                 :Iron-E/nvim-soluarized {}
                 :jiangmiao/auto-pairs {}
-                :jose-elias-alvarez/null-ls.nvim {:mod :null-ls
+                :nvimtools/none-ls.nvim {:mod :null-ls
                                                   :requires [:nvim-lua/plenary.nvim]}
                 :junegunn/vim-easy-align {:mod :easyalign}
                 :kovisoft/paredit {:mod :paredit}
@@ -67,7 +68,6 @@
                 :nvim-treesitter/nvim-treesitter {:run ":TSUpdate"
                                                   :mod :treesitter}
                 :nvim-treesitter/playground {}
-                :p00f/nvim-ts-rainbow {}
                 :radenling/vim-dispatch-neovim {}
                 :RaafatTurki/hex.nvim { :mod :hex }
                 :rafamadriz/friendly-snippets {}
@@ -91,8 +91,11 @@
                 :williamboman/mason.nvim {:mod :mason
                                           :requires [:williamboman/mason-lspconfig.nvim]}
                 ; NeoVim lsp server installs
+                ; :p00f/nvim-ts-rainbow {}
                 ; :luochen1990/rainbow {}
                 ; :thecontinium/asyncomplete-conjure.vim {}
+                ; :jose-elias-alvarez/null-ls.nvim {:mod :null-ls
+                ;                                   :requires [:nvim-lua/plenary.nvim]}
                 } ; :tpope/vim-fireplace {} ; Clojure
       ; :tpope/vim-sexp-mappings-for-regular-people {}
       )
