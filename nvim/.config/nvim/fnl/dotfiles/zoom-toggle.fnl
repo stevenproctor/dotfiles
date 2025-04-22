@@ -17,5 +17,5 @@
                            (nvim.ex.vertical :resize))))
 
 (nu.fn-bridge :ZoomToggle :dotfiles.zoom-toggle :zoom-toggle {:return false})
-(u.nnoremap :<C-W>z ":call ZoomToggle()<CR>")
-(u.tnoremap :t "Ω" "<c-\\><c-n>:call ZoomToggle()<CR>")
+(u.nnoremap :<M-z> ":call ZoomToggle()<CR>")
+(u.tnoremap :<M-z> "<c-\\><c-n>:call ZoomToggle()<CR>")
