@@ -14,19 +14,13 @@
 
 (defn xbufmap [from to] (bufmap :x from to))
 
-(defn define-sign [level sign]
-      (let [sign-level (.. :DiagnosticSign level)]
-        (nvim.fn.sign_define sign-level
-                             {:texthl sign-level :text sign :numhl sign-level})))
-
-;; (define-sign :Error "☢️")
-;; (define-sign :Warn "⚠️")
-;; (define-sign :SignHint "🔎")
-;; (define-sign :Info "ℹ️")
-(define-sign :Error :X)
-(define-sign :Warn "!")
-(define-sign :SignHint "?")
-(define-sign :Info :i)
+(vim.diagnostic.config
+  {:signs {:text {vim.diagnostic.severity.ERROR "☢️"
+                  vim.diagnostic.severity.WARN "⚠️"
+                  vim.diagnostic.severity.INFO "ℹ️"
+                  vim.diagnostic.severity.HINT "🔎"}
+           :linehl {vim.diagnostic.severity.ERROR :ErrorMsg}
+           :numhl {vim.diagnostic.severity.WARN :WarningMsg}}})
 
 (def core-nmappings
      {:gd "lua vim.lsp.buf.definition()"
