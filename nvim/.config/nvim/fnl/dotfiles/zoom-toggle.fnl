@@ -1,21 +1,18 @@
-(module dotfiles.zoom-toggle
-        {autoload {a aniseed.core}
-         require {anenv aniseed.env
-                  nvim aniseed.nvim
-                  nu aniseed.nvim.util
-                  u dotfiles.util}})
+(local u (require :dotfiles.util))
 
 (var unzoom! nil)
 
-(defn zoom-toggle [] (if unzoom!
-                         (do
-                           (nvim.command unzoom!)
-                           (set unzoom! nil))
-                         (do
-                           (set unzoom! (nvim.fn.winrestcmd))
-                           (nvim.ex.resize)
-                           (nvim.ex.vertical :resize))))
+(fn zoom-toggle []
+  (if unzoom!
+      (do
+        (vim.cmd unzoom!)
+        (set unzoom! nil))
+      (do
+        (set unzoom! (vim.fn.winrestcmd))
+        (vim.fn.resize)
+        (vim.fn.vertical :resize))))
 
-(nu.fn-bridge :ZoomToggle :dotfiles.zoom-toggle :zoom-toggle {:return false})
+(vim.api.nvim_create_user_command :ZoomToggle zoom-toggle {})
+
 (u.nnoremap :<M-z> ":call ZoomToggle()<CR>")
 (u.tnoremap :<M-z> "<c-\\><c-n>:call ZoomToggle()<CR>")
