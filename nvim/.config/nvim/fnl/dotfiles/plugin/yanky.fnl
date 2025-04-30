@@ -1,9 +1,4 @@
-(module dotfiles.plugin.yanky {autoload {nvim aniseed.nvim
-                                         a aniseed.core
-                                         ;; util dotfiles.util
-                                         yanky yanky}
-                               ;; require {minpac minpac}
-                               })
+(local yanky (require :yanky))
 
 (yanky.setup {:ring {:history_length 100
                      :storage :shada

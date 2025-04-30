@@ -1,69 +1,76 @@
 (module dotfiles.plugin.paredit
         {autoload {nvim aniseed.nvim
-                   a aniseed.core
-                   nu aniseed.nvim.util
                    paredit paredit
                    ts-parsers nvim-treesitter.parsers
                    ts-utils nvim-treesitter.ts_utils
                    languagetree vim.treesitter.languagetree}})
 
-(set nvim.g.paredit_smartjump 1)
+(local a (require :aniseed.core))
 
-(defn list-member? [xs x] (a.some #(= x $1) (a.vals xs)))
+(set vim.g.paredit_smartjump 1)
 
-(defn bool->int [bool] (if bool 1 0))
+(fn list-member? [xs x]
+  (a.some #(= x $1) (a.vals xs)))
 
-(defn int->bool [x] (if (= 0 x) false true))
+(fn bool->int [bool] (if bool 1 0))
 
-(defn toggle-global! [x] (->> (a.get nvim.g x)
-                              (int->bool)
-                              (not)
-                              (bool->int)
-                              (tset nvim.g x)))
+(fn int->bool [x] (if (= 0 x) false true))
 
-(defn language-at-cursor [] (let [parser (ts-parsers.get_parser)
-                                  current-node (ts-utils.get_node_at_cursor)
-                                  range (if current-node [(current-node:range)])
-                                  lang (if range
-                                           (languagetree.language_for_range parser
-                                                                            range))]
-                              (if lang
-                                  (lang:lang))))
+(fn toggle-global! [x]
+  (->> (a.get vim.g x)
+       (int->bool)
+       (not)
+       (bool->int)
+       (tset vim.g x)))
 
-(defn parser-language [] (let [parser (ts-parsers.get_parser)]
-                           (when parser
-                             (parser:lang))))
+(fn language-at-cursor []
+  (let [parser (ts-parsers.get_parser)
+        current-node (ts-utils.get_node_at_cursor)
+        range (if current-node [(current-node:range)])
+        lang (if range
+                 (languagetree.language_for_range parser range))]
+    (if lang
+        (lang:lang))))
 
-(def- paredit-langs [:clojure
-                     :fennel
-                     :hy
-                     :janet
-                     :julia
-                     :lfe
-                     :lisp
-                     :racket
-                     :scheme
-                     :shen])
+(fn parser-language []
+  (let [parser (ts-parsers.get_parser)]
+    (when parser
+      (parser:lang))))
 
-(def- paredit-host-langs [:org :markdown :asciidoc])
+(local paredit-langs [:clojure
+                      :fennel
+                      :hy
+                      :janet
+                      :julia
+                      :lfe
+                      :lisp
+                      :racket
+                      :scheme
+                      :shen])
 
-(defn- host-lang-in? [langs] (list-member? langs (parser-language)))
+(local paredit-host-langs [:org :markdown :asciidoc])
 
-(defn paredit-lang? [lang] (list-member? paredit-langs lang))
+(fn host-lang-in? [langs] (list-member? langs (parser-language)))
 
-(defn TreeSitterLangParedit []
-      (when (host-lang-in? paredit-host-langs)
-        (when-let [cursor-lang (language-at-cursor)]
-                  (->> cursor-lang
-                       (paredit-lang?)
-                       (bool->int)
-                       (set nvim.g.paredit_mode))
-                  (nvim.fn.PareditInitBuffer))))
+(fn paredit-lang? [lang] (list-member? paredit-langs lang))
 
+(fn TreeSitterLangParedit []
+  (when (host-lang-in? paredit-host-langs)
+    (when-let [cursor-lang (language-at-cursor)]
+              (->> cursor-lang
+                   (paredit-lang?)
+                   (bool->int)
+                   (set nvim.g.paredit_mode))
+              (nvim.fn.PareditInitBuffer))))
 
-(nvim.ex.autocmd :FileType :ruby :call "PareditInitBalancingAllBracketsBuffer()")
-(nvim.ex.autocmd :FileType :javascript :call "PareditInitBalancingAllBracketsBuffer()")
-(nvim.ex.autocmd :FileType :terraform :call "PareditInitBalancingAllBracketsBuffer()")
+(nvim.ex.autocmd :FileType :ruby :call
+                 "PareditInitBalancingAllBracketsBuffer()")
+
+(nvim.ex.autocmd :FileType :javascript :call
+                 "PareditInitBalancingAllBracketsBuffer()")
+
+(nvim.ex.autocmd :FileType :terraform :call
+                 "PareditInitBalancingAllBracketsBuffer()")
 
 ; (nvim.del_augroup_by_name "BabeliteParedit")
 ; (nvim.get_autocmds {:group "BabeliteParedit"})
@@ -75,14 +82,14 @@
 ;;                        :callback TreeSitterLangParedit}))
 ;;
 
-;; (defn paredit-toggle! [] (toggle-global :paredit_mode)
+;; (fn paredit-toggle! [] (toggle-global :paredit_mode)
 ;;       (nvim.fn.PareditInitBuffer)
 ;; nvim.g.paredit_mode
 ;;       )
 ;; 
 ;; \
 ;; (int->bool 0)
-;; (defn test [x] (a.get nvim.g x))
+;; (fn test [x] (a.get nvim.g x))
 ;; 
 ;; (test :pareditmode)
 ;; (a.get nvim.g :paredit_mode)

@@ -1,2 +1,1 @@
-(module dotfiles.plugin.headlines
-  {autoload {headlines headlines}})
+(local headlines (require :headlines))

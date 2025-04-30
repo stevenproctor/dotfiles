@@ -1,5 +1,3 @@
-(module dotfiles.plugin.whichkey
-  {autoload {which-key which-key}})
-
-(which-key.setup {})
-
+(let [which-key (require :which-key)]
+  (when which-key
+    (which-key.setup {})))

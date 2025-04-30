@@ -1,17 +1,16 @@
-(module dotfiles.plugin.cmp {autoload {nvim aniseed.nvim luasnip luasnip}})
+(local cmp (require :cmp))
+(local luasnip (require :luasnip))
 
-(module config.plugin.cmp {autoload {nvim aniseed.nvim cmp cmp}})
+(local cmp-src-menu-items {:buffer :buff :conjure :conj :nvim_lsp :lsp})
 
-(def- cmp-src-menu-items {:buffer :buff :conjure :conj :nvim_lsp :lsp})
-
-(def- cmp-srcs [{:name :nvim_lsp}
-                {:name :nvim_lua}
-                {:name :luasnip}
-                {:name :vsnip}
-                {:name :conjure}
-                {:name :buffer}
-                {:name :orgmode}
-                {:name :emoji :max_item_count 8}])
+(local cmp-srcs [{:name :nvim_lsp}
+                 {:name :nvim_lua}
+                 {:name :luasnip}
+                 {:name :vsnip}
+                 {:name :conjure}
+                 {:name :buffer}
+                 {:name :orgmode}
+                 {:name :emoji :max_item_count 8}])
 
 ;; Setup cmp with desired settings
 (let [cmp (require :cmp)]

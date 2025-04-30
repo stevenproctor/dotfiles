@@ -1,6 +1,4 @@
-(module dotfiles.terraform-helpers
-        {autoload {a aniseed.core}
-         require {anenv aniseed.env nvim aniseed.nvim u dotfiles.util}})
+(module dotfiles.terraform-helpers {require {nvim aniseed.nvim}})
 
 (fn append-to-buf [bufno lines]
   (when lines

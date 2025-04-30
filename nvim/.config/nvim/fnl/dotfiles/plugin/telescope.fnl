@@ -4,19 +4,19 @@
                    telescope telescope
                    project-nvim project_nvim}})
 
-(def vimgrep_arguments [:ag
-                        :--nocolor
-                        :--noheading
-                        :--number
-                        :--column
-                        :--nobreak
-                        :--smart-case
-                        :--hidden
-                        ; "--skip-vcs-ignores"
-                        ; "-g" "!.git/"
-                        :--ignore
-                        :.git
-                        :--follow])
+(local vimgrep_arguments [:ag
+                          :--nocolor
+                          :--noheading
+                          :--number
+                          :--column
+                          :--nobreak
+                          :--smart-case
+                          :--hidden
+                          ; "--skip-vcs-ignores"
+                          ; "-g" "!.git/"
+                          :--ignore
+                          :.git
+                          :--follow])
 
 (telescope.load_extension :projects)
 (telescope.load_extension :yank_history)

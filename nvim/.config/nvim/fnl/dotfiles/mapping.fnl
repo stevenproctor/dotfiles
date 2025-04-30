@@ -1,20 +1,17 @@
-(module dotfiles.mapping
-        {autoload {nvim aniseed.nvim
-                   nu aniseed.nvim.util
-                   core aniseed.core
-                   util dotfiles.util}})
+(local util (require :dotfiles.util))
 
-(defn- noremap [mode from to] "Sets a mapping with {:noremap true}."
-       (nvim.set_keymap mode from to {:noremap true}))
+(fn noremap [mode from to]
+  "Sets a mapping with {:noremap true}."
+  (vim.keymap.set mode from to {:noremap true}))
 
 ; (set nvim.g.mapleader "\\")
 
-(defn aniseed-reload []
-      (each [k _ (ipairs package.loaded)]
-        (when (string.match k "^dotfiles%..+")
-          (tset package.loaded k nil)))
-      ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true})
-      (core.println "aniseed reloaded!"))
+(fn aniseed-reload []
+  (each [k _ (ipairs package.loaded)]
+    (when (string.match k "^dotfiles%..+")
+      (tset package.loaded k nil)))
+  ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true})
+  (print "aniseed reloaded!"))
 
 (vim.keymap.set :n "<leader>`" aniseed-reload)
 
@@ -67,7 +64,10 @@
 (noremap :n :<leader>mv ":AsyncRun -mode=bang open -a Marked\\ 2.app '%:p'<cr>")
 
 ; Run current statement in DadBod-UI
-(nvim.ex.autocmd :FileType :sql :nmap :<leader>s :vap<leader>S)
+;; (nvim.ex.autocmd :FileType :sql :nmap :<leader>s :vap<leader>S)
+(vim.api.nvim_create_autocmd [:FileType]
+                             {:pattern :sql
+                              :command "nmap <leader>s vap<leader>S"})
 
 (noremap :n :Q ":.!bash <CR>")
 
@@ -81,10 +81,11 @@
 ; Trim trailing Whitespace in current line
 (util.lnnoremap :tw "<C-U>.s/\\s\\+$//ge<CR>:nohlsearch<Enter>/<BS>")
 
-
 ;; <Leader><C-l> in terminal to clear scrollback buffer
 ;; nmap <silent> <leader><C-l> :set scrollback=1 \| set scrollback=100000<cr>
-(util.lnnoremap :<C-k> ":set scrollback=1 | :set scrollback 100000<cr>" {:silent true})
+(util.lnnoremap :<C-k> ":set scrollback=1 | :set scrollback 100000<cr>"
+                {:silent true})
+
 ;; tmap <silent> <leader><C-l> <C-\><C-n><leader><C-l>i
 (util.ltnoremap :<C-k> "<C-\\><C-n><leader><C-l>i" {:silent true})
 

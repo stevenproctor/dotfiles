@@ -1,3 +1,3 @@
-(module dotfiles.plugin.hex {autoload {nvim aniseed.nvim hex hex}})
-
-(hex.setup)
+(let [hex (require :hex)]
+  (when hex
+    (hex.setup)))

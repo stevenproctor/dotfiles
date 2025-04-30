@@ -1,9 +1,4 @@
-(module dotfiles.init
-  {autoload
-   {a aniseed.core}
-   require
-   {nvim aniseed.nvim}})
-
+(local a (require :aniseed.core))
 
 (require :dotfiles.core)
 (require :dotfiles.plugins)
@@ -12,5 +7,4 @@
 (require :dotfiles.zoom-toggle)
 
 ;(nvim.ex.source "~/.vimrc")
-
 (a.println "(re)loaded")
