@@ -1,8 +1,5 @@
-(module dotfiles.plugin.telescope
-        {autoload {nvim aniseed.nvim
-                   util dotfiles.util
-                   telescope telescope
-                   project-nvim project_nvim}})
+(local util (require :dotfiles.util))
+(local telescope (require :telescope))
 
 (local vimgrep_arguments [:ag
                           :--nocolor

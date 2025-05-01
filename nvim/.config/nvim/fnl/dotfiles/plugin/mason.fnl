@@ -9,3 +9,8 @@
         (mason-lspconf.setup_handlers {1 lspconfig.default-server-handler})))))
 
 (setup)
+;; (mason.setup)
+;; 
+;; (when-let [mason-lspconfig (require :mason-lspconfig)]
+;;   (mason-lspconfig.setup)
+;;           (mason-lspconfig.setup_handlers {1 default-server-handler}))
