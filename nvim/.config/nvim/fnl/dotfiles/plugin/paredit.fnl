@@ -1,11 +1,8 @@
-(module dotfiles.plugin.paredit
-        {autoload {nvim aniseed.nvim
-                   paredit paredit
-                   ts-parsers nvim-treesitter.parsers
-                   ts-utils nvim-treesitter.ts_utils
-                   languagetree vim.treesitter.languagetree}})
-
 (local a (require :aniseed.core))
+(local treesitter (require :dotfiles.plugin.treesitter))
+(local ts-parsers (require :nvim-treesitter.parsers))
+(local ts-utils (require :nvim-treesitter.ts_utils))
+(local languagetree (require :vim.treesitter.languagetree))
 
 (set vim.g.paredit_smartjump 1)
 
@@ -60,42 +57,15 @@
               (->> cursor-lang
                    (paredit-lang?)
                    (bool->int)
-                   (set nvim.g.paredit_mode))
-              (nvim.fn.PareditInitBuffer))))
+                   (set vim.g.paredit_mode))
+              (vim.fn.PareditInitBuffer))))
 
-(nvim.ex.autocmd :FileType :ruby :call
-                 "PareditInitBalancingAllBracketsBuffer()")
+(vim.api.nvim_create_autocmd [:FileType]
+                             {:pattern :ruby :callback (lambda [] (vim.fn.PareditInitBalancingAllBracketsBuffer))})
 
-(nvim.ex.autocmd :FileType :javascript :call
-                 "PareditInitBalancingAllBracketsBuffer()")
+(vim.api.nvim_create_autocmd [:FileType]
+                             {:pattern :javascript :callback (lambda [] (vim.fn.PareditInitBalancingAllBracketsBuffer))})
 
-(nvim.ex.autocmd :FileType :terraform :call
-                 "PareditInitBalancingAllBracketsBuffer()")
+(vim.api.nvim_create_autocmd [:FileType]
+                             {:pattern terraform :callback (lambda [] ( vim.fn.PareditInitBalancingAllBracketsBuffer))})
 
-; (nvim.del_augroup_by_name "BabeliteParedit")
-; (nvim.get_autocmds {:group "BabeliteParedit"})
-
-;;(let [group (nvim.create_augroup :BabeliteParedit {:clear true})]
-;;  (nvim.create_autocmd [:CursorHold :CursorMoved]
-;;                       {: group
-;;                        ;:pattern ["*.org" "*.md"]
-;;                        :callback TreeSitterLangParedit}))
-;;
-
-;; (fn paredit-toggle! [] (toggle-global :paredit_mode)
-;;       (nvim.fn.PareditInitBuffer)
-;; nvim.g.paredit_mode
-;;       )
-;; 
-;; \
-;; (int->bool 0)
-;; (fn test [x] (a.get nvim.g x))
-;; 
-;; (test :pareditmode)
-;; (a.get nvim.g :paredit_mode)
-;; (comment ;
-;;   nvim.g.paredit_mode
-;;   ;
-;; 
-;;   (paredit-toggle!)
-;;   )

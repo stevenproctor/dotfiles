@@ -55,4 +55,4 @@
   (vim.api.nvim_create_autocmd [:FileType]
                                {:pattern ftype :callback setup-conceals}))
 
-{}
+{: setup-conceals}

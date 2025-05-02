@@ -47,7 +47,8 @@
                  :nvimtools/none-ls.nvim {:mod :null-ls
                                           :requires [:nvim-lua/plenary.nvim]}
                  :junegunn/vim-easy-align {:mod :easyalign}
-                 :kovisoft/paredit {:mod :paredit}
+                 :kovisoft/paredit {:mod :paredit
+                                    :require [:nvim-treesitter/nvim-treesitter] }
                  :kristijanhusak/vim-dadbod-completion {}
                  :kristijanhusak/vim-dadbod-ui {}
                  :L3MON4D3/LuaSnip {:mod :luasnip}
@@ -86,7 +87,8 @@
                  :wbthomason/packer.nvim {:mod :packer}
                  ;; :williamboman/nvim-lsp-installbuilder {}
                  :williamboman/mason.nvim {:mod :mason
-                                           :requires [:williamboman/mason-lspconfig.nvim]}
+                                           :requires [:williamboman/mason-lspconfig.nvim
+                                                      :neovim/nvim-lspconfig]}
                  ; NeoVim lsp server installs
                  ; :p00f/nvim-ts-rainbow {}
                  ; :luochen1990/rainbow {}

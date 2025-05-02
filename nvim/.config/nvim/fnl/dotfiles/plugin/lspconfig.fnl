@@ -1,10 +1,8 @@
-(module dotfiles.plugin.lspconfig
-        {autoload {a aniseed.core
-                   u dotfiles.util
-                   nvim aniseed.nvim
-                   lsp vim.lsp
-                   lspconfig lspconfig
-                   cmp_nvim_lsp cmp_nvim_lsp}})
+(local a (require :aniseed.core))
+(local u (require :dotfiles.util))
+(local lsp (require :vim.lsp))
+(local lspconfig (require :lspconfig))
+(local cmp_nvim_lsp (require :cmp_nvim_lsp))
 
 (fn bufmap [mode from to] (u.noremap mode from to {:local? true}))
 
@@ -110,11 +108,12 @@
   ; --   buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   ; --   buf_set_keymap('n', '<leader>ic', "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
   ; --   buf_set_keymap('x', '<leader>ic', "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
-  (nvim.buf_set_option 0 :omnifunc "v:lua.vim.lsp.omnifunc")
+  (vim.api.nvim_set_option_value :omnifunc "v:lua.vim.lsp.omnifunc" {:buf 0})
   (bind-client-mappings client)
   (if client.server_capabilities.documentFormattingProvider
-      (nvim.ex.autocmd :BufWritePre :<buffer> ":lua vim.lsp.buf.format()")) ;  (nvim.ex.autocmd "BufEnter,CursorHold,InsertLeave" :<buffer> :lua "vim.lsp.codelens.refresh()")
-  ; client autocmds ;  -- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf_request_sync(vim.api.nvim_get_current_buf(), 'workspace/executeCommand', {command = 'clean-ns', arguments = {vim.uri_from_bufnr(1), vim.api.nvim_win_get_cursor(0)[1], vim.api.nvim_win_get_cursor(0)[2]}, title = 'Clean Namespace'})]]
+      (vim.api.nvim_create_autocmd [:BufWritePre]
+                                   {:pattern :<buffer>
+                                    :callback (lambda [] (vim.lsp.buf.format))}))
   (print "LSP Client Attached."))
 
 (local base-server-opts
@@ -124,7 +123,7 @@
 (fn default-server-handler [server-name]
   (let [specific-opts (a.get server-specific-opts server-name {})
         server (a.get lspconfig server-name)
-        server-opts (a.merge base-server-opts server-opts)]
+        server-opts (a.merge base-server-opts specific-opts)]
     (server.setup server-opts)))
 
 (fn lsp-execute-command [cmd ...]
@@ -139,3 +138,10 @@
 (u.nnoremap :<leader>li :LspInfo)
 
 (vim.api.nvim_create_user_command :LspExecuteCommand lsp-execute-command {})
+
+; (let [mason-lspconfig (require :mason-lspconfig)]
+;   (when mason-lspconfig
+;     (mason-lspconfig.setup)
+;     (mason-lspconfig.setup_handlers [default-server-handler])))
+
+{: on_attach : default-server-handler}

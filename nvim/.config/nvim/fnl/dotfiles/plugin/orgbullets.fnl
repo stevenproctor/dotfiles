@@ -1,6 +1,5 @@
-(module dotfiles.plugin.orgbullets {autoload {nvim aniseed.nvim}})
-
 (local core (require :aniseed.core))
+(local conceal (require :dotfiles.conceal))
 (local ts-utils (require :dotfiles.ts-utils))
 (local stars ["◉" "⦾" "○" "✸" "✿" "✶" "•" "‣"])
 
@@ -37,12 +36,10 @@
                                          :virt_text_pos :overlay
                                          :hl_mode :combine}))))))
 
-(let [group (nvim.create_augroup :HeaderStars {:clear true})]
-  (nvim.create_autocmd [:FileChangedShellPost
-                        :Syntax
-                        :TextChanged
-                        :InsertLeave
-                        :WinScrolled]
-                       {: group
-                        ;; :pattern [:*.org]
-                        :callback gen-star-extmarks}))
+(let [group (vim.api.nvim_create_augroup :HeaderStars {:clear true})]
+  (vim.api.nvim_create_autocmd [:FileChangedShellPost
+                                :Syntax
+                                :TextChanged
+                                :InsertLeave
+                                :WinScrolled]
+                               {: group :callback conceal.setup-conceals}))
