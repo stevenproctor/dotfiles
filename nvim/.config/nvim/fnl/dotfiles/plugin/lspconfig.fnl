@@ -135,6 +135,11 @@
         args (a.concat opts [...])]
     (vim.lsp.buf.execute_command {:command cmd :arguments args})))
 
+
+(fn setup-handlers [language_servers]
+  (each [_ server-name (pairs language_servers)]
+    (default-server-handler server-name)))
+
 (u.nnoremap :<leader>li :LspInfo)
 
 (vim.api.nvim_create_user_command :LspExecuteCommand lsp-execute-command {})
@@ -144,4 +149,8 @@
 ;     (mason-lspconfig.setup)
 ;     (mason-lspconfig.setup_handlers [default-server-handler])))
 
-{: on_attach : default-server-handler}
+{: on_attach
+ : default-server-handler
+ : setup-handlers
+ }
+

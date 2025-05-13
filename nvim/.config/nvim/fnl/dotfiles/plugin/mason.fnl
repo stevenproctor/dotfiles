@@ -8,7 +8,7 @@
     (mason.setup {:ui {:icons {:package_installed "✓"}}})
     (when mason-lspconf
       (mason-lspconf.setup {:ensure_installed [:lua_ls]})
-      (mason-lspconf.setup_handlers [lspconfig.default-server-handler])))
+      (lspconfig.setup-handlers (mason-lspconf.get_installed_servers))))
 
 (setup)
 ;; (mason.setup)
