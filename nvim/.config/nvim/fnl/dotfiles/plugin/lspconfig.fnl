@@ -1,4 +1,4 @@
-(local a (require :aniseed.core))
+(local a (require :nfnl.core))
 (local u (require :dotfiles.util))
 (local lsp (require :vim.lsp))
 (local lspconfig (require :lspconfig))
@@ -122,9 +122,8 @@
 
 (fn default-server-handler [server-name]
   (let [specific-opts (a.get server-specific-opts server-name {})
-        server (a.get lspconfig server-name)
         server-opts (a.merge base-server-opts specific-opts)]
-    (server.setup server-opts)))
+    (vim.lsp.config server-name server-opts)))
 
 (fn lsp-execute-command [cmd ...]
   (let [buf-uri (vim.uri_from_bufnr 0)
@@ -134,7 +133,6 @@
         opts [buf-uri r c]
         args (a.concat opts [...])]
     (vim.lsp.buf.execute_command {:command cmd :arguments args})))
-
 
 (fn setup-handlers [language_servers]
   (each [_ server-name (pairs language_servers)]
@@ -149,8 +147,4 @@
 ;     (mason-lspconfig.setup)
 ;     (mason-lspconfig.setup_handlers [default-server-handler])))
 
-{: on_attach
- : default-server-handler
- : setup-handlers
- }
-
+{: on_attach : default-server-handler : setup-handlers}

@@ -1,4 +1,4 @@
-(local a (require :aniseed.core))
+(local a (require :nfnl.core))
 
 (fn noremap [mode from to opts]
   (let [map-opts {:noremap true :silent true}

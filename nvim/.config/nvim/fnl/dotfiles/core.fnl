@@ -1,4 +1,4 @@
-(local a (require :aniseed.core))
+(local a (require :nfnl.core))
 (local u (require :dotfiles.util))
 
 (vim.cmd.set :shortmess+=c)
@@ -117,8 +117,3 @@
 (vim.api.nvim_create_user_command :FennelScratchBuffer make-fennel-scratch {})
 
 (u.nnoremap :<leader>fsb ":call FennelScratchBuffer ()<CR>")
-
-;; (fn compile-fnl [] (print :recompiling)
-;;   (anenv.init {:force true :init :dotfiles.init}))
-;; 
-;; (vim.api.nvim_create_user_command :AniseedCompile compile-fnl {})

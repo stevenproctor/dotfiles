@@ -1,4 +1,4 @@
-(local core (require :aniseed.core))
+(local core (require :nfnl.core))
 
 (fn root [bufnr lang]
   (let [parser (vim.treesitter.get_parser bufnr lang {})

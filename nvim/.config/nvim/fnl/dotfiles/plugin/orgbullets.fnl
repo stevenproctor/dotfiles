@@ -1,4 +1,4 @@
-(local core (require :aniseed.core))
+(local core (require :nfnl.core))
 (local conceal (require :dotfiles.conceal))
 (local ts-utils (require :dotfiles.ts-utils))
 (local stars ["◉" "⦾" "○" "✸" "✿" "✶" "•" "‣"])

@@ -1,4 +1,6 @@
 (local util (require :dotfiles.util))
+(local nfnl (require :nfnl.api))
+
 
 (fn noremap [mode from to]
   "Sets a mapping with {:noremap true}."
@@ -6,17 +8,12 @@
 
 ; (set nvim.g.mapleader "\\")
 
-(fn aniseed-reload []
-  (each [k _ (ipairs package.loaded)]
-    (when (string.match k "^dotfiles%..+")
-      (tset package.loaded k nil)))
-  ((. (require :aniseed.env) :init) {:module :dotfiles.init :compile true})
-  (print "aniseed reloaded!"))
-
-(vim.keymap.set :n "<leader>`" aniseed-reload)
+(vim.keymap.set :n "<leader>`"
+                (fn []
+                  (nfnl.compile-all-files (vim.fn.stdpath :config))
+                  (vim.cmd.source (.. (vim.fn.stdpath :config) :/init.lua))))
 
 ; (noremap :n "<leader>`" ":source ~/.config/nvim/init.lua<CR>")
-(noremap :n :<leader>! ":call AniseedCompile()<CR>")
 
 (noremap :n :<Enter> ":nohlsearch<Enter>/<BS>")
 

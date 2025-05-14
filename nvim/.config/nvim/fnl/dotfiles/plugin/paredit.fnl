@@ -1,4 +1,4 @@
-(local a (require :aniseed.core))
+(local a (require :nfnl.core))
 (local treesitter (require :dotfiles.plugin.treesitter))
 (local ts-parsers (require :nvim-treesitter.parsers))
 (local ts-utils (require :nvim-treesitter.ts_utils))
@@ -53,19 +53,25 @@
 
 (fn TreeSitterLangParedit []
   (when (host-lang-in? paredit-host-langs)
-    (when-let [cursor-lang (language-at-cursor)]
-              (->> cursor-lang
-                   (paredit-lang?)
-                   (bool->int)
-                   (set vim.g.paredit_mode))
-              (vim.fn.PareditInitBuffer))))
+    (let [cursor-lang (language-at-cursor)]
+      (when cursor-lang
+        (->> cursor-lang
+             (paredit-lang?)
+             (bool->int)
+             (set vim.g.paredit_mode))
+        (vim.fn.PareditInitBuffer)))))
 
 (vim.api.nvim_create_autocmd [:FileType]
-                             {:pattern :ruby :callback (lambda [] (vim.fn.PareditInitBalancingAllBracketsBuffer))})
+                             {:pattern :ruby
+                              :callback (lambda []
+                                          (vim.fn.PareditInitBalancingAllBracketsBuffer))})
 
 (vim.api.nvim_create_autocmd [:FileType]
-                             {:pattern :javascript :callback (lambda [] (vim.fn.PareditInitBalancingAllBracketsBuffer))})
+                             {:pattern :javascript
+                              :callback (lambda []
+                                          (vim.fn.PareditInitBalancingAllBracketsBuffer))})
 
 (vim.api.nvim_create_autocmd [:FileType]
-                             {:pattern terraform :callback (lambda [] ( vim.fn.PareditInitBalancingAllBracketsBuffer))})
-
+                             {:pattern :terraform
+                              :callback (lambda []
+                                          (vim.fn.PareditInitBalancingAllBracketsBuffer))})

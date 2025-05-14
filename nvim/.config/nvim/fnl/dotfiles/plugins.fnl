@@ -1,5 +1,5 @@
 (local packer (require :packer))
-(local core (require :aniseed.core))
+(local core (require :nfnl.core))
 
 (fn safe-require-plugin-config [name]
   (let [(ok? val-or-err) (pcall require (.. :dotfiles.plugin. name))]
@@ -15,7 +15,7 @@
                       (-?> (. opts :mod) (safe-require-plugin-config))
                       (use (core.assoc opts 1 name))))))
 
-(local packages {:Olical/aniseed {}
+(local packages {:Olical/nfnl {}
                  :Olical/conjure {:mod :conjure}
                  :Olical/fennel.vim {}
                  :ahmedkhalf/project.nvim {}
@@ -48,7 +48,7 @@
                                           :requires [:nvim-lua/plenary.nvim]}
                  :junegunn/vim-easy-align {:mod :easyalign}
                  :kovisoft/paredit {:mod :paredit
-                                    :require [:nvim-treesitter/nvim-treesitter] }
+                                    :require [:nvim-treesitter/nvim-treesitter]}
                  :kristijanhusak/vim-dadbod-completion {}
                  :kristijanhusak/vim-dadbod-ui {}
                  :L3MON4D3/LuaSnip {:mod :luasnip}
@@ -57,12 +57,21 @@
                  ;   :michaelb/sniprun {:run "bash ./install.sh" :mod :sniprun}
                  :mrjones2014/smart-splits.nvim {:mod :smartsplits}
                  :mechatroner/rainbow_csv {}
+                 :MunifTanjim/nui.nvim {}
                  :neovim/nvim-lspconfig {:mod :lspconfig}
                  :norcalli/nvim-colorizer.lua {:mod :colorizer}
+                 :nvim-neo-tree/neo-tree.nvim {:branch :v3.x
+                                               :require [:nvim-lua/plenary.nvim
+                                                         :nvim-tree/nvim-web-devicons
+                                                         ; not strictly required, but recommended
+                                                         :MunifTanjim/nui.nvim
+                                                         ; :3rd/image.nvim, ; Optional image support in preview window: See `# Preview Mode` for more information
+                                                         ]}
                  :nvim-orgmode/orgmode {:mod :orgmode}
                  :nvim-telescope/telescope.nvim {:requires [[:nvim-lua/popup.nvim]
                                                             [:nvim-lua/plenary.nvim]]
                                                  :mod :telescope}
+                 :nvim-tree/nvim-web-devicons {}
                  :nvim-treesitter/nvim-treesitter {:run ":TSUpdate"
                                                    :mod :treesitter}
                  :nvim-treesitter/playground {}
