@@ -1,13 +1,21 @@
 -- [nfnl] fnl/dotfiles/util.fnl
 local a = require("nfnl.core")
+local function fn_3f(x)
+  return ("function" == type(x))
+end
 local function noremap(mode, from, to, opts)
   local map_opts = {noremap = true, silent = true}
-  local to0 = (":" .. to .. "<cr>")
+  local to0
+  if fn_3f(to) then
+    to0 = to
+  else
+    to0 = (":" .. to .. "<cr>")
+  end
   local buff_num = a.get(opts, "buff-num")
   if (a.get(opts, "local?") or buff_num) then
-    return vim.api.nvim_buf_set_keymap((buff_num or 0), mode, from, to0, map_opts)
+    return vim.keymap.set(mode, from, to0, a.merge(map_opts, {buffer = (buff_num or 0)}))
   else
-    return vim.api.nvim_set_keymap(mode, from, to0, map_opts)
+    return vim.keymap.set(mode, from, to0, map_opts)
   end
 end
 local function nnoremap(from, to, opts)

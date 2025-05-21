@@ -1,12 +1,18 @@
 (local a (require :nfnl.core))
 
+(fn fn? [x]
+  (= :function (type x)))
+
 (fn noremap [mode from to opts]
   (let [map-opts {:noremap true :silent true}
-        to (.. ":" to :<cr>)
+        to (if (fn? to)
+               to
+               (.. ":" to :<cr>))
         buff-num (a.get opts :buff-num)]
     (if (or (a.get opts :local?) buff-num)
-        (vim.api.nvim_buf_set_keymap (or buff-num 0) mode from to map-opts)
-        (vim.api.nvim_set_keymap mode from to map-opts))))
+        (vim.keymap.set mode from to
+                        (a.merge map-opts {:buffer (or buff-num 0)}))
+        (vim.keymap.set mode from to map-opts))))
 
 (fn nnoremap [from to opts] (noremap :n from to opts))
 
