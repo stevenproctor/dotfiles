@@ -13,6 +13,15 @@ end
 local function xbufmap(from, to)
   return bufmap("x", from, to)
 end
+local function lsp_execute_command(cmd, ...)
+  local buf_uri = vim.uri_from_bufnr(0)
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local r = (a.first(cursor) - 1)
+  local c = a.second(cursor)
+  local opts = {buf_uri, r, c}
+  local args = a.concat(opts, {...})
+  return vim.lsp.buf.execute_command({command = cmd, arguments = args})
+end
 vim.diagnostic.config({signs = {text = {[vim.diagnostic.severity.ERROR] = "\226\152\162\239\184\143", [vim.diagnostic.severity.WARN] = "\226\154\160\239\184\143", [vim.diagnostic.severity.INFO] = "\226\132\185\239\184\143", [vim.diagnostic.severity.HINT] = "\240\159\148\142"}}})
 local core_nmappings = {gd = "lua vim.lsp.buf.definition()", gD = "lua vim.lsp.buf.declaration()", gi = "lua vim.lsp.buf.implementation()", gr = "lua vim.lsp.buf.references()", K = "lua vim.lsp.buf.hover()", ["[g"] = "lua vim.diagnostic.goto_prev()", ["]g"] = "lua vim.diagnostic.goto_next()", ["<leader>ca"] = "lua vim.lsp.buf.code_action()", ["<leader>cl"] = "lua vim.lsp.codelens.run()", ["<leader>ic"] = "lua vim.lsp.buf.incoming_calls()", ["<leader>sld"] = "lua vim.diagnostic.open_float(nil, {source = 'always'})", ["<leader>rn"] = "lua vim.lsp.buf.rename()", ["<leader>fa"] = "lua vim.lsp.buf.format()"}
 local client_nmappings = {clojure_lsp = {["<leader>cn"] = "call LspExecuteCommand('clean-ns')", ["<leader>ref"] = "call LspExecuteCommand('extract-function', input('Function name: '))", ["<leader>id"] = "call LspExecuteCommand('inline-symbol')", ["<leader>il"] = "call LspExecuteCommand('introduce-let', input('Binding name: '))", ["<leader>m2l"] = "call LspExecuteCommand('move-to-let', input('Binding name: '))"}}
@@ -40,7 +49,11 @@ local function bind_client_mappings(client)
         opts_str = s
       end
       local mapping = ("<leader>" .. lnmapping)
-      local cmd = ("call LspExecuteCommand('" .. lsp_cmd .. "'" .. opts_str .. ")")
+      local cmd
+      local function _2_()
+        return lsp_execute_command(lsp_cmd, opts_str)
+      end
+      cmd = _2_
       nbufmap(mapping, cmd)
     end
     return nil
@@ -55,11 +68,26 @@ local function on_attach(client, bufnr)
   xbufmap("<leader>fa", "lua vim.lsp.buf.format()")
   vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", {buf = 0})
   bind_client_mappings(client)
+  if client.server_capabilities.documentHighlightProvider then
+    for hlgroup, base_group in pairs({LspReferenceRead = "SpecialKey", LspReferenceText = "SpecialKey", LspReferenceWrite = "SpecialKey"}) do
+      vim.api.nvim_set_hl(0, hlgroup, a.merge(vim.api.nvim_get_hl_by_name(base_group, true), {italic = true, foreground = "#6c71c4", background = "NONE"}))
+    end
+    local group = vim.api.nvim_create_augroup("LspDocumentHighlight", {clear = true})
+    local function _4_()
+      return vim.lsp.buf.document_highlight()
+    end
+    vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {group = group, pattern = "<buffer>", callback = _4_})
+    local function _5_()
+      return vim.lsp.buf.clear_references()
+    end
+    vim.api.nvim_create_autocmd({"CursorMoved"}, {group = group, pattern = "<buffer>", callback = _5_})
+  else
+  end
   if client.server_capabilities.documentFormattingProvider then
-    local function _3_()
+    local function _7_()
       return vim.lsp.buf.format()
     end
-    vim.api.nvim_create_autocmd({"BufWritePre"}, {pattern = "<buffer>", callback = _3_})
+    vim.api.nvim_create_autocmd({"BufWritePre"}, {pattern = "<buffer>", callback = _7_})
   else
   end
   return print("LSP Client Attached.")
@@ -74,15 +102,6 @@ local function default_server_handler(server_name)
   local server_opts = a.merge(base_server_opts, specific_opts)
   return vim.lsp.config(server_name, server_opts)
 end
-local function lsp_execute_command(cmd, ...)
-  local buf_uri = vim.uri_from_bufnr(0)
-  local cursor = vim.api.nvim_win_get_cursor(0)
-  local r = (a.first(cursor) - 1)
-  local c = a.second(cursor)
-  local opts = {buf_uri, r, c}
-  local args = a.concat(opts, {...})
-  return vim.lsp.buf.execute_command({command = cmd, arguments = args})
-end
 local function setup_handlers(language_servers)
   for _, server_name in pairs(language_servers) do
     default_server_handler(server_name)
@@ -90,5 +109,5 @@ local function setup_handlers(language_servers)
   return nil
 end
 u.nnoremap("<leader>li", "LspInfo")
-vim.api.nvim_create_user_command("LspExecuteCommand", lsp_execute_command, {})
+vim.api.nvim_create_user_command("LspExecuteCommand", lsp_execute_command, {nargs = "+"})
 return {on_attach = on_attach, ["default-server-handler"] = default_server_handler, ["setup-handlers"] = setup_handlers}

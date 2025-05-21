@@ -10,6 +10,15 @@
 
 (fn xbufmap [from to] (bufmap :x from to))
 
+(fn lsp-execute-command [cmd ...]
+  (let [buf-uri (vim.uri_from_bufnr 0)
+        cursor (vim.api.nvim_win_get_cursor 0)
+        r (- (a.first cursor) 1)
+        c (a.second cursor)
+        opts [buf-uri r c]
+        args (a.concat opts [...])]
+    (vim.lsp.buf.execute_command {:command cmd :arguments args})))
+
 (vim.diagnostic.config {:signs {:text {vim.diagnostic.severity.ERROR "☢️"
                                        vim.diagnostic.severity.WARN "⚠️"
                                        vim.diagnostic.severity.INFO "ℹ️"
@@ -93,7 +102,8 @@
               opts-str (accumulate [s "" i opt (ipairs (a.second command-mapping))]
                          (.. s ", " opt))
               mapping (.. :<leader> lnmapping)
-              cmd (.. "call LspExecuteCommand('" lsp-cmd "'" opts-str ")")]
+              cmd (fn []
+                    (lsp-execute-command lsp-cmd opts-str))]
           (nbufmap mapping cmd))))))
 
 (fn on_attach [client bufnr]
@@ -110,6 +120,28 @@
   ; --   buf_set_keymap('x', '<leader>ic', "<cmd>lua vim.lsp.buf.incoming_calls()<CR>", opts)
   (vim.api.nvim_set_option_value :omnifunc "v:lua.vim.lsp.omnifunc" {:buf 0})
   (bind-client-mappings client)
+  (when client.server_capabilities.documentHighlightProvider
+    (each [hlgroup base-group (pairs {:LspReferenceRead :SpecialKey
+                                      :LspReferenceText :SpecialKey
+                                      :LspReferenceWrite :SpecialKey})]
+      (vim.api.nvim_set_hl 0 hlgroup
+                           (a.merge (vim.api.nvim_get_hl_by_name base-group
+                                                                 true)
+                                    {:italic true
+                                     :foreground "#6c71c4"
+                                     :background :NONE})))
+    (let [group (vim.api.nvim_create_augroup :LspDocumentHighlight
+                                             {:clear true})]
+      (vim.api.nvim_create_autocmd [:CursorHold :CursorHoldI]
+                                   {: group
+                                    :pattern :<buffer>
+                                    :callback (lambda []
+                                                (vim.lsp.buf.document_highlight))})
+      (vim.api.nvim_create_autocmd [:CursorMoved]
+                                   {: group
+                                    :pattern :<buffer>
+                                    :callback (lambda []
+                                                (vim.lsp.buf.clear_references))})))
   (if client.server_capabilities.documentFormattingProvider
       (vim.api.nvim_create_autocmd [:BufWritePre]
                                    {:pattern :<buffer>
@@ -125,22 +157,14 @@
         server-opts (a.merge base-server-opts specific-opts)]
     (vim.lsp.config server-name server-opts)))
 
-(fn lsp-execute-command [cmd ...]
-  (let [buf-uri (vim.uri_from_bufnr 0)
-        cursor (vim.api.nvim_win_get_cursor 0)
-        r (- (a.first cursor) 1)
-        c (a.second cursor)
-        opts [buf-uri r c]
-        args (a.concat opts [...])]
-    (vim.lsp.buf.execute_command {:command cmd :arguments args})))
-
 (fn setup-handlers [language_servers]
   (each [_ server-name (pairs language_servers)]
     (default-server-handler server-name)))
 
 (u.nnoremap :<leader>li :LspInfo)
 
-(vim.api.nvim_create_user_command :LspExecuteCommand lsp-execute-command {})
+(vim.api.nvim_create_user_command :LspExecuteCommand lsp-execute-command
+                                  {:nargs "+"})
 
 ; (let [mason-lspconfig (require :mason-lspconfig)]
 ;   (when mason-lspconfig
