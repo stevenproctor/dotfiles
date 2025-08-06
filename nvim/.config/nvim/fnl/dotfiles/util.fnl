@@ -4,12 +4,14 @@
   (= :function (type x)))
 
 (fn noremap [mode from to opts]
-  (let [map-opts {:noremap true :silent true}
+  (let [local? (a.get opts :local?)
+        opts (a.assoc opts :local? nil)
+        map-opts (a.merge opts {:noremap true :silent true})
         to (if (fn? to)
                to
                (.. ":" to :<cr>))
         buff-num (a.get opts :buff-num)]
-    (if (or (a.get opts :local?) buff-num)
+    (if (or local? buff-num)
         (vim.keymap.set mode from to
                         (a.merge map-opts {:buffer (or buff-num 0)}))
         (vim.keymap.set mode from to map-opts))))
@@ -22,7 +24,7 @@
 
 (fn vnoremap [from to opts] (noremap :v from to opts))
 
-(fn lnnoremap [from to] (nnoremap (.. :<leader> from) to))
+(fn lnnoremap [from to opts] (nnoremap (.. :<leader> from) to opts))
 
 (fn ltnoremap [from to opts] (noremap :v (.. :<leader> from) to opts))
 

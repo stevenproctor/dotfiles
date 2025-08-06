@@ -4,20 +4,23 @@
 (local lspconfig (require :lspconfig))
 (local cmp_nvim_lsp (require :cmp_nvim_lsp))
 
-(fn bufmap [mode from to] (u.noremap mode from to {:local? true}))
+(fn bufmap [mode from to opts]
+  (u.noremap mode from to (a.merge {:local? true} opts)))
 
-(fn nbufmap [from to] (bufmap :n from to))
+(fn nbufmap [from to opts] (bufmap :n from to opts))
 
-(fn xbufmap [from to] (bufmap :x from to))
+(fn xbufmap [from to opts] (bufmap :x from to opts))
 
-(fn lsp-execute-command [cmd ...]
+(fn lsp-execute-command [client cmd ...]
   (let [buf-uri (vim.uri_from_bufnr 0)
         cursor (vim.api.nvim_win_get_cursor 0)
         r (- (a.first cursor) 1)
         c (a.second cursor)
         opts [buf-uri r c]
         args (a.concat opts [...])]
-    (vim.lsp.buf.execute_command {:command cmd :arguments args})))
+    ;;(client.exec_cmd {:command cmd :arguments args} {:bufnr 0})
+    (client.request_sync :workspace/executeCommand
+                         {:command cmd :arguments args} nil 0)))
 
 (vim.diagnostic.config {:signs {:text {vim.diagnostic.severity.ERROR "☢️"
                                        vim.diagnostic.severity.WARN "⚠️"
@@ -45,21 +48,23 @@
         :<leader>rn "lua vim.lsp.buf.rename()"
         :<leader>fa "lua vim.lsp.buf.format()"})
 
-(local client-nmappings
-       {:clojure_lsp {:<leader>cn "call LspExecuteCommand('clean-ns')"
-                      :<leader>ref "call LspExecuteCommand('extract-function', input('Function name: '))"
-                      :<leader>id "call LspExecuteCommand('inline-symbol')"
-                      :<leader>il "call LspExecuteCommand('introduce-let', input('Binding name: '))"
-                      :<leader>m2l "call LspExecuteCommand('move-to-let', input('Binding name: '))"}})
+(local client-nmappings {:clojure_lsp {;;:<leader>cn "call LspExecuteCommand('clean-ns')"
+                                       ;; :<leader>ref "call LspExecuteCommand('extract-function', input('Function name: '))"
+                                       ;; :<leader>id "call LspExecuteCommand('inline-symbol')"
+                                       ;; :<leader>il "call LspExecuteCommand('introduce-let', input('Binding name: '))"
+                                       ;;:<leader>m2l "call LspExecuteCommand('move-to-let', input('Binding name: '))"
+                                       }})
+
+;;(vim.fn.input "foo: ")
 
 (local client-command-lnmappings
        {:clojure_lsp {:ai [:add-import-to-namespace
-                           ["input('Namespace name: ')"]]
+                           [(lambda [] (vim.fn.input "Namespace name: "))]]
                       :am [:add-missing-libspec []]
                       :as [:add-require-suggestion
-                           ["input('Namespace name: ')"
-                            "input('Namespace as: ')"
-                            "input('Namespace name: ')"]]
+                           [(lambda [] (vim.fn.input "Namespace name: "))
+                            (lambda [] (vim.fn.input "Namespace as: "))
+                            (lambda [] (vim.fn.input "Namespace name: "))]]
                       :cc [:cycle-coll []]
                       :cn [:clean-ns []]
                       :cp [:cycle-privacy []]
@@ -68,17 +73,25 @@
                       :db [:drag-backward []]
                       :df [:drag-forward []]
                       :dk [:destructure-keys []]
-                      :ed [:extract-to-def ["input('Definition name: ')"]]
-                      :ef [:extract-function ["input('Function name: ')"]]
+                      :ed [:extract-to-def
+                           [(lambda [] (vim.fn.input "Definition name: "))]]
+                      :ref [:extract-function
+                            [(lambda [] (vim.fn.input "Function name: "))]]
                       :el [:expand-let []]
                       :fe [:create-function []]
-                      :il [:introduce-let ["input('Binding name: ')"]]
+                      :il [:introduce-let
+                           [(lambda [] (vim.fn.input "Binding name: "))]]
                       :is [:inline-symbol []]
                       :ma [:resolve-macro-as []]
-                      :mf [:move-form ["input('File name: ')"]]
-                      :ml [:move-to-let ["input('Binding name: ')"]]
-                      :pf [:promote-fn ["input('Function name: ')"]]
-                      :sc [:change-collection ["input('Collection type: ')"]]
+                      :mf [:move-form
+                           [(lambda [] (vim.fn.input "File name: "))]]
+                      :ml [:move-to-let
+                           [(lambda [] (vim.fn.input "Binding name: "))]]
+                      :pf [:promote-fn
+                           [(lambda [] (vim.fn.input "Function name: "))]]
+                      :sc [:change-collection
+                           [(lambda [] (vim.fn.input ""))
+                            "input('Collection type: ')"]]
                       :sm [:sort-map []]
                       :tf [:thread-first-all []]
                       :tF [:thread-first []]
@@ -95,21 +108,26 @@
         command-lnmappings (a.get client-command-lnmappings client-name)]
     (when mappings
       (each [mapping cmd (pairs mappings)]
-        (nbufmap mapping cmd)))
+        (nbufmap mapping cmd {})))
     (when command-lnmappings
       (each [lnmapping command-mapping (pairs command-lnmappings)]
         (let [lsp-cmd (a.first command-mapping)
-              opts-str (accumulate [s "" i opt (ipairs (a.second command-mapping))]
-                         (.. s ", " opt))
+              ;;lsp-cmd (.. client-name "." (a.first command-mapping))
+              ;;opts (a.second command-mapping)
               mapping (.. :<leader> lnmapping)
-              cmd (fn []
-                    (lsp-execute-command lsp-cmd opts-str))]
-          (nbufmap mapping cmd))))))
+              cmd (lambda []
+                    (let [opts (accumulate [s "" _i opt (ipairs (a.second command-mapping))]
+                                 (.. s
+                                     (if (= :function (type opt))
+                                         (opt)
+                                         opt)))]
+                      (lsp-execute-command client lsp-cmd opts)))]
+          (nbufmap mapping cmd {:desc (.. "LSP command `" lsp-cmd "`")}))))))
 
 (fn on_attach [client bufnr]
   (each [mapping cmd (pairs core-nmappings)]
-    (nbufmap mapping cmd)) ; x mode mappings
-  (xbufmap :<leader>fa "lua vim.lsp.buf.format()") ; --   buf_set_keymap('n', 'gs', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+    (nbufmap mapping cmd {})) ; x mode mappings
+  (xbufmap :<leader>fa "lua vim.lsp.buf.format()" {:desc "Format buffer"}) ; --   buf_set_keymap('n', 'gs', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
   ; --   buf_set_keymap('n', 'gS', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   ; --   buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   ; --   buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)

@@ -4,28 +4,62 @@ local u = require("dotfiles.util")
 local lsp = require("vim.lsp")
 local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local function bufmap(mode, from, to)
-  return u.noremap(mode, from, to, {["local?"] = true})
+local function bufmap(mode, from, to, opts)
+  return u.noremap(mode, from, to, a.merge({["local?"] = true}, opts))
 end
-local function nbufmap(from, to)
-  return bufmap("n", from, to)
+local function nbufmap(from, to, opts)
+  return bufmap("n", from, to, opts)
 end
-local function xbufmap(from, to)
-  return bufmap("x", from, to)
+local function xbufmap(from, to, opts)
+  return bufmap("x", from, to, opts)
 end
-local function lsp_execute_command(cmd, ...)
+local function lsp_execute_command(client, cmd, ...)
   local buf_uri = vim.uri_from_bufnr(0)
   local cursor = vim.api.nvim_win_get_cursor(0)
   local r = (a.first(cursor) - 1)
   local c = a.second(cursor)
   local opts = {buf_uri, r, c}
   local args = a.concat(opts, {...})
-  return vim.lsp.buf.execute_command({command = cmd, arguments = args})
+  return client.request_sync("workspace/executeCommand", {command = cmd, arguments = args}, nil, 0)
 end
 vim.diagnostic.config({signs = {text = {[vim.diagnostic.severity.ERROR] = "\226\152\162\239\184\143", [vim.diagnostic.severity.WARN] = "\226\154\160\239\184\143", [vim.diagnostic.severity.INFO] = "\226\132\185\239\184\143", [vim.diagnostic.severity.HINT] = "\240\159\148\142"}}})
 local core_nmappings = {gd = "lua vim.lsp.buf.definition()", gD = "lua vim.lsp.buf.declaration()", gi = "lua vim.lsp.buf.implementation()", gr = "lua vim.lsp.buf.references()", K = "lua vim.lsp.buf.hover()", ["[g"] = "lua vim.diagnostic.goto_prev()", ["]g"] = "lua vim.diagnostic.goto_next()", ["<leader>ca"] = "lua vim.lsp.buf.code_action()", ["<leader>cl"] = "lua vim.lsp.codelens.run()", ["<leader>ic"] = "lua vim.lsp.buf.incoming_calls()", ["<leader>sld"] = "lua vim.diagnostic.open_float(nil, {source = 'always'})", ["<leader>rn"] = "lua vim.lsp.buf.rename()", ["<leader>fa"] = "lua vim.lsp.buf.format()"}
-local client_nmappings = {clojure_lsp = {["<leader>cn"] = "call LspExecuteCommand('clean-ns')", ["<leader>ref"] = "call LspExecuteCommand('extract-function', input('Function name: '))", ["<leader>id"] = "call LspExecuteCommand('inline-symbol')", ["<leader>il"] = "call LspExecuteCommand('introduce-let', input('Binding name: '))", ["<leader>m2l"] = "call LspExecuteCommand('move-to-let', input('Binding name: '))"}}
-local client_command_lnmappings = {clojure_lsp = {ai = {"add-import-to-namespace", {"input('Namespace name: ')"}}, am = {"add-missing-libspec", {}}, as = {"add-require-suggestion", {"input('Namespace name: ')", "input('Namespace as: ')", "input('Namespace name: ')"}}, cc = {"cycle-coll", {}}, cn = {"clean-ns", {}}, cp = {"cycle-privacy", {}}, ct = {"create-test", {}}, df = {"drag-forward", {}}, db = {"drag-backward", {}}, dk = {"destructure-keys", {}}, ed = {"extract-to-def", {"input('Definition name: ')"}}, ef = {"extract-function", {"input('Function name: ')"}}, el = {"expand-let", {}}, fe = {"create-function", {}}, il = {"introduce-let", {"input('Binding name: ')"}}, is = {"inline-symbol", {}}, ma = {"resolve-macro-as", {}}, mf = {"move-form", {"input('File name: ')"}}, ml = {"move-to-let", {"input('Binding name: ')"}}, pf = {"promote-fn", {"input('Function name: ')"}}, sc = {"change-collection", {"input('Collection type: ')"}}, sm = {"sort-map", {}}, tf = {"thread-first-all", {}}, tF = {"thread-first", {}}, tl = {"thread-last-all", {}}, tL = {"thread-last", {}}, ua = {"unwind-all", {}}, uw = {"unwind-thread", {}}}}
+local client_nmappings = {clojure_lsp = {}}
+local client_command_lnmappings
+local function _1_()
+  return vim.fn.input("Namespace name: ")
+end
+local function _2_()
+  return vim.fn.input("Namespace name: ")
+end
+local function _3_()
+  return vim.fn.input("Namespace as: ")
+end
+local function _4_()
+  return vim.fn.input("Namespace name: ")
+end
+local function _5_()
+  return vim.fn.input("Definition name: ")
+end
+local function _6_()
+  return vim.fn.input("Function name: ")
+end
+local function _7_()
+  return vim.fn.input("Binding name: ")
+end
+local function _8_()
+  return vim.fn.input("File name: ")
+end
+local function _9_()
+  return vim.fn.input("Binding name: ")
+end
+local function _10_()
+  return vim.fn.input("Function name: ")
+end
+local function _11_()
+  return vim.fn.input("")
+end
+client_command_lnmappings = {clojure_lsp = {ai = {"add-import-to-namespace", {_1_}}, am = {"add-missing-libspec", {}}, as = {"add-require-suggestion", {_2_, _3_, _4_}}, cc = {"cycle-coll", {}}, cn = {"clean-ns", {}}, cp = {"cycle-privacy", {}}, ct = {"create-test", {}}, df = {"drag-forward", {}}, db = {"drag-backward", {}}, dk = {"destructure-keys", {}}, ed = {"extract-to-def", {_5_}}, ref = {"extract-function", {_6_}}, el = {"expand-let", {}}, fe = {"create-function", {}}, il = {"introduce-let", {_7_}}, is = {"inline-symbol", {}}, ma = {"resolve-macro-as", {}}, mf = {"move-form", {_8_}}, ml = {"move-to-let", {_9_}}, pf = {"promote-fn", {_10_}}, sc = {"change-collection", {_11_, "input('Collection type: ')"}}, sm = {"sort-map", {}}, tf = {"thread-first-all", {}}, tF = {"thread-first", {}}, tl = {"thread-last-all", {}}, tL = {"thread-last", {}}, ua = {"unwind-all", {}}, uw = {"unwind-thread", {}}}}
 local server_specific_opts = {}
 local function bind_client_mappings(client)
   local client_name = a.get(client, "name")
@@ -33,28 +67,34 @@ local function bind_client_mappings(client)
   local command_lnmappings = a.get(client_command_lnmappings, client_name)
   if mappings then
     for mapping, cmd in pairs(mappings) do
-      nbufmap(mapping, cmd)
+      nbufmap(mapping, cmd, {})
     end
   else
   end
   if command_lnmappings then
     for lnmapping, command_mapping in pairs(command_lnmappings) do
       local lsp_cmd = a.first(command_mapping)
-      local opts_str
-      do
-        local s = ""
-        for i, opt in ipairs(a.second(command_mapping)) do
-          s = (s .. ", " .. opt)
-        end
-        opts_str = s
-      end
       local mapping = ("<leader>" .. lnmapping)
       local cmd
-      local function _2_()
-        return lsp_execute_command(lsp_cmd, opts_str)
+      local function _13_()
+        local opts
+        do
+          local s = ""
+          for _i, opt in ipairs(a.second(command_mapping)) do
+            local _14_
+            if ("function" == type(opt)) then
+              _14_ = opt()
+            else
+              _14_ = opt
+            end
+            s = (s .. _14_)
+          end
+          opts = s
+        end
+        return lsp_execute_command(client, lsp_cmd, opts)
       end
-      cmd = _2_
-      nbufmap(mapping, cmd)
+      cmd = _13_
+      nbufmap(mapping, cmd, {desc = ("LSP command `" .. lsp_cmd .. "`")})
     end
     return nil
   else
@@ -63,9 +103,9 @@ local function bind_client_mappings(client)
 end
 local function on_attach(client, bufnr)
   for mapping, cmd in pairs(core_nmappings) do
-    nbufmap(mapping, cmd)
+    nbufmap(mapping, cmd, {})
   end
-  xbufmap("<leader>fa", "lua vim.lsp.buf.format()")
+  xbufmap("<leader>fa", "lua vim.lsp.buf.format()", {desc = "Format buffer"})
   vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", {buf = 0})
   bind_client_mappings(client)
   if client.server_capabilities.documentHighlightProvider then
@@ -73,21 +113,21 @@ local function on_attach(client, bufnr)
       vim.api.nvim_set_hl(0, hlgroup, a.merge(vim.api.nvim_get_hl_by_name(base_group, true), {italic = true, foreground = "#6c71c4", background = "NONE"}))
     end
     local group = vim.api.nvim_create_augroup("LspDocumentHighlight", {clear = true})
-    local function _4_()
+    local function _17_()
       return vim.lsp.buf.document_highlight()
     end
-    vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {group = group, pattern = "<buffer>", callback = _4_})
-    local function _5_()
+    vim.api.nvim_create_autocmd({"CursorHold", "CursorHoldI"}, {group = group, pattern = "<buffer>", callback = _17_})
+    local function _18_()
       return vim.lsp.buf.clear_references()
     end
-    vim.api.nvim_create_autocmd({"CursorMoved"}, {group = group, pattern = "<buffer>", callback = _5_})
+    vim.api.nvim_create_autocmd({"CursorMoved"}, {group = group, pattern = "<buffer>", callback = _18_})
   else
   end
   if client.server_capabilities.documentFormattingProvider then
-    local function _7_()
+    local function _20_()
       return vim.lsp.buf.format()
     end
-    vim.api.nvim_create_autocmd({"BufWritePre"}, {pattern = "<buffer>", callback = _7_})
+    vim.api.nvim_create_autocmd({"BufWritePre"}, {pattern = "<buffer>", callback = _20_})
   else
   end
   return print("LSP Client Attached.")
