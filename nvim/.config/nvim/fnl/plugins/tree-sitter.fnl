@@ -1,45 +1,38 @@
 (import-macros {: tx} :config.macros)
 
-(vim.api.nvim_create_autocmd
-  "FileType"
-  {:pattern ["*"]
-   :callback #(vim.schedule #(pcall #(vim.treesitter.start)))})
+(vim.api.nvim_create_autocmd :FileType
+                             {:pattern ["*"]
+                              :callback #(vim.schedule #(pcall #(vim.treesitter.start)))})
 
-(tx
-  "nvim-treesitter/nvim-treesitter"
-  {:main :nvim-treesitter.configs
-   :branch "main"
-   :build ":TSUpdate"
-   :config (fn []
-
-              (let [ treesitter-configs (require :nvim-treesitter.config)]
-
-                (treesitter-configs.setup {:highlight {:enable true
-                                                       ;; :additional_vim_regex_highlighting false
-                                                       :additional_vim_regex_highlighting [:org]}
-                                           :ensure_installed :all
-                                           ; [:org]
-                                           :rainbow {:enable true
-                                                     :extended_mode true
-                                                     ; Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                                                     :max_file_lines 10000
-                                                     ; Do not enable for files with more than 1000 lines, int
-                                                     :colors ["#dc322f"
-                                                              ; red
-                                                              "#b58900"
-                                                              ; yellow
-                                                              "#d33682"
-                                                              ; magenta
-                                                              "#859900"
-                                                              ; green
-                                                              "#2aa198"
-                                                              ; cyan
-                                                              "#268bd2"
-                                                              ; blue
-                                                              "#6c71c4"
-                                                              ; violet / brmagenta
-                                                              ]
-                                                     ; table of hex strings
-                                                     }}))
-              )
-   })
+(tx :nvim-treesitter/nvim-treesitter
+    {:branch :main
+     :build (fn []
+              (let [TS (require :nvim-treesitter)]
+                (when (not TS.get_installed)
+                  (LazyVim.error "Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch."))
+                ; make sure we're using the latest treesitter util
+                (set package.loaded.lazyvim.util.treesitter nil)
+                (LazyVim.treesitter.build (fn []
+                                            (TS.update nil {:summary true})))))
+     :opts {:indent {:enable true}
+            :highlight {:enable true}
+            :folds {:enable true}
+            :ensure_installed [:bash
+                               :clojure
+                               :diff
+                               :fennel
+                               :html
+                               :javascript
+                               :jsdoc
+                               :json
+                               :lua
+                               :luadoc
+                               :luap
+                               :markdown
+                               :markdown_inline
+                               :regex
+                               :toml
+                               :vim
+                               :vimdoc
+                               :xml
+                               :yaml]}})

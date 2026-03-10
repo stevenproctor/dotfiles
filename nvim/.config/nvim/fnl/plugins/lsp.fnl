@@ -79,14 +79,14 @@
              :yamlls
              :marksman
              :html
-             :basedpyright
-             :ts_ls
+             ; :basedpyright
+             ; :ts_ls
              :terraformls
              ; "tailwindcss"
              :dockerls
              :docker_compose_language_service
              :bashls
-             :taplo
+             ; :taplo
              :sqlls])
 
 (local filetype->formatters
@@ -95,7 +95,7 @@
         :python [:ruff_organize_imports :ruff_format]
         :rust [:rustfmt]
         :toml [:taplo]
-        :clojure [:cljfmt]
+        ; :clojure [:cljfmt]
         :json [:prettierd]
         :javascript [:prettierd]
         :typescript [:prettierd]
@@ -107,6 +107,7 @@
         :fennel [:fnlfmt]
         :sql [:sqlfmt]
         :gleam [:gleam]
+        :_ {:lsp_format :prefer}
         :* [:trim_whitespace :trim_newlines]})
 
 (local formatter->package {:ruff_organize_imports :ruff :ruff_format :ruff})
@@ -128,57 +129,57 @@
 
 [(tx :folke/lsp-colors.nvim {})
  (tx :williamboman/mason.nvim {:tag :v1.11.0 :opts {}})
- ; (tx :stevearc/conform.nvim
- ;     {:dependencies [:rcarriga/nvim-notify]
- ;      :opts {:default_format_opts {:lsp_format :fallback}
- ;             :formatters_by_ft filetype->formatters
- ;             :format_on_save (fn [_buf]
- ;                               (when (and vim.g.dotfiles_format_on_save
- ;                                          (or (= nil
- ;                                                 vim.b.dotfiles_format_on_save)
- ;                                              vim.b.dotfiles_format_on_save)
- ;                                          (not (. disable-formatter-on-save
- ;                                                  vim.bo.filetype)))
- ;                                 {:timeout_ms 500 :lsp_format :fallback}))}
- ;      :config (fn [_ opts]
- ;                (let [conform (require :conform)
- ;                      registry (require :mason-registry)
- ;                      formatters-for-mason {}]
- ;                  (set conform.formatters.shfmt {:prepend_args [:-i :2 :-ci]})
- ;                  (vim.schedule (fn []
- ;                                  (each [_ft formatters (pairs filetype->formatters)]
- ;                                    (each [_idx formatter (ipairs formatters)]
- ;                                      (when (not (. disable-formatter-auto-install
- ;                                                    formatter))
- ;                                        (tset formatters-for-mason
- ;                                              (or (. formatter->package
- ;                                                     formatter)
- ;                                                  formatter)
- ;                                              true))))
- ;                                  (each [formatter _true (pairs formatters-for-mason)]
- ;                                    (let [pkg (registry.get_package formatter)]
- ;                                      (when (not (pkg:is_installed))
- ;                                        (vim.notify (.. "Automatically installing "
- ;                                                        formatter " with Mason."))
- ;                                        (pkg:install))))))
- ;                  (set vim.g.dotfiles_format_on_save true)
- ;                  (conform.setup opts)
- ;                  (set vim.o.formatexpr "v:lua.require'conform'.formatexpr()")))
- ;      :keys [(tx :<leader>tf
- ;                 (fn []
- ;                   (set vim.b.dotfiles_format_on_save
- ;                        (if (= nil vim.b.dotfiles_format_on_save) false
- ;                            (not vim.b.dotfiles_format_on_save)))
- ;                   (vim.notify (.. "Set vim.b.dotfiles_format_on_save to "
- ;                                   (tostring vim.b.dotfiles_format_on_save))))
- ;                 {:desc "Toggle buffer formatting"})
- ;             (tx :<leader>tF
- ;                 (fn []
- ;                   (set vim.g.dotfiles_format_on_save
- ;                        (not vim.g.dotfiles_format_on_save))
- ;                   (vim.notify (.. "Set vim.g.dotfiles_format_on_save to "
- ;                                   (tostring vim.g.dotfiles_format_on_save))))
- ;                 {:desc "Toggle global formatting"})]})
+ (tx :stevearc/conform.nvim
+     {:dependencies [:rcarriga/nvim-notify]
+      :opts {;;:default_format_opts {:lsp_format :fallback}
+             :formatters_by_ft filetype->formatters
+             :format_on_save (fn [_buf]
+                               (when (and vim.g.dotfiles_format_on_save
+                                          (or (= nil
+                                                 vim.b.dotfiles_format_on_save)
+                                              vim.b.dotfiles_format_on_save)
+                                          (not (. disable-formatter-on-save
+                                                  vim.bo.filetype)))
+                                 {:timeout_ms 500 :lsp_format :fallback}))}
+      :config (fn [_ opts]
+                (let [conform (require :conform)
+                      registry (require :mason-registry)
+                      formatters-for-mason {}]
+                  (set conform.formatters.shfmt {:prepend_args [:-i :2 :-ci]})
+                  (vim.schedule (fn []
+                                  (each [_ft formatters (pairs filetype->formatters)]
+                                    (each [_idx formatter (ipairs formatters)]
+                                      (when (not (. disable-formatter-auto-install
+                                                    formatter))
+                                        (tset formatters-for-mason
+                                              (or (. formatter->package
+                                                     formatter)
+                                                  formatter)
+                                              true))))
+                                  (each [formatter _true (pairs formatters-for-mason)]
+                                    (let [pkg (registry.get_package formatter)]
+                                      (when (not (pkg:is_installed))
+                                        (vim.notify (.. "Automatically installing "
+                                                        formatter " with Mason."))
+                                        (pkg:install))))))
+                  (set vim.g.dotfiles_format_on_save true)
+                  (conform.setup opts)
+                  (set vim.o.formatexpr "v:lua.require'conform'.formatexpr()")))
+      :keys [(tx :<leader>tbf
+                 (fn []
+                   (set vim.b.dotfiles_format_on_save
+                        (if (= nil vim.b.dotfiles_format_on_save) false
+                            (not vim.b.dotfiles_format_on_save)))
+                   (vim.notify (.. "Set vim.b.dotfiles_format_on_save to "
+                                   (tostring vim.b.dotfiles_format_on_save))))
+                 {:desc "Toggle buffer formatting"})
+             (tx :<leader>tgf
+                 (fn []
+                   (set vim.g.dotfiles_format_on_save
+                        (not vim.g.dotfiles_format_on_save))
+                   (vim.notify (.. "Set vim.g.dotfiles_format_on_save to "
+                                   (tostring vim.g.dotfiles_format_on_save))))
+                 {:desc "Toggle global formatting"})]})
  (tx :williamboman/mason-lspconfig.nvim
      {:tag :v1.32.0
       :dependencies [:williamboman/mason.nvim]
@@ -191,8 +192,9 @@
                      :Olical/nfnl]
       :keys [(tx :<leader>ca #(vim.lsp.buf.code_action)
                  {:desc "Invoke code_action, prompting for an action to take at the cursor"})
-             (tx :<leader>fa vim.lsp.buf.format
-                 ; (fn [] ((. (require :conform) :format)))
+             (tx :<leader>fa ; vim.lsp.buf.format
+                 (fn []
+                   ((. (require :conform) :format)))
                  {:desc "LSP format"})
              (tx :<leader>rn vim.lsp.buf.rename {:desc "LSP rename"})
              (tx :gd vim.lsp.buf.definition {:desc "Go to Definition"})
@@ -270,8 +272,7 @@
 
                   (fn on_attach [client bufnr]
                     ;(each [mapping cmd (pairs core-nmappings)] ;  (nbufmap mapping cmd {})) ; x mode mappings
-                    ;(xbufmap :<leader>fa "lua vim.lsp.buf.format()"
-                    ;         {:desc "Format buffer"}) ; --   buf_set_keymap('n', 'gs', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+                    ;(xbufmap :<leader>fa "lua vim.lsp.buf.format()" ;         {:desc "Format buffer"}) ; --   buf_set_keymap('n', 'gs', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
                     ; --   buf_set_keymap('n', 'gS', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
                     ; --   buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
                     ; --   buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -309,7 +310,9 @@
                     (if client.server_capabilities.documentFormattingProvider
                         (vim.api.nvim_create_autocmd [:BufWritePre]
                                                      {:pattern :<buffer>
-                                                      :callback vim.lsp.buf.format}))
+                                                      :callback (fn []
+                                                                  ((. (require :conform)
+                                                                      :format)))}))
                     (print "LSP Client Attached."))
 
                   (mlsp.setup_handlers (tx (fn [server-name]

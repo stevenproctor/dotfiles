@@ -10,7 +10,15 @@ local function _1_()
 end
 vim.api.nvim_create_autocmd("FileType", {pattern = {"*"}, callback = _1_})
 local function _4_()
-  local treesitter_configs = require("nvim-treesitter.config")
-  return treesitter_configs.setup({highlight = {enable = true, additional_vim_regex_highlighting = {"org"}}, ensure_installed = "all", rainbow = {enable = true, extended_mode = true, max_file_lines = 10000, colors = {"#dc322f", "#b58900", "#d33682", "#859900", "#2aa198", "#268bd2", "#6c71c4"}}})
+  local TS = require("nvim-treesitter")
+  if not TS.get_installed then
+    LazyVim.error("Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch.")
+  else
+  end
+  package.loaded.lazyvim.util.treesitter = nil
+  local function _6_()
+    return TS.update(nil, {summary = true})
+  end
+  return LazyVim.treesitter.build(_6_)
 end
-return {"nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate", config = _4_, main = "nvim-treesitter.configs"}
+return {"nvim-treesitter/nvim-treesitter", branch = "main", build = _4_, opts = {indent = {enable = true}, highlight = {enable = true}, folds = {enable = true}, ensure_installed = {"bash", "clojure", "diff", "fennel", "html", "javascript", "jsdoc", "json", "lua", "luadoc", "luap", "markdown", "markdown_inline", "regex", "toml", "vim", "vimdoc", "xml", "yaml"}}}
