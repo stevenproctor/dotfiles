@@ -13,7 +13,7 @@
 
 ;; (require-all)
 (require :dotfiles.core)
-(require :dotfiles.plugins)
+;; (require :dotfiles.plugins)
 (require :dotfiles.mapping)
 (require :dotfiles.conceal)
 (require :dotfiles.zoom-toggle)

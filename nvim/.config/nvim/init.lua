@@ -1,6 +1,8 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
+require 'config.lazy'
+
 local pack_path = fn.stdpath("data") .. "/site/pack"
 local fmt = string.format
 

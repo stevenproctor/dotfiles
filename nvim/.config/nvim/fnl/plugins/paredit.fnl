@@ -1,8 +1,4 @@
-(local a (require :nfnl.core))
-;; (local treesitter (require :dotfiles.plugin.treesitter))
-(local ts-parsers (require :nvim-treesitter.parsers))
-(local ts-utils (require :nvim-treesitter.ts_utils))
-(local languagetree (require :vim.treesitter.languagetree))
+(import-macros {: tx} :config.macros)
 
 (set vim.g.paredit_smartjump 1)
 
@@ -20,20 +16,6 @@
        (bool->int)
        (tset vim.g x)))
 
-(fn language-at-cursor []
-  (let [parser (ts-parsers.get_parser)
-        current-node (ts-utils.get_node_at_cursor)
-        range (if current-node [(current-node:range)])
-        lang (if range
-                 (languagetree.language_for_range parser range))]
-    (if lang
-        (lang:lang))))
-
-(fn parser-language []
-  (let [parser (ts-parsers.get_parser)]
-    (when parser
-      (parser:lang))))
-
 (local paredit-langs [:clojure
                       :fennel
                       :hy
@@ -47,19 +29,8 @@
 
 (local paredit-host-langs [:org :markdown :asciidoc])
 
-(fn host-lang-in? [langs] (list-member? langs (parser-language)))
-
 (fn paredit-lang? [lang] (list-member? paredit-langs lang))
 
-(fn TreeSitterLangParedit []
-  (when (host-lang-in? paredit-host-langs)
-    (let [cursor-lang (language-at-cursor)]
-      (when cursor-lang
-        (->> cursor-lang
-             (paredit-lang?)
-             (bool->int)
-             (set vim.g.paredit_mode))
-        (vim.fn.PareditInitBuffer)))))
 
 (vim.api.nvim_create_autocmd [:FileType]
                              {:pattern :ruby
@@ -75,3 +46,43 @@
                              {:pattern :terraform
                               :callback (lambda []
                                           (vim.fn.PareditInitBalancingAllBracketsBuffer))})
+
+
+
+(tx :kovisoft/paredit
+    {:dependencies [:nvim-treesitter/nvim-treesitter]
+     :config (fn []
+               (let [a (require :nfnl.core)
+                     ;; treesitter (require :dotfiles.plugin.treesitter)
+                     ts-parsers (require :nvim-treesitter.parsers)
+                     ;; ts-utils (require :nvim-treesitter.utils)
+                     languagetree (require :vim.treesitter.languagetree)]
+
+(fn language-at-cursor []
+  (let [parser (ts-parsers.get_parser)
+        current-node (vim.treesitter.get_node {:bufnr 0})
+        range (if current-node [(current-node:range)])
+        lang (if range
+                 (languagetree.language_for_range parser range))]
+    (if lang
+        (lang:lang))))
+
+(fn parser-language []
+  (let [parser (ts-parsers.get_parser)]
+    (when parser
+      (parser:lang))))
+
+(fn host-lang-in? [langs] (list-member? langs (parser-language)))
+
+
+(fn TreeSitterLangParedit []
+  (when (host-lang-in? paredit-host-langs)
+    (let [cursor-lang (language-at-cursor)]
+      (when cursor-lang
+        (->> cursor-lang
+             (paredit-lang?)
+             (bool->int)
+             (set vim.g.paredit_mode))
+        (vim.fn.PareditInitBuffer)))))
+
+               ))})

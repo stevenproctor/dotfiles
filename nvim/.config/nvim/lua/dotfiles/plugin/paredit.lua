@@ -1,6 +1,5 @@
 -- [nfnl] fnl/dotfiles/plugin/paredit.fnl
 local a = require("nfnl.core")
-local treesitter = require("dotfiles.plugin.treesitter")
 local ts_parsers = require("nvim-treesitter.parsers")
 local ts_utils = require("nvim-treesitter.ts_utils")
 local languagetree = require("vim.treesitter.languagetree")

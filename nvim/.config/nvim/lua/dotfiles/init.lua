@@ -16,7 +16,6 @@ local function require_all()
   return a.map(_1_, a.filter(_2_, a.map(_3_, fs.relglob("fnl/dotfiles", "*.fnl"))))
 end
 require("dotfiles.core")
-require("dotfiles.plugins")
 require("dotfiles.mapping")
 require("dotfiles.conceal")
 require("dotfiles.zoom-toggle")
