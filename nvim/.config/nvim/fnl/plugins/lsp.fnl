@@ -5,7 +5,8 @@
 (vim.diagnostic.config {:signs {:text {vim.diagnostic.severity.ERROR "☢️"
                                        vim.diagnostic.severity.WARN "⚠️"
                                        vim.diagnostic.severity.INFO "ℹ️"
-                                       vim.diagnostic.severity.HINT "🔎"}
+                                       vim.diagnostic.severity.HINT "🔎"
+                                       }
                                 ;; :linehl {vim.diagnostic.severity.ERROR :ErrorMsg}
                                 ;; :numhl {vim.diagnostic.severity.WARN :WarningMsg}
                                 }})
@@ -49,9 +50,18 @@
                            [(lambda [] (vim.fn.input "Binding name: "))]]
                       :pf [:promote-fn
                            [(lambda [] (vim.fn.input "Function name: "))]]
-                      :sc [:change-collection
-                           [(lambda [] (vim.fn.input ""))
-                            "input('Collection type: ')"]]
+                      :sc [:change-coll
+                           [(lambda []
+                              (let [coll-types [:map :list :set :vector]
+                                    a (require :nfnl.core)
+                                    choice (vim.fn.inputlist (a.concat ["Collection Type:"]
+                                                                       (a.map-indexed (fn [[k
+                                                                                            v]]
+                                                                                        (.. (tostring k)
+                                                                                            ". "
+                                                                                            v))
+                                                                                      coll-types)))]
+                                (a.get coll-types choice)))]]
                       :sm [:sort-map []]
                       :tf [:thread-first-all []]
                       :tF [:thread-first []]
@@ -220,7 +230,6 @@
                       a (require :nfnl.core)
                       u (require :dotfiles.util)
                       lsp (require :vim.lsp)
-                      lspconfig (require :lspconfig)
                       cmp_nvim_lsp (require :cmp_nvim_lsp)]
                   (vim.lsp.enable :gleam)
 

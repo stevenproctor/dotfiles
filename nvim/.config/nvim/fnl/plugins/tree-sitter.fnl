@@ -6,20 +6,14 @@
 
 (tx :nvim-treesitter/nvim-treesitter
     {:branch :main
-     :build (fn []
-              (let [TS (require :nvim-treesitter)]
-                (when (not TS.get_installed)
-                  (LazyVim.error "Please restart Neovim and run `:TSUpdate` to use the `nvim-treesitter` **main** branch."))
-                ; make sure we're using the latest treesitter util
-                (set package.loaded.lazyvim.util.treesitter nil)
-                (LazyVim.treesitter.build (fn []
-                                            (TS.update nil {:summary true})))))
+     :build ":TSUpdate"
      :opts {:indent {:enable true}
             :highlight {:enable true}
             :folds {:enable true}
             :ensure_installed [:bash
                                :clojure
                                :diff
+                               :elm
                                :fennel
                                :html
                                :javascript
@@ -31,6 +25,7 @@
                                :markdown
                                :markdown_inline
                                :regex
+                               :ruby
                                :toml
                                :vim
                                :vimdoc

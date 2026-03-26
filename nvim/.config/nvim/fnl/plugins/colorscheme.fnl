@@ -1,3 +1,3 @@
 (import-macros {: tx} :config.macros)
 
-(tx :lifepillar/vim-solarized8 {})
+(tx "https://codeberg.org/lifepillar/vim-solarized8/" {:branch "neovim"})

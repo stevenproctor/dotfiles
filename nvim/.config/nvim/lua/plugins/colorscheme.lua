@@ -1,2 +1,2 @@
 -- [nfnl] fnl/plugins/colorscheme.fnl
-return {"lifepillar/vim-solarized8"}
+return {"https://codeberg.org/lifepillar/vim-solarized8/", branch = "neovim"}
