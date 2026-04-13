@@ -1,5 +1,5 @@
 -- [nfnl] fnl/plugins/smartsplits.fnl
-do
+local function _1_()
   local smart_splits = require("smart-splits")
   if smart_splits then
     vim.keymap.set("n", "<M-S-h>", smart_splits.resize_left)
@@ -13,8 +13,9 @@ do
     vim.keymap.set("n", "<leader><leader>h", smart_splits.swap_buf_left)
     vim.keymap.set("n", "<leader><leader>j", smart_splits.swap_buf_down)
     vim.keymap.set("n", "<leader><leader>k", smart_splits.swap_buf_up)
-    vim.keymap.set("n", "<leader><leader>l", smart_splits.swap_buf_right)
+    return vim.keymap.set("n", "<leader><leader>l", smart_splits.swap_buf_right)
   else
+    return nil
   end
 end
-return {"mrjones2014/smart-splits.nvim", lazy = false}
+return {"mrjones2014/smart-splits.nvim", config = _1_, lazy = false}
