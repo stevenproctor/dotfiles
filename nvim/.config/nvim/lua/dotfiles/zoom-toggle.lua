@@ -8,10 +8,10 @@ local function zoom_toggle()
     return nil
   else
     unzoom_21 = vim.fn.winrestcmd()
-    vim.fn.resize()
-    return vim.fn.vertical("resize")
+    vim.cmd.resize()
+    return vim.cmd.resize({mods = {vertical = true}})
   end
 end
 vim.api.nvim_create_user_command("ZoomToggle", zoom_toggle, {})
-u.nnoremap("<M-z>", ":call ZoomToggle()<CR>")
-return u.tnoremap("<M-z>", "<c-\\><c-n>:call ZoomToggle()<CR>")
+local wk = require("which-key")
+return wk.add({{{"<M-z>", zoom_toggle, desc = "Toggle zoom of buffer window"}}, {{"<M-z>", zoom_toggle, desc = "Toggle zoom of buffer window", mode = {"n", "t"}}}})
