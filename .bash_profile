@@ -2,8 +2,9 @@ shopt -s globstar
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 PATH=/usr/local/sbin:/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
-PATH=$PATH:$HOME
+export PATH=$PATH:$HOME
 MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
 
 export XDG_CONFIG_HOME=$HOME/.config
@@ -54,7 +55,7 @@ safesource ~/.bash/aliases
 safesource ~/.bash_local
 
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+#export PATH="/usr/local/heroku/bin:$PATH"
 
 function repeat() {
   local count=$1
