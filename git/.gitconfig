@@ -1,25 +1,37 @@
-# This is Git's per-user configuration file.
 [user]
-	email = steven.proctor@gmail.com
 	name = Proctor
-
+	email = steven.proctor@gmail.com
 [core]
 	editor = nvim
 	excludesFile = ~/.gitignore.global
+[color]
+	ui = true
+[pull]
+	ff = only
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
 [init]
 	defaultBranch = main
-
 [alias] ; Command aliases for the git[1] command wrapper
 	last = cat-file commit HEAD
 [branch]
   autoSetupRebase = always
 [checkout]
   defaultRemote = origin
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
 [merge]
-  ff = only
+	ff = only
 [push]
-  autoSetupRemote = true
-  default = upstream
+	default = current
+	autoSetupRemote = true
 [rerere]
 	enabled = true
 [remote]
@@ -28,5 +40,3 @@
 ;; This is last, take in any other local file overrides
 [include]
 	path = ~/.gitconfig.local ; find ".gitconfig.local" in your `$HOME` directory
-[pull]
-	ff = only
