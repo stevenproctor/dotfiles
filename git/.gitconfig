@@ -15,6 +15,11 @@
 	defaultBranch = main
 [alias] ; Command aliases for the git[1] command wrapper
 	last = cat-file commit HEAD
+[diff]
+  algorithm = histogram
+  colorMoved = zebra # plain
+  mnemonicPrefix = true
+  renames = true
 [branch]
   autoSetupRebase = always
 [checkout]
@@ -23,17 +28,27 @@
 	format = ssh
 [commit]
 	gpgsign = true
+[fetch]
+  all = true
+  prune = true
+  pruneTags = true
 [tag]
-	gpgsign = true
+  gpgsign = true
+  sort = version:refname
 [gpg "ssh"]
 	allowedSignersFile = ~/.ssh/allowed_signers
+[help]
+  autocorrect = prompt
 [merge]
+  conflitstyle = zdiff3
 	ff = only
 [push]
 	default = current
-	autoSetupRemote = true
+  autoSetupRemote = true
+  followTags = true
 [rerere]
 	enabled = true
+  autoupdate = true
 [remote]
 	pushDefault = origin
 
