@@ -1,7 +1,5 @@
 shopt -s globstar
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
 PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 PATH=/usr/local/sbin:/usr/local/bin:~/bin:/usr/local/share/npm/bin:$PATH
 export PATH=$PATH:$HOME
@@ -114,3 +112,5 @@ export LESS_TERMCAP_us=$'\e'"[1;32m"
 [ -s "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
 
 # source /Users/proctor/.config/broot/launcher/bash/br
+#
+[[ -f ~/.bashrc ]] && . ~/.bashrc
