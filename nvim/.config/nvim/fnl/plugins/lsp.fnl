@@ -5,8 +5,7 @@
 (vim.diagnostic.config {:signs {:text {vim.diagnostic.severity.ERROR "☢️"
                                        vim.diagnostic.severity.WARN "⚠️"
                                        vim.diagnostic.severity.INFO "ℹ️"
-                                       vim.diagnostic.severity.HINT "🔎"
-                                       }
+                                       vim.diagnostic.severity.HINT "🔎"}
                                 ;; :linehl {vim.diagnostic.severity.ERROR :ErrorMsg}
                                 ;; :numhl {vim.diagnostic.severity.WARN :WarningMsg}
                                 }})
@@ -135,7 +134,8 @@
         :trim_newlines true
         :gleam true})
 
-(vim.lsp.enable [:clojure :fennel-ls :typedclojure])
+(each [_ lsp-lang (pairs [:clojure :fennel-ls :typedclojure])]
+  (vim.lsp.enable lsp-lang))
 
 [(tx :folke/lsp-colors.nvim {})
  (tx :williamboman/mason.nvim {:tag :v1.11.0 :opts {}})
@@ -231,8 +231,6 @@
                       u (require :dotfiles.util)
                       lsp (require :vim.lsp)
                       cmp_nvim_lsp (require :cmp_nvim_lsp)]
-                  (vim.lsp.enable :gleam)
-
                   (fn bufmap [mode from to opts]
                     (u.noremap mode from to (a.merge {:local? true} opts)))
 
@@ -328,26 +326,7 @@
                                              (vim.lsp.config server-name
                                                              {:capabilities caps
                                                               : on_attach})
-                                             (vim.lsp.enable server-name))
-                                           {; :tailwindcss
-                                            ; (fn []
-                                            ;   ;; https://github.com/tailwindlabs/tailwindcss/discussions/7554#discussioncomment-12991596
-                                            ;   ;; https://github.com/tailwindlabs/tailwindcss-intellisense/issues/401#issuecomment-2336568169
-                                            ;   ;; https://github.com/tailwindlabs/tailwindcss-intellisense/issues/400#issuecomment-2664427180
-                                            ;   (vim.lsp.config "tailwindcss"
-                                            ;     {:settings
-                                            ;      {:tailwindCSS
-                                            ;       {:experimental
-                                            ;        {:classRegex [["\\[:[^.\\s]*((?:\\.[^.\\s\\]]*)+)[\\s\\]]" "\\.([^.]*)"]
-                                            ;                      ["\\:(\\.[^\\s#]+(?:\\.[^\\s#]+)*)" "\\.([^\\.\\s#]+)"]
-                                            ;                      ["class\\s+(\\:[^\\s\\}]*)[\\s\\}]" "[\\:.]([^.]*)"]
-                                            ;                      ["class\\s+(\"[^\\}\"]*)\"" "[\"\\s]([^\\s\"]*)"]
-                                            ;                      ["class\\s+\\[([\\s\\S]*)\\]" "[\"\\:]([^\\s\"]*)[\"]?"]
-                                            ;                      ["class\\s+'\\[([\\s\\S]*)\\]" "([^\\s]*)?"]]}
-                                            ;        :includeLanguages {:clojure "html"
-                                            ;                           :clojurescript "html"}}}})
-                                            ;   (vim.lsp.enable "tailwindcss"))
-                                            }))))})
+                                             (vim.lsp.enable server-name))))))})
  (tx :RubixDev/mason-update-all {:cmd :MasonUpdateAll
                                  :dependencies [:williamboman/mason.nvim
                                                 :Olical/nfnl]

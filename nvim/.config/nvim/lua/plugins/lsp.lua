@@ -51,7 +51,9 @@ local filetype__3eformatters = {lua = {"stylua"}, sh = {"shfmt"}, python = {"ruf
 local formatter__3epackage = {ruff_organize_imports = "ruff", ruff_format = "ruff"}
 local disable_formatter_on_save = {fennel = true, sql = true}
 local disable_formatter_auto_install = {cljfmt = true, fnlfmt = true, rustfmt = true, trim_whitespace = true, trim_newlines = true, gleam = true}
-vim.lsp.enable({"clojure", "fennel-ls", "typedclojure"})
+for _, lsp_lang in pairs({"clojure", "fennel-ls", "typedclojure"}) do
+  vim.lsp.enable(lsp_lang)
+end
 local function _14_(_, opts)
   local conform = require("conform")
   local registry = require("mason-registry")
@@ -108,7 +110,6 @@ local function _23_()
   local u = require("dotfiles.util")
   local lsp = require("vim.lsp")
   local cmp_nvim_lsp = require("cmp_nvim_lsp")
-  vim.lsp.enable("gleam")
   local function bufmap(mode, from, to, opts)
     return u.noremap(mode, from, to, a.merge({["local?"] = true}, opts))
   end
