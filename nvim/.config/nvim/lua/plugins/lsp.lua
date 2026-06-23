@@ -196,16 +196,17 @@ local function _23_()
     end
     return print("LSP Client Attached.")
   end
-  local function _34_(server_name)
+  for _, config in pairs(vim.lsp.get_configs({enabled = true})) do
+    local server_name = config.name
     vim.lsp.config(server_name, {capabilities = caps, on_attach = on_attach})
-    return vim.lsp.enable(server_name)
+    vim.lsp.enable(server_name)
   end
-  return mlsp.setup_handlers({_34_})
+  return nil
 end
-local function _35_()
+local function _34_()
   return vim.lsp.buf.code_action()
 end
-local function _36_()
+local function _35_()
   return require("conform").format()
 end
-return {{"folke/lsp-colors.nvim"}, {"williamboman/mason.nvim", opts = {}, tag = "v1.11.0"}, {"stevearc/conform.nvim", config = _14_, dependencies = {"rcarriga/nvim-notify"}, keys = {{"<leader>tbf", _18_, desc = "Toggle buffer formatting"}, {"<leader>tgf", _20_, desc = "Toggle global formatting"}}, opts = {formatters_by_ft = filetype__3eformatters, format_on_save = _21_}}, {"williamboman/mason-lspconfig.nvim", dependencies = {"williamboman/mason.nvim"}, opts = {ensure_installed = lsps, automatic_installation = true}, tag = "v1.32.0"}, {"neovim/nvim-lspconfig", config = _23_, dependencies = {"williamboman/mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp", "stevearc/conform.nvim", "Olical/nfnl"}, keys = {{"<leader>ca", _35_, desc = "Invoke code_action, prompting for an action to take at the cursor"}, {"<leader>fa", _36_, desc = "LSP format"}, {"<leader>rn", vim.lsp.buf.rename, desc = "LSP rename"}, {"gd", vim.lsp.buf.definition, desc = "Go to Definition"}, {"gD", vim.lsp.buf.declaration, desc = "Go to Declaration"}, {"gi", vim.lsp.buf.implementation, desc = "Go to Implementation"}, {"gr", vim.lsp.buf.references, desc = "Show References"}, {"K", vim.lsp.buf.hover, desc = "LSP Hover"}, {"[g", vim.lsp.diagnostic.goto_prev, desc = "Previous Diagnostic"}, {"]g", vim.lsp.diagnostic.goto_next, desc = "Next Diagnostic"}, {"<c-k>", vim.lsp.buf.signature_help, desc = "Signature Help"}}, lazy = false}, {"RubixDev/mason-update-all", cmd = "MasonUpdateAll", dependencies = {"williamboman/mason.nvim", "Olical/nfnl"}, main = "mason-update-all", opts = {}}}
+return {{"folke/lsp-colors.nvim"}, {"mason-org/mason.nvim", opts = {ui = {icons = {package_installed = "\226\156\147"}}}}, {"stevearc/conform.nvim", config = _14_, dependencies = {"rcarriga/nvim-notify"}, keys = {{"<leader>tbf", _18_, desc = "Toggle buffer formatting"}, {"<leader>tgf", _20_, desc = "Toggle global formatting"}}, opts = {formatters_by_ft = filetype__3eformatters, format_on_save = _21_}}, {"mason-org/mason-lspconfig.nvim", dependencies = {"mason-org/mason.nvim"}, opts = {ensure_installed = lsps}}, {"neovim/nvim-lspconfig", config = _23_, dependencies = {"mason-org/mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp", "stevearc/conform.nvim", "Olical/nfnl"}, keys = {{"<leader>ca", _34_, desc = "Invoke code_action, prompting for an action to take at the cursor"}, {"<leader>fa", _35_, desc = "LSP format"}, {"<leader>rn", vim.lsp.buf.rename, desc = "LSP rename"}, {"gd", vim.lsp.buf.definition, desc = "Go to Definition"}, {"gD", vim.lsp.buf.declaration, desc = "Go to Declaration"}, {"gi", vim.lsp.buf.implementation, desc = "Go to Implementation"}, {"gr", vim.lsp.buf.references, desc = "Show References"}, {"K", vim.lsp.buf.hover, desc = "LSP Hover"}, {"[g", vim.lsp.diagnostic.goto_prev, desc = "Previous Diagnostic"}, {"]g", vim.lsp.diagnostic.goto_next, desc = "Next Diagnostic"}, {"<c-k>", vim.lsp.buf.signature_help, desc = "Signature Help"}}, lazy = false}, {"RubixDev/mason-update-all", cmd = "MasonUpdateAll", dependencies = {"mason-org/mason.nvim", "Olical/nfnl"}, main = "mason-update-all", opts = {}}}

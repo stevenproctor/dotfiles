@@ -138,7 +138,7 @@
   (vim.lsp.enable lsp-lang))
 
 [(tx :folke/lsp-colors.nvim {})
- (tx :williamboman/mason.nvim {:tag :v1.11.0 :opts {}})
+ (tx :mason-org/mason.nvim {:opts {:ui {:icons {:package_installed "✓"}}}})
  (tx :stevearc/conform.nvim
      {:dependencies [:rcarriga/nvim-notify]
       :opts {;;:default_format_opts {:lsp_format :fallback}
@@ -190,13 +190,12 @@
                    (vim.notify (.. "Set vim.g.dotfiles_format_on_save to "
                                    (tostring vim.g.dotfiles_format_on_save))))
                  {:desc "Toggle global formatting"})]})
- (tx :williamboman/mason-lspconfig.nvim
-     {:tag :v1.32.0
-      :dependencies [:williamboman/mason.nvim]
-      :opts {:ensure_installed lsps :automatic_installation true}})
+ (tx :mason-org/mason-lspconfig.nvim
+     {:dependencies [:mason-org/mason.nvim]
+      :opts {:ensure_installed lsps}})
  (tx :neovim/nvim-lspconfig
      {:lazy false
-      :dependencies [:williamboman/mason-lspconfig.nvim
+      :dependencies [:mason-org/mason-lspconfig.nvim
                      :hrsh7th/cmp-nvim-lsp
                      :stevearc/conform.nvim
                      :Olical/nfnl]
@@ -322,13 +321,14 @@
                                                                       :format)))}))
                     (print "LSP Client Attached."))
 
-                  (mlsp.setup_handlers (tx (fn [server-name]
-                                             (vim.lsp.config server-name
-                                                             {:capabilities caps
-                                                              : on_attach})
-                                             (vim.lsp.enable server-name))))))})
+                  (each [_ config (pairs (vim.lsp.get_configs {:enabled true}))]
+                    (let [server-name (. config :name)]
+                      (vim.lsp.config server-name
+                                      {:capabilities caps
+                                       : on_attach})
+                      (vim.lsp.enable server-name)))))})
  (tx :RubixDev/mason-update-all {:cmd :MasonUpdateAll
-                                 :dependencies [:williamboman/mason.nvim
+                                 :dependencies [:mason-org/mason.nvim
                                                 :Olical/nfnl]
                                  :main :mason-update-all
                                  :opts {}})]
